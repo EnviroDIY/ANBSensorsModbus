@@ -4,7 +4,9 @@ ___
 
 ## The EnviroDIY ANBSensorsModbus Library<!--! {#mainpage_intro} -->
 
-This library is for communicating with pH sensors manufactured by [ANB Sensors](https://www.anbsensors.com/) using Modbus
+This library is for communicating with pH sensors manufactured by [ANB Sensors](https://www.anbsensors.com/) using Modbus.
+These sensors are marketed as next-generation calibration-free pH sensors.
+The sensors can be operated autonomously when powered by an external battery or they can be controlled by an external controller.
 
 ## Contributing<!--! {#mainpage_contributing} -->
 

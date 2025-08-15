@@ -52,19 +52,17 @@
         "group-command",
         "section-command"
       ]
-    },
-    {
-      "name": "example_tags",
-      "pattern": "/BUILD_[A-Z0-9_]+/g"
     }
   ],
   "words": [
-    "Adafruit",
-    "Arduinos",
-    "AtlaspH",
     "Damiano",
     "datasheet",
+    "doxyfile",
     "enviro_diy",
+    "EnviroDIY",
+    "Geleskie",
+    "microsiemens",
+    "millisiemens",
     "Modbus",
     "SRGD",
     "SRGDamia1",
