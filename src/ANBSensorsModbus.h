@@ -146,7 +146,7 @@ enum class ANBStatusCode:uint8_t {
  * | ANBDiagnosticCode | Value | Explanation         | Action |
  * | ----------------- | ----- | ------------------- | ------ |
  * | OK                | 0     | Healthy Sensor      | None |
- * | BATTERY_ERROR     | 1     | Clock Battery Error | If there is no external power to the sensor the real time clock will not hold the programmed time<br>- If the sensor is powered, the time set and data streamed, this failure is not an issue<br>- If the sensor is in automonous mode the clock will fail if disconnected from the power when it was programmed and placed on an external battery<br>-Users can record when the sensor was first switched on (where the sensor's time will be set to 0) and calculate the times externally, or, if this is not viable, contact support@anbsensors.com |
+ * | BATTERY_ERROR     | 1     | Clock Battery Error | If there is no external power to the sensor the real time clock will not hold the programmed time<br>- If the sensor is powered, the time set and data streamed, this failure is not an issue<br>- If the sensor is in autonomous mode the clock will fail if disconnected from the power when it was programmed and placed on an external battery<br>-Users can record when the sensor was first switched on (where the sensor's time will be set to 0) and calculate the times externally, or, if this is not viable, contact support@anbsensors.com |
  * | SD_ERROR          | 2     | SD Card Error       | Either SD Card has been disabled or<br>A failing in the internal data save has occurred and no new data can be saved to the internal memory<br>- If the sensor is connected to an external communications system the sensor will continue to stream data, however no data will be saved in autonomous mode<br>- Please contact support@anbsensors.com |
  * | SYSTEM_ERROR      | 3     | System Error        | Contact support@anbsensors.com |
  * | UNKNOWN           | 255   | Unknown status      | Reconnect with the sensor |
@@ -234,7 +234,7 @@ class anbSensor {
      *
      * @return A code for the control mode
      */
-    ANBSensorMode getSensorControlMode(void);
+    ANBSensorMode getControlMode(void);
     /**
      * @brief Set the sensor control mode
      *
@@ -250,7 +250,7 @@ class anbSensor {
      * @param newControlMode The new control mode to use
      * @return True if the control mode was successfully set, false if not.
      */
-    bool setSensorControlMode(ANBSensorMode newControlMode);
+    bool setControlMode(ANBSensorMode newControlMode);
 
     /**
      * @brief Get the sensor salinity mode
@@ -480,7 +480,7 @@ class anbSensor {
     /**
      * @brief Tells the sensor to begin a scan (taking measurements)
      *
-     * The start scan command is set with **coil** 0x0100
+     * The start scan command is set with **coil** 0x0100 (decimal 256)
      *
      * > After sending the first scan command there is a 2-3 min delay before
      * > the sensor will return a valid pH value. In this 90s the sensor will
@@ -527,7 +527,7 @@ class anbSensor {
      * If the sensor is told that it has been abraded, it resets all internal
      * sensor settings.
      *
-     * The abrade sensor command is set with **coil** 0x0180
+     * The abrade sensor command is set with **coil** 0x0180 (decimal 384)
      *
      * [Detailed maintenance guidelines including how to abrade the sensor can
      * be found
@@ -781,7 +781,7 @@ class anbSensor {
      *
      * @return A code for the baud rate
      */
-    ANBSensorBaud getSensorBaud(void);
+    ANBSensorBaud getBaud(void);
     /**
      * @brief Set the sensor modbus baud
      *
@@ -799,7 +799,7 @@ class anbSensor {
      * @param newSensorBaud The new baud rate to use
      * @return True if the baud rate was successfully set, false if not.
      */
-    bool setSensorBaud(ANBSensorBaud newSensorBaud);
+    bool setBaud(ANBSensorBaud newSensorBaud);
 
     /**
      * @brief Gets the modbus sensor (slave) address.
@@ -808,7 +808,7 @@ class anbSensor {
      *
      * @return The modbus address of the ANB pH sensor
      */
-    byte getSensorAddress(void);
+    byte getAddress(void);
     /**
      * @brief Set a new modbus sensor (slave) address.
      *
@@ -824,7 +824,7 @@ class anbSensor {
      * @param newSensorAddress  The new address (slave ID) for the ANB pH sensor
      * @return True if the slave ID was successfully set, false if not.
      */
-    bool setSensorAddress(byte newSensorAddress);
+    bool setAddress(byte newSensorAddress);
 
     /**
      * @brief Change to terminal (RS232) communication mode on the sensor.
@@ -860,7 +860,7 @@ class anbSensor {
      * @return The manufacturer of the ANB pH sensor; this should return "ANB
      * Sensors"
      */
-    String getSensorManufacturer(void);
+    String getManufacturer(void);
 
     /**
      * @brief Gets the sensor name as a String
@@ -870,7 +870,7 @@ class anbSensor {
      *
      * @return The name of the ANB pH sensor
      */
-    String getSensorName(void);
+    String getName(void);
 
     /**
      * @brief Gets the sensor sub-name as a String
@@ -880,7 +880,7 @@ class anbSensor {
      *
      * @return The sub-name of the ANB pH sensor
      */
-    String getSensorSubName(void);
+    String getSubName(void);
 
     /**
      * @brief Gets the interface firmware (IF) version as a String
@@ -927,8 +927,8 @@ class anbSensor {
      * @param MM Reference to a variable where the month will be stored
      * @param yy Reference to a variable where the year will be stored
      */
-    bool getSensorRTC(uint8_t& ss, uint8_t& mm, uint8_t& hh, uint8_t& dd,
-                      uint8_t& MM, uint8_t& yy);
+    bool getRTC(uint8_t& ss, uint8_t& mm, uint8_t& hh, uint8_t& dd, uint8_t& MM,
+                uint8_t& yy);
     /**
      * @brief Set a new RTC (Real-Time Clock) value on the sensor.
      *
@@ -943,8 +943,8 @@ class anbSensor {
      * @param yy year
      * @return True if the RTC value was successfully set, false otherwise.
      */
-    bool setSensorRTC(uint8_t ss, uint8_t mm, uint8_t hh, uint8_t dd,
-                      uint8_t MM, uint8_t yy);
+    bool setRTC(uint8_t ss, uint8_t mm, uint8_t hh, uint8_t dd, uint8_t MM,
+                uint8_t yy);
 
     /**
      * @anchor debugging
