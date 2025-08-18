@@ -555,11 +555,9 @@ class anbSensor {
      * @brief Tells the sensors to save the current sensor configuration and
      * restart the sensor so it is ready to run with the saved configurations.
      *
-     * @warning NOT YET SUPPORTED BY MODBUS COMMANDS
-     *
-     * @return True if the sensor was successfully rebooted, false if not.
+     * The reboot command is set by writing 0xFFFF to input register 0x1000
      */
-    bool reboot(void) __attribute__((error("Command not available!")));
+    bool reboot(void);
 
     /**
      * @brief Tells the sensors to save the current results and turn off the
