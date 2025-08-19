@@ -770,6 +770,38 @@ class anbSensor {
     bool enableModbus();
 
     /**
+     * @brief Attempt to force the sensor to enter Modbus mode by sending the
+     * command via serial mode.
+     *
+     * @return True if the operation was successful, false otherwise.
+     */
+    void forceModbus();
+
+    /**
+     * @brief Change to terminal (RS232) communication mode on the sensor.
+     *
+     * The terminal enable command is in input register 0x003B (decimal 59)
+     *
+     * Terminal communication is enabled **on the next boot**.  If you need to
+     * immediately switch to terminal mode without rebooting, you can send the
+     * characters #700. This action prohibits the use of 0x23 (0x23 = #) as a
+     * Modbus address.
+     *
+     * @note The reverse of this command is enableModbus()
+     *
+     * @return True if the operation was successful, false otherwise.
+     */
+    bool enableTerminal();
+
+    /**
+     * @brief Attempt to force the sensor to immediately enter terminal mode by
+     * sending the #700 command.
+     *
+     * @return True if the operation was successful, false otherwise.
+     */
+    void forceTerminal();
+
+    /**
      * @brief Get the sensor modbus baud rate
      *
      * The baud rate is in the lower byte of input register 0x003A
@@ -823,22 +855,6 @@ class anbSensor {
      * @return True if the slave ID was successfully set, false if not.
      */
     bool setAddress(byte newSensorAddress);
-
-    /**
-     * @brief Change to terminal (RS232) communication mode on the sensor.
-     *
-     * The terminal enable command is in input register 0x003B (decimal 59)
-     *
-     * Terminal communication is enabled **on the next boot**.  If you need to
-     * immediately switch to terminal mode without rebooting, you can send the
-     * characters #700. This action prohibits the use of 0x23 as a Modbus
-     * address.
-     *
-     * @note The reverse of this command is enableModbus()
-     *
-     * @return True if the operation was successful, false otherwise.
-     */
-    bool enableTerminal();
 
     /**
      * @brief Gets the instrument serial number as a String
@@ -984,9 +1000,21 @@ class anbSensor {
  private:
     int  _model;    ///< the sensor model
     byte _slaveID;  ///< the sensor slave id
-
-    // Class from EnviroDIY SensorModbusMaster library,
-    // https://github.com/EnviroDIY/SensorModbusMaster
+    /**
+     * @brief The stream instance (serial port) for communication with the
+     * Modbus slave (usually over RS485)
+     *
+     * We keep a pointer to this stream from the input so that we can use it for
+     * forceTerminal() and forceModbus() functions. The stream pointer from the
+     * SensorModbusMaster library is private.
+     */
+    Stream* _stream;
+    /**
+     * @brief Internal reference to the Modbus communication object from
+     * EnviroDIY SensorModbusMaster library.
+     *
+     * @see https://github.com/EnviroDIY/SensorModbusMaster
+     */
     modbusMaster
         modbus;  ///< an internal reference to the modbus communication object.
 };

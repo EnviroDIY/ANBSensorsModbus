@@ -21,11 +21,9 @@
 bool anbSensor::begin(byte modbusSlaveID, Stream* stream, int enablePin) {
     // Give values to variables;
     _slaveID = modbusSlaveID;
+    _stream  = stream;
     // Start up the modbus instance
     bool success = modbus.begin(modbusSlaveID, stream, enablePin);
-    // Get the model type from the serial number if it's not known
-    // if (_model == UNKNOWN) getSerialNumber();
-
     return success;
 }
 bool anbSensor::begin(byte modbusSlaveID, Stream& stream, int enablePin) {
@@ -159,7 +157,8 @@ bool anbSensor::stop(void) {
 // The reboot command is set by writing 0xFFFF to input register 0x1000 (decimal
 // 4096)
 bool anbSensor::reboot(void) {
-    return modbus.setRegisters(0x1000, 1, (byte[]){0xFF, 0xFF}, false);
+    byte value[2] = {0xFF, 0xFF};
+    return modbus.setRegisters(0x1000, 1, value, false);
 }
 
 //----------------------------------------------------------------------------
@@ -264,6 +263,53 @@ bool anbSensor::enableModbus() {
     uint16_t set_value = 0x010D;
     return modbus.uint16ToRegister(0x0140, set_value, bigEndian, false);
 }
+void anbSensor::forceModbus() {
+    // enter the main menu of the terminal
+    _stream->println("menu");
+    _stream->flush();
+    // dump the response - we're not trying to parse the menu!
+    while (_stream->available()) { _stream->read(); }
+    // enter the interface option
+    _stream->println("interface");
+    _stream->flush();
+    // dump the response - we're not trying to parse the options!
+    while (_stream->available()) { _stream->read(); }
+    // select option 2 for modbus
+    _stream->println("2");
+    _stream->flush();
+    // dump the response
+    while (_stream->available()) { _stream->read(); }
+    // set the modbus address
+    _stream->println("mb_address");
+    _stream->flush();
+    // dump the response
+    while (_stream->available()) { _stream->read(); }
+    // set the modbus address
+    if (_slaveID <= 0xF) {
+        _stream->print("0");  // zero pad
+    }
+    _stream->println(_slaveID, HEX);
+    _stream->flush();
+    // dump the response
+    while (_stream->available()) { _stream->read(); }
+    // reboot the sensor for the setting to take
+    _stream->println("reboot");
+    _stream->flush();
+    // dump the response
+    while (_stream->available()) { _stream->read(); }
+    delay(1000);  // wait for the sensor to reboot
+    /// @todo Figure out how long the reboot takes!
+}
+
+// The terminal enable command is in input register 0x003B (decimal 59)
+bool anbSensor::enableTerminal() {
+    uint16_t set_value = 0x010D;
+    return modbus.uint16ToRegister(0x003B, set_value, bigEndian, false);
+}
+void anbSensor::forceTerminal() {
+    _stream->print("#700\r");
+    _stream->flush();
+}
 
 // The baud rate is in the lower byte of input register 0x003A (decimal 58)
 ANBSensorBaud anbSensor::getBaud(void) {
@@ -311,13 +357,6 @@ bool anbSensor::setAddress(byte newSensorAddress) {
     // Write the new address to the lower byte of input register 0x0039
     return modbus.byteToRegister(0x39, 0, newSensorAddress);
 }
-
-// The terminal enable command is in input register 0x003B (decimal 59)
-bool anbSensor::enableTerminal() {
-    uint16_t set_value = 0x010D;
-    return modbus.uint16ToRegister(0x003B, set_value, bigEndian, false);
-}
-
 
 // The serial number takes up 3 holding registers starting at 0x000A (decimal
 // 10)

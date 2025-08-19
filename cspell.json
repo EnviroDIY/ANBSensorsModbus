@@ -17,7 +17,7 @@
     },
     {
       "name": "javadoc-command",
-      "pattern": "/@[a-z]+/g"
+      "pattern": "/@[a-z_]+/g"
     },
     {
       "name": "doxygen-commands",
