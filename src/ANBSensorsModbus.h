@@ -176,8 +176,8 @@ class anbSensor {
      * It should be run during the arduino "setup" function.
      * The "stream" device must be initialized prior to running this.
      *
-     * @note The default Modbus address is 0x55, but it can be any number
-     * between 0x01 and 0xFE.
+     * @note The default Modbus address is 0x55 (decimal 85), but it can be any
+     * value between 0x01 and 0xFE *except 0x23*.
      *
      * @warning The address 0x23 cannot be used!
      *
@@ -197,7 +197,7 @@ class anbSensor {
      * The "stream" device must be initialized prior to running this.
      *
      * @note The default Modbus address is 0x55, but it can be any number
-     * between 0x01 and 0xFE.
+     * between 0x01 and 0xFE *except 0x23*.
      *
      * @warning The address 0x23 cannot be used!
      *
@@ -222,13 +222,19 @@ class anbSensor {
      *
      * [Detailed function documentation is available
      * here.](https://www.anbsensors.com/newdocs/docs/modbus/#measurement-setting-functions)
+     *
+     * @note The Modbus instructions from ANB sensors state that the "source"
+     * for all of the measurement setting functions are input (read only)
+     * registers, but in all cases the functions use **holding** (read/write)
+     * registers.
      */
     /**@{*/
 
     /**
      * @brief Get the sensor control mode
      *
-     * The control mode is in input register 0x0035
+     * The control mode is in ~~input~~ **holding** register 0x0035 (decimal
+     * 53).
      *
      * @see ANBSensorMode
      *
@@ -243,7 +249,8 @@ class anbSensor {
      *
      * @note Requires power cycle to invoke autonomous mode
      *
-     * The control mode is in input register 0x0035
+     * The control mode is in ~~input~~ **holding** register 0x0035 (decimal
+     * 53).
      *
      * @see ANBSensorMode
      *
@@ -255,7 +262,8 @@ class anbSensor {
     /**
      * @brief Get the sensor salinity mode
      *
-     * The salinity mode is in input register 0x003E
+     * The salinity mode is in ~~input~~ **holding** register 0x003E (decimal
+     * 62).
      *
      * @return A code for the salinity mode
      */
@@ -268,7 +276,8 @@ class anbSensor {
      *
      * @note Before scanning set the expected salinity.
      *
-     * The salinity mode is in input register 0x003E
+     * The salinity mode is in ~~input~~ **holding** register 0x003E (decimal
+     * 62).
      *
      * @param newSalinityMode The new salinity mode to use
      * @return True if the salinity mode was successfully set, false if not.
@@ -278,7 +287,7 @@ class anbSensor {
     /**
      * @brief Get the sensor power style
      *
-     * The power style is in input register 0x003F
+     * The power style is in ~~input~~ **holding** register 0x003F (decimal 63).
      *
      * @return A code for the power style
      */
@@ -291,7 +300,7 @@ class anbSensor {
      *
      * @note Before scanning set the desired power style.
      *
-     * The power style is in input register 0x003F
+     * The power style is in ~~input~~ **holding** register 0x003F (decimal 63).
      *
      * @param newPowerStyle The new power style to use
      * @return True if the power style was successfully set, false if not.
@@ -306,7 +315,8 @@ class anbSensor {
      * between measurements. The minimum interval time for interval mode is 10
      * minutes. The maximum interval time is 240 minutes.
      *
-     * The interval time is stored in input register 0x0036
+     * The interval time is stored in ~~input~~ **holding** register 0x0036
+     * (decimal 54).
      *
      * @note The interval time only applies if the sensor is in autonomous mode
      * and always powered.  The sensor will go into a low power state during the
@@ -329,7 +339,8 @@ class anbSensor {
      * and always powered.  The sensor will go into a low power state during the
      * set interval.
      *
-     * The interval time is stored in input register 0x0036
+     * The interval time is stored in ~~input~~ **holding** register 0x0036
+     * (decimal 54).
      *
      * @param newIntervalTime The new interval time to use
      * @return True if the interval time was successfully set, false if not.
@@ -387,9 +398,10 @@ class anbSensor {
      * >   interval delay before rechecking.
      * > - Measurement will automatically resume once immersion is detected.
      *
-     * @note This function is not available on ATX sensors (S/N <300200)
+     * @note This function is not available on ATX sensors (S/N <300200).
      *
-     * The immersion sensor status (immersion rule) is in input register 0x003C
+     * The immersion sensor status (immersion rule) is in ~~input~~ **holding**
+     * register 0x003C (decimal 60).
      *
      * @return True if the immersion sensor is enabled, false otherwise.
      */
@@ -403,7 +415,8 @@ class anbSensor {
      * immediately.  When power cycled, the immersion sensor defaults to enabled
      * and the sensor goes into a low power mode.
      *
-     * The immersion sensor status (immersion rule) is in input register 0x003C
+     * The immersion sensor status (immersion rule) is in ~~input~~ **holding**
+     * register 0x003C (decimal 60).
      *
      * @param enable True to enable the immersion sensor, false to disable
      * @return True if the immersion sensor status was successfully set, false
@@ -480,7 +493,7 @@ class anbSensor {
     /**
      * @brief Tells the sensor to begin a scan (taking measurements)
      *
-     * The start scan command is set with **coil** 0x0100 (decimal 256)
+     * The start scan command is set with **coil** 0x0100 (decimal 256).
      *
      * > After sending the first scan command there is a 2-3 min delay before
      * > the sensor will return a valid pH value. In this 90s the sensor will
@@ -527,7 +540,7 @@ class anbSensor {
      * If the sensor is told that it has been abraded, it resets all internal
      * sensor settings.
      *
-     * The abrade sensor command is set with **coil** 0x0180 (decimal 384)
+     * The abrade sensor command is set with **coil** 0x0180 (decimal 384).
      *
      * [Detailed maintenance guidelines including how to abrade the sensor can
      * be found
@@ -555,7 +568,8 @@ class anbSensor {
      * @brief Tells the sensors to save the current sensor configuration and
      * restart the sensor so it is ready to run with the saved configurations.
      *
-     * The reboot command is set by writing 0xFFFF to input register 0x1000
+     * The reboot command is set by writing 0xFFFF to ~~input~~ **holding**
+     * register 0x1000
      */
     bool reboot(void);
 
@@ -590,7 +604,7 @@ class anbSensor {
      * @note If the pH output is 99.99, check the transducer health number for
      * instruction.
      *
-     * The pH value is stored in holding register 0x0000 (decimal 0)
+     * The pH value is stored in holding register 0x0000 (decimal 0).
      *
      * @return The pH value as a float. Passes the sensor returned 99.99 for a
      * bad value and returns -9999 if the sensor could not be read.
@@ -601,7 +615,7 @@ class anbSensor {
      * @brief Gets the current temperature in degrees Celsius (°C) from the
      * sensor.
      *
-     * The temperature value is stored in holding register 0x0002 (decimal 2)
+     * The temperature value is stored in holding register 0x0002 (decimal 2).
      *
      * @return The temperature value in degrees Celsius (°C) as a float. Passes
      * the sensor returned 99.99 for a bad value and returns -9999 if the sensor
@@ -621,7 +635,7 @@ class anbSensor {
      * @note If both the pH and salinity output is 99.99, check the
      * transducer health number for instruction.
      *
-     * The salinity value is stored in holding register 0x0004 (decimal 4)
+     * The salinity value is stored in holding register 0x0004 (decimal 4).
      *
      * @return The salinity value as a float. Passes the sensor
      * returned 99.99 for a bad value and returns -9999 if the sensor could not
@@ -642,7 +656,7 @@ class anbSensor {
      * transducer health number for instruction.
      *
      * The specific conductance value is stored in holding register 0x0006
-     * (decimal 6)
+     * (decimal 6).
      *
      * @return The specific conductance value as a float. Passes the sensor
      * returned 99.99 for a bad value and returns -9999 if the sensor could not
@@ -654,7 +668,7 @@ class anbSensor {
      * @brief Gets the current transducer health code from the sensor.
      *
      * The health code is stored in the lower byte of holding register 0x0008
-     * (decimal 8)
+     * (decimal 8).
      *
      * @return The transducer health code; passes ANBHealthCode::UNKNOWN (0xFF)
      * if the sensor could not be read.
@@ -676,7 +690,7 @@ class anbSensor {
      * transducer health number for instruction.
      *
      * The raw conductivity value is stored in holding register 0x0043 (decimal
-     * 67)
+     * 67).
      *
      * @return The raw (actual) conductivity value as a float. Passes the sensor
      * returned 99.99 for a bad value and returns -9999 if the sensor could not
@@ -691,7 +705,7 @@ class anbSensor {
      * sensor could not be read.
      *
      * The status code is stored in the upper byte of holding register 0x0009
-     * (decimal 9)
+     * (decimal 9).
      *
      * @see ANBStatusCode
      */
@@ -704,7 +718,7 @@ class anbSensor {
      * the sensor could not be read.
      *
      * The diagnostic code is stored in the lower byte of holding register
-     * 0x0009 (decimal 9)
+     * 0x0009 (decimal 9).
      *
      * @see ANBDiagnosticCode
      */
@@ -713,7 +727,7 @@ class anbSensor {
     /**
      * @brief Gets bulk values from all parameters
      *
-     * All parameters can be read from 11 (0x0B) input registers starting at
+     * All parameters can be read from 11 (0x0B) holding registers starting at
      * 0x0000.
      *
      * BUT -- the documentation also says that pH, temp, salinity, conductivity,
@@ -753,13 +767,19 @@ class anbSensor {
      * functions](https://www.anbsensors.com/newdocs/docs/modbus#admin-functions)
      * to get and set the sensor address, communication settings, and clock and
      * to get sensor metadata
+     *
+     * @note The Modbus instructions from ANB sensors state that the "source"
+     * for several of the administrative functions are input (read only)
+     * registers, but in all cases the functions use **holding** (read/write)
+     * registers.
      */
     /**@{*/
 
     /**
      * @brief Enable Modbus communication on the sensor.
      *
-     * The modbus enable command is in input register 0x0140 (320)
+     * The modbus enable command is in ~~input~~ **holding** register 0x0140
+     * (decimal 320).
      *
      * Modbus is enabled immediately after the response
      *
@@ -780,7 +800,8 @@ class anbSensor {
     /**
      * @brief Change to terminal (RS232) communication mode on the sensor.
      *
-     * The terminal enable command is in input register 0x003B (decimal 59)
+     * The terminal enable command is in ~~input~~ **holding** register 0x003B
+     * (decimal 59).
      *
      * Terminal communication is enabled **on the next boot**.  If you need to
      * immediately switch to terminal mode without rebooting, you can send the
@@ -804,7 +825,8 @@ class anbSensor {
     /**
      * @brief Get the sensor modbus baud rate
      *
-     * The baud rate is in the lower byte of input register 0x003A
+     * The baud rate is in the lower byte of ~~input~~ **holding** register
+     * 0x003A (decimal 58).
      *
      * The factory default value is ANBSensorBaud::BAUD57600 (7), corresponding
      * to a baud rate of 57600.
@@ -815,7 +837,7 @@ class anbSensor {
     /**
      * @brief Set the sensor modbus baud
      *
-     * The baud rate is in input register 0x003A
+     * The baud rate is in ~~input~~ **holding** register 0x003A (decimal 58).
      *
      * The new baud rate **does not take effect** until the next bootup.
      *
@@ -834,7 +856,8 @@ class anbSensor {
     /**
      * @brief Gets the modbus sensor (slave) address.
      *
-     * The address is in the lower byte of input register 0x0039 (decimal 57)
+     * The address is in the lower byte of ~~input~~ **holding** register 0x0039
+     * (decimal 57).
      *
      * @return The modbus address of the ANB pH sensor
      */
@@ -849,7 +872,8 @@ class anbSensor {
      *
      * @warning The address 0x23 cannot be used!
      *
-     * The address is in the lower byte of input register 0x0039 (decimal 57)
+     * The address is in the lower byte of ~~input~~ **holding** register 0x0039
+     * (decimal 57).
      *
      * @param newSensorAddress  The new address (slave ID) for the ANB pH sensor
      * @return True if the slave ID was successfully set, false if not.
@@ -860,6 +884,7 @@ class anbSensor {
      * @brief Gets the instrument serial number as a String
      *
      * The serial number takes up 3 holding registers starting at 0x000A
+     * (decimal 10).
      *
      * @return The serial number of the ANB pH sensor
      */
@@ -869,7 +894,7 @@ class anbSensor {
      * @brief Gets the instrument manufacturer as a String
      *
      * The manufacturer information takes up 8 holding registers starting at
-     * 0x000D
+     * 0x000D (decimal 13).
      *
      * @return The manufacturer of the ANB pH sensor; this should return "ANB
      * Sensors"
@@ -880,7 +905,7 @@ class anbSensor {
      * @brief Gets the sensor name as a String
      *
      * The sensor name takes up 8 holding registers starting at 0x0015 (decimal
-     * 21)
+     * 21).
      *
      * @return The name of the ANB pH sensor
      */
@@ -890,7 +915,7 @@ class anbSensor {
      * @brief Gets the sensor sub-name as a String
      *
      * The sensor sub-name takes up 8 holding registers starting at 0x001D
-     * (decimal 29)
+     * (decimal 29).
      *
      * @return The sub-name of the ANB pH sensor
      */
@@ -905,7 +930,7 @@ class anbSensor {
      * here](https://www.anbsensors.com/newdocs/docs/Firmware/firmware-archive)
      *
      * The interface firmware (IF) version takes up 8 holding registers
-     * starting at 0x0025 (decimal 37)
+     * starting at 0x0025 (decimal 37).
      *
      * @return The interface firmware (IF)version of the ANB pH sensor
      */
@@ -920,7 +945,7 @@ class anbSensor {
      * here](https://www.anbsensors.com/newdocs/docs/Firmware/firmware-archive)
      *
      * The driver (DV) firmware version takes up 8 holding registers starting at
-     * 0x002D (decimal 45)
+     * 0x002D (decimal 45).
      *
      * @return The driver (DV) firmware version of the ANB pH sensor
      */
@@ -930,6 +955,7 @@ class anbSensor {
      * @brief Gets the current RTC (Real-Time Clock) value on the sensor
      *
      * The RTC value is stored in 6 holding registers starting at 0x003D
+     * (decimal 61).
      *
      * @return True if the RTC value was successfully retrieved, false
      * otherwise.
@@ -947,7 +973,7 @@ class anbSensor {
      * @brief Set a new RTC (Real-Time Clock) value on the sensor.
      *
      * The RTC value is stored in 6 holding registers starting at 0x003D
-     * (decimal 61)
+     * (decimal 61).
      *
      * @param ss seconds
      * @param mm minutes

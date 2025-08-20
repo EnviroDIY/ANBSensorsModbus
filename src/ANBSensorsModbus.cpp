@@ -34,11 +34,11 @@ bool anbSensor::begin(byte modbusSlaveID, Stream& stream, int enablePin) {
 //  Measurement setting functions
 //----------------------------------------------------------------------------
 
-// The control mode is in input register 0x0035 (decimal 53)
+// The control mode is in **holding** register 0x0035 (decimal 53)
 // This function reads the control mode from the sensor and returns it as an
 // ANBSensorMode enum.
 ANBSensorMode anbSensor::getControlMode(void) {
-    int16_t modeCode = modbus.int16FromRegister(0x04, 0x0035, bigEndian);
+    int16_t modeCode = modbus.int16FromRegister(0x03, 0x0035, bigEndian);
     switch (modeCode) {
         case 1: return ANBSensorMode::CONTROLLED;
         case 2: return ANBSensorMode::AUTONOMOUS;
@@ -59,9 +59,9 @@ bool anbSensor::setControlMode(ANBSensorMode newControlMode) {
     return modbus.setRegisters(0x0035, 1, dataToSend, true);
 }
 
-// The salinity mode is in input register 0x003E (decimal 62)
+// The salinity mode is in **holding** register 0x003E (decimal 62)
 ANBSalinityMode anbSensor::getSalinityMode(void) {
-    int16_t modeCode = modbus.int16FromRegister(0x04, 0x003E, bigEndian);
+    int16_t modeCode = modbus.int16FromRegister(0x03, 0x003E, bigEndian);
     switch (modeCode) {
         case 1: return ANBSalinityMode::LOW_SALINITY;
         case 2: return ANBSalinityMode::HIGH_SALINITY;
@@ -81,9 +81,9 @@ bool anbSensor::setSalinityMode(ANBSalinityMode newSalinityMode) {
     return modbus.setRegisters(0x003E, 1, dataToSend, true);
 }
 
-// The power style is in input register 0x003F (decimal 63)
+// The power style is in **holding** register 0x003F (decimal 63)
 ANBPowerStyle anbSensor::getPowerStyle(void) {
-    int16_t styleCode = modbus.int16FromRegister(0x04, 0x003F, bigEndian);
+    int16_t styleCode = modbus.int16FromRegister(0x03, 0x003F, bigEndian);
     switch (styleCode) {
         case 1: return ANBPowerStyle::ALWAYS_POWERED;
         case 2: return ANBPowerStyle::ON_MEASUREMENT;
@@ -104,9 +104,9 @@ bool anbSensor::setPowerStyle(ANBPowerStyle newPowerStyle) {
 }
 
 
-// The interval time is stored in input register 0x0036 (decimal 54)
+// The interval time is stored in **holding** register 0x0036 (decimal 54)
 uint8_t anbSensor::getIntervalTime(void) {
-    int16_t interval = modbus.int16FromRegister(0x04, 0x0036, bigEndian);
+    int16_t interval = modbus.int16FromRegister(0x03, 0x0036, bigEndian);
     if (interval < 0 || interval > 255) {
         return 0;  // Return 0 if the value is out of expected range
     }
@@ -122,10 +122,10 @@ bool anbSensor::setIntervalTime(uint8_t newIntervalTime) {
     return modbus.setRegisters(0x0036, 1, dataToSend, true);
 }
 
-// The immersion sensor status (immersion rule) is in input register 0x003C
-// (decimal 60)
+// The immersion sensor status (immersion rule) is in **holding** register
+// 0x003C (decimal 60)
 bool anbSensor::isImmersionSensorEnabled(void) {
-    int16_t status = modbus.int16FromRegister(0x04, 0x003C, bigEndian);
+    int16_t status = modbus.int16FromRegister(0x03, 0x003C, bigEndian);
     return status == 1;
 }
 bool anbSensor::enableImmersionSensor(bool enable) {
@@ -154,8 +154,8 @@ bool anbSensor::stop(void) {
     return modbus.setCoil(0x0000, true);
 }
 
-// The reboot command is set by writing 0xFFFF to input register 0x1000 (decimal
-// 4096)
+// The reboot command is set by writing 0xFFFF to **holding** register 0x1000
+// (decimal 4096)
 bool anbSensor::reboot(void) {
     byte value[2] = {0xFF, 0xFF};
     return modbus.setRegisters(0x1000, 1, value, false);
@@ -258,7 +258,7 @@ bool anbSensor::getValues(float& pH, float& temperature, float& salinity,
 //  Admin functions
 //----------------------------------------------------------------------------
 
-// The modbus enable command is in input register 0x0140 (decimal 320)
+// The modbus enable command is in **holding** register 0x0140 (decimal 320)
 bool anbSensor::enableModbus() {
     uint16_t set_value = 0x010D;
     return modbus.uint16ToRegister(0x0140, set_value, bigEndian, false);
@@ -301,7 +301,7 @@ void anbSensor::forceModbus() {
     /// @todo Figure out how long the reboot takes!
 }
 
-// The terminal enable command is in input register 0x003B (decimal 59)
+// The terminal enable command is in **holding** register 0x003B (decimal 59)
 bool anbSensor::enableTerminal() {
     uint16_t set_value = 0x010D;
     return modbus.uint16ToRegister(0x003B, set_value, bigEndian, false);
@@ -311,9 +311,10 @@ void anbSensor::forceTerminal() {
     _stream->flush();
 }
 
-// The baud rate is in the lower byte of input register 0x003A (decimal 58)
+// The baud rate is in the lower byte of **holding** register 0x003A (decimal
+// 58)
 ANBSensorBaud anbSensor::getBaud(void) {
-    uint8_t baud_code = modbus.byteFromRegister(0x04, 0x003A, 0);
+    uint8_t baud_code = modbus.byteFromRegister(0x03, 0x003A, 0);
     switch (baud_code) {
         case 1: return ANBSensorBaud::BAUD9600;
         case 2: return ANBSensorBaud::BAUD14400;
@@ -339,13 +340,14 @@ bool anbSensor::setBaud(ANBSensorBaud newSensorBaud) {
         case ANBSensorBaud::BAUD115200: baud_code = 8; break;
         default: return false;  // Unknown baud rate
     }
-    // Write the baud rate code to the lower byte of input register 0x003A
+    // Write the baud rate code to the lower byte of **holding** register 0x003A
+    // (decimal 58)
     return modbus.byteToRegister(0x3A, 0, baud_code);
 }
 
-// The address is in the lower byte of input register 0x0039 (decimal 57)
+// The address is in the lower byte of **holding** register 0x0039 (decimal 57)
 byte anbSensor::getAddress(void) {
-    return modbus.byteFromRegister(0x04, 0x0039, 0);
+    return modbus.byteFromRegister(0x03, 0x0039, 0);
 }
 bool anbSensor::setAddress(byte newSensorAddress) {
     if (newSensorAddress == 0 || newSensorAddress == 35 ||
@@ -354,7 +356,7 @@ bool anbSensor::setAddress(byte newSensorAddress) {
         // on ANB sensors
         return false;
     }
-    // Write the new address to the lower byte of input register 0x0039
+    // Write the new address to the lower byte of **holding** register 0x0039
     return modbus.byteToRegister(0x39, 0, newSensorAddress);
 }
 
