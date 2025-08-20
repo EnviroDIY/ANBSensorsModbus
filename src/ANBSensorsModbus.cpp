@@ -59,7 +59,7 @@ bool anbSensor::setControlMode(ANBSensorMode newControlMode) {
     }
     byte dataToSend[2] = {0x00, modeCode};
     // Write to holding register 0x0035 (decimal 53)
-    return modbus.setRegisters(0x0035, 1, dataToSend, true);
+    return modbus.setRegisters(0x0035, 1, dataToSend, false);
 }
 
 // The salinity mode is in **holding** register 0x003E (decimal 62) and is write
@@ -84,7 +84,7 @@ bool anbSensor::setSalinityMode(ANBSalinityMode newSalinityMode) {
     }
     byte dataToSend[2] = {0x00, modeCode};
     // Write to holding register 0x003E (decimal 62)
-    return modbus.setRegisters(0x003E, 1, dataToSend, true);
+    return modbus.setRegisters(0x003E, 1, dataToSend, false);
 }
 
 // The power style is in **holding** register 0x003F (decimal 63) and is  write
@@ -109,7 +109,7 @@ bool anbSensor::setPowerStyle(ANBPowerStyle newPowerStyle) {
     }
     byte dataToSend[2] = {0x00, styleCode};
     // Write to holding register 0x003F (decimal 63)
-    return modbus.setRegisters(0x003F, 1, dataToSend, true);
+    return modbus.setRegisters(0x003F, 1, dataToSend, false);
 }
 
 
@@ -122,13 +122,13 @@ uint8_t anbSensor::getIntervalTime(void) {
     return static_cast<uint8_t>(interval);
 }
 bool anbSensor::setIntervalTime(uint8_t newIntervalTime) {
-    if (newIntervalTime >= 1 || newIntervalTime < 10) {
+    if (newIntervalTime >= 1 && newIntervalTime < 10) {
         return false;  // Return false for an invalid input; it must be >10 or 0
                        // for continuous
     }
     byte dataToSend[2] = {0x00, newIntervalTime};
     // Write to holding register 0x0036 (decimal 54)
-    return modbus.setRegisters(0x0036, 1, dataToSend, true);
+    return modbus.setRegisters(0x0036, 1, dataToSend, false);
 }
 
 // The immersion sensor status (immersion rule) is in **holding** register
@@ -140,7 +140,7 @@ bool anbSensor::isImmersionSensorEnabled(void) {
 bool anbSensor::enableImmersionSensor(bool enable) {
     byte dataToSend[2] = {0x00, static_cast<byte>(enable ? 1 : 2)};
     // Write to holding register 0x003C (decimal 60)
-    return modbus.setRegisters(0x003C, 1, dataToSend, true);
+    return modbus.setRegisters(0x003C, 1, dataToSend, false);
 }
 
 
