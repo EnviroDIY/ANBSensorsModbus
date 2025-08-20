@@ -413,7 +413,7 @@ String anbSensor::getDriverVersion(void) {
 // 61)
 bool anbSensor::getRTC(uint8_t& ss, uint8_t& mm, uint8_t& hh, uint8_t& dd,
                        uint8_t& MM, uint8_t& yy) {
-    if (!modbus.getRegisters(0x03, 0x003D, 12)) { return false; }
+    if (!modbus.getRegisters(0x03, 0x003D, 6)) { return false; }
     ss = modbus.byteFromFrame(3);
     mm = modbus.byteFromFrame(4);
     hh = modbus.byteFromFrame(5);
