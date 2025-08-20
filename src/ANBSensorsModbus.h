@@ -226,7 +226,9 @@ class anbSensor {
      * @note The Modbus instructions from ANB sensors state that the "source"
      * for all of the measurement setting functions are input (read only)
      * registers, but in all cases the functions use **holding** (read/write)
-     * registers.
+     * registers.  Most of the registers are, however, **write only** from
+     * within the modbus interface - attempting to read the registers will give
+     * an illegal function error.
      */
     /**@{*/
 
@@ -236,11 +238,15 @@ class anbSensor {
      * The control mode is in ~~input~~ **holding** register 0x0035 (decimal
      * 53).
      *
+     * @warning NOT YET SUPPORTED BY MODBUS COMMANDS. The sensor control mode is
+     * **write only** from within the modbus interface.
+     *
      * @see ANBSensorMode
      *
      * @return A code for the control mode
      */
-    ANBSensorMode getControlMode(void);
+    ANBSensorMode getControlMode(void)
+        __attribute__((error("Command not available!")));
     /**
      * @brief Set the sensor control mode
      *
@@ -265,9 +271,13 @@ class anbSensor {
      * The salinity mode is in ~~input~~ **holding** register 0x003E (decimal
      * 62).
      *
+     * @warning NOT YET SUPPORTED BY MODBUS COMMANDS. The salinity mode is
+     * **write only** from within the modbus interface.
+     *
      * @return A code for the salinity mode
      */
-    ANBSalinityMode getSalinityMode(void);
+    ANBSalinityMode getSalinityMode(void)
+        __attribute__((error("Command not available!")));
     /**
      * @brief Set the sensor salinity mode
      *
@@ -289,9 +299,13 @@ class anbSensor {
      *
      * The power style is in ~~input~~ **holding** register 0x003F (decimal 63).
      *
+     * @warning NOT YET SUPPORTED BY MODBUS COMMANDS. The power style is **write
+     * only** from within the modbus interface.
+     *
      * @return A code for the power style
      */
-    ANBPowerStyle getPowerStyle(void);
+    ANBPowerStyle getPowerStyle(void)
+        __attribute__((error("Command not available!")));
     /**
      * @brief Set the sensor power style
      *
@@ -771,7 +785,9 @@ class anbSensor {
      * @note The Modbus instructions from ANB sensors state that the "source"
      * for several of the administrative functions are input (read only)
      * registers, but in all cases the functions use **holding** (read/write)
-     * registers.
+     * registers.  Most of the mislabeled registers are, however, **write only**
+     * from within the modbus interface - attempting to read the registers will
+     * give an illegal function error.
      */
     /**@{*/
 
@@ -831,9 +847,13 @@ class anbSensor {
      * The factory default value is ANBSensorBaud::BAUD57600 (7), corresponding
      * to a baud rate of 57600.
      *
+     * @warning NOT YET SUPPORTED BY MODBUS COMMANDS. The baud rate is **write
+     * only** from within the modbus interface.
+     *
      * @return A code for the baud rate
      */
-    ANBSensorBaud getBaud(void);
+    ANBSensorBaud getBaud(void)
+        __attribute__((error("Command not available!")));
     /**
      * @brief Set the sensor modbus baud
      *
@@ -859,9 +879,12 @@ class anbSensor {
      * The address is in the lower byte of ~~input~~ **holding** register 0x0039
      * (decimal 57).
      *
+     * @warning NOT YET SUPPORTED BY MODBUS COMMANDS. The modbus address is
+     * **write only** from within the modbus interface.
+     *
      * @return The modbus address of the ANB pH sensor
      */
-    byte getAddress(void);
+    byte getAddress(void) __attribute__((error("Command not available!")));
     /**
      * @brief Set a new modbus sensor (slave) address.
      *

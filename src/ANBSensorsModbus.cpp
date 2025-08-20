@@ -34,7 +34,9 @@ bool anbSensor::begin(byte modbusSlaveID, Stream& stream, int enablePin) {
 //  Measurement setting functions
 //----------------------------------------------------------------------------
 
-// The control mode is in **holding** register 0x0035 (decimal 53)
+// The control mode is in **holding** register 0x0035 (decimal 53) and is write
+// only
+#if 0
 // This function reads the control mode from the sensor and returns it as an
 // ANBSensorMode enum.
 ANBSensorMode anbSensor::getControlMode(void) {
@@ -47,6 +49,7 @@ ANBSensorMode anbSensor::getControlMode(void) {
                                             // unknown
     }
 }
+#endif
 bool anbSensor::setControlMode(ANBSensorMode newControlMode) {
     byte modeCode;
     switch (newControlMode) {
@@ -59,7 +62,9 @@ bool anbSensor::setControlMode(ANBSensorMode newControlMode) {
     return modbus.setRegisters(0x0035, 1, dataToSend, true);
 }
 
-// The salinity mode is in **holding** register 0x003E (decimal 62)
+// The salinity mode is in **holding** register 0x003E (decimal 62) and is write
+// only.
+#if 0
 ANBSalinityMode anbSensor::getSalinityMode(void) {
     int16_t modeCode = modbus.int16FromRegister(0x03, 0x003E, bigEndian);
     switch (modeCode) {
@@ -69,6 +74,7 @@ ANBSalinityMode anbSensor::getSalinityMode(void) {
             return ANBSalinityMode::UNKNOWN;  // Default to UNKNOWN if unknown
     }
 }
+#endif
 bool anbSensor::setSalinityMode(ANBSalinityMode newSalinityMode) {
     byte modeCode;
     switch (newSalinityMode) {
@@ -81,7 +87,9 @@ bool anbSensor::setSalinityMode(ANBSalinityMode newSalinityMode) {
     return modbus.setRegisters(0x003E, 1, dataToSend, true);
 }
 
-// The power style is in **holding** register 0x003F (decimal 63)
+// The power style is in **holding** register 0x003F (decimal 63) and is  write
+// only
+#if 0
 ANBPowerStyle anbSensor::getPowerStyle(void) {
     int16_t styleCode = modbus.int16FromRegister(0x03, 0x003F, bigEndian);
     switch (styleCode) {
@@ -91,6 +99,7 @@ ANBPowerStyle anbSensor::getPowerStyle(void) {
             return ANBPowerStyle::UNKNOWN;  // Default to UNKNOWN if unknown
     }
 }
+#endif
 bool anbSensor::setPowerStyle(ANBPowerStyle newPowerStyle) {
     byte styleCode;
     switch (newPowerStyle) {
@@ -312,7 +321,8 @@ void anbSensor::forceTerminal() {
 }
 
 // The baud rate is in the lower byte of **holding** register 0x003A (decimal
-// 58)
+// 58) and is write only
+#if 0
 ANBSensorBaud anbSensor::getBaud(void) {
     uint8_t baud_code = modbus.byteFromRegister(0x03, 0x003A, 0);
     switch (baud_code) {
@@ -327,6 +337,7 @@ ANBSensorBaud anbSensor::getBaud(void) {
         default: return ANBSensorBaud::UNKNOWN;
     }
 }
+#endif
 bool anbSensor::setBaud(ANBSensorBaud newSensorBaud) {
     uint8_t baud_code;
     switch (newSensorBaud) {
@@ -346,9 +357,12 @@ bool anbSensor::setBaud(ANBSensorBaud newSensorBaud) {
 }
 
 // The address is in the lower byte of **holding** register 0x0039 (decimal 57)
+// and is write only
+#if 0
 byte anbSensor::getAddress(void) {
     return modbus.byteFromRegister(0x03, 0x0039, 0);
 }
+#endif
 bool anbSensor::setAddress(byte newSensorAddress) {
     if (newSensorAddress == 0 || newSensorAddress == 35 ||
         newSensorAddress > 247) {
