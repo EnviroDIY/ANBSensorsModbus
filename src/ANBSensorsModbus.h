@@ -436,7 +436,7 @@ class anbSensor {
      * @return True if the immersion sensor status was successfully set, false
      * if not.
      */
-    bool enableImmersionSensor(bool enable);
+    bool enableImmersionSensor(bool enable = true);
 
     /**
      * @brief Check if fast profiling is enabled
@@ -461,7 +461,7 @@ class anbSensor {
      * @param enable True to enable fast profiling mode, false to disable
      * @return True if the command was successfully sent, false if not.
      */
-    bool enableFastProfiling(bool enable)
+    bool enableFastProfiling(bool enable = true)
         __attribute__((error("Command not available!")));
 
     /**
@@ -490,7 +490,7 @@ class anbSensor {
      * @param enable True to enable SD card, false to disable
      * @return True if the command was successfully sent, false if not.
      */
-    bool enableSDCard(bool enable)
+    bool enableSDCard(bool enable = true)
         __attribute__((error("Command not available!")));
     /**@}*/
 
