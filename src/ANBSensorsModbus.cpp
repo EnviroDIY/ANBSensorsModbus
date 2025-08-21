@@ -24,6 +24,11 @@ bool anbSensor::begin(byte modbusSlaveID, Stream* stream, int enablePin) {
     _stream  = stream;
     // Start up the modbus instance
     bool success = modbus.begin(modbusSlaveID, stream, enablePin);
+    // increase the wait time for a response to a modbus command from the
+    // default of 500ms to 5s
+    modbus.setCommandTimeout(5000L);
+    // increase the wait for the next byte mid-frame from 4ms to 10ms
+    modbus.setFrameTimeout(10L);
     return success;
 }
 bool anbSensor::begin(byte modbusSlaveID, Stream& stream, int enablePin) {
