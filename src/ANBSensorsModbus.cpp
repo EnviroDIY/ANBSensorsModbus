@@ -39,10 +39,12 @@ bool anbSensor::begin(byte modbusSlaveID, Stream& stream, int enablePin) {
 // To check for a response, we will send the command to request status
 // and look for any correctly formed modbus response.
 bool anbSensor::gotModbusResponse(void) {
+    modbus.setCommandRetries(1);
     getHealthCode();
+    modbus.setCommandRetries(10);
     modbusErrorCode lastCode = modbus.getLastError();
-    return lastCode != NO_RESPONSE && lastCode != BAD_CRC &&
-        lastCode != WRONG_SLAVE_ID;
+    return static_cast<int8_t>(lastCode) > 0 &&
+        static_cast<int8_t>(lastCode) < 0x0C;
 }
 
 // To check if the sensor is ready, we will send the command to request
@@ -50,7 +52,9 @@ bool anbSensor::gotModbusResponse(void) {
 // NOTE: We don't use the returned health code to tell if the measurement is
 // complete, just that the sensor responses and doesn't give an error code.
 bool anbSensor::isSensorReady(void) {
+    modbus.setCommandRetries(1);
     getHealthCode();
+    modbus.setCommandRetries(10);
     return modbus.getLastError() == NO_ERROR;
 }
 
