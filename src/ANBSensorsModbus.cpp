@@ -516,20 +516,20 @@ String anbSensor::getDriverVersion(void) {
 
 // The RTC value is stored in 6 holding registers starting at 0x003D (decimal
 // 61)
-bool anbSensor::getRTC(uint8_t& ss, uint8_t& mm, uint8_t& hh, uint8_t& dd,
-                       uint8_t& MM, uint8_t& yy) {
+bool anbSensor::getRTC(uint8_t& seconds, uint8_t& minutes, uint8_t& hours,
+                       uint8_t& day, uint8_t& month, uint8_t& year) {
     if (!modbus.getRegisters(0x03, 0x003D, 6)) { return false; }
-    ss = modbus.byteFromFrame(3);
-    mm = modbus.byteFromFrame(4);
-    hh = modbus.byteFromFrame(5);
-    dd = modbus.byteFromFrame(6);
-    MM = modbus.byteFromFrame(7);
-    yy = modbus.byteFromFrame(8);
+    seconds = modbus.byteFromFrame(3);
+    minutes = modbus.byteFromFrame(4);
+    hours   = modbus.byteFromFrame(5);
+    day     = modbus.byteFromFrame(6);
+    month   = modbus.byteFromFrame(7);
+    year    = modbus.byteFromFrame(8);
     return true;
 }
-bool anbSensor::setRTC(uint8_t ss, uint8_t mm, uint8_t hh, uint8_t dd,
-                       uint8_t MM, uint8_t yy) {
+bool anbSensor::setRTC(uint8_t seconds, uint8_t minutes, uint8_t hours,
+                       uint8_t day, uint8_t month, uint8_t year) {
     // Write the RTC values to the holding registers starting at 0x003D
-    byte rtc_values[6] = {ss, mm, hh, dd, MM, yy};
+    byte rtc_values[6] = {seconds, minutes, hours, day, month, year};
     return modbus.setRegisters(0x003D, 6, rtc_values);
 }

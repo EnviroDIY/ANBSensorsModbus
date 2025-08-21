@@ -374,12 +374,12 @@ class anbSensor {
      * @warning NOT YET SUPPORTED BY MODBUS COMMANDS
      *
      * @return True if the start delay was successfully retrieved, false if not.
-     * @param hh Reference to a uint8_t where the hours part of the start delay
-     * will be stored.
-     * @param mm Reference to a uint8_t where the minutes part of the start
+     * @param hours Reference to a uint8_t where the hours part of the start
+     * delay will be stored.
+     * @param minutes Reference to a uint8_t where the minutes part of the start
      * delay will be stored.
      */
-    bool getStartDelay(uint8_t& hh, uint8_t& mm)
+    bool getStartDelay(uint8_t& hours, uint8_t& minutes)
         __attribute__((error("Command not available!")));
     /**
      * @brief Set the sensor start delay
@@ -393,11 +393,11 @@ class anbSensor {
      *
      * @warning NOT YET SUPPORTED BY MODBUS COMMANDS
      *
-     * @param hh The hours part of the new start delay (0-24)
-     * @param mm The minutes part of the new start delay (0-59)
+     * @param hours The hours part of the new start delay (0-24)
+     * @param minutes The minutes part of the new start delay (0-59)
      * @return True if the start delay was successfully set, false if not.
      */
-    bool setStartDelay(uint8_t hh, uint8_t mm)
+    bool setStartDelay(uint8_t hours, uint8_t minutes)
         __attribute__((error("Command not available!")));
 
     /**
@@ -990,31 +990,31 @@ class anbSensor {
      * @return True if the RTC value was successfully retrieved, false
      * otherwise.
      *
-     * @param ss Reference to a variable where the seconds will be stored
-     * @param mm Reference to a variable where the minutes will be stored
-     * @param hh Reference to a variable where the hours will be stored
-     * @param dd Reference to a variable where the day will be stored
-     * @param MM Reference to a variable where the month will be stored
-     * @param yy Reference to a variable where the year will be stored
+     * @param seconds Reference to a variable where the seconds will be stored
+     * @param minutes Reference to a variable where the minutes will be stored
+     * @param hours Reference to a variable where the hours will be stored
+     * @param day Reference to a variable where the day will be stored
+     * @param month Reference to a variable where the month will be stored
+     * @param year Reference to a variable where the year will be stored
      */
-    bool getRTC(uint8_t& ss, uint8_t& mm, uint8_t& hh, uint8_t& dd, uint8_t& MM,
-                uint8_t& yy);
+    bool getRTC(uint8_t& seconds, uint8_t& minutes, uint8_t& hours,
+                uint8_t& day, uint8_t& month, uint8_t& year);
     /**
      * @brief Set a new RTC (Real-Time Clock) value on the sensor.
      *
      * The RTC value is stored in 6 holding registers starting at 0x003D
      * (decimal 61).
      *
-     * @param ss seconds
-     * @param mm minutes
-     * @param hh hours
-     * @param dd day
-     * @param MM month
-     * @param yy year
+     * @param seconds The seconds portion of the current time
+     * @param minutes The minutes portion of the current time
+     * @param hours The hours portion of the current time
+     * @param day The day portion of the current time
+     * @param month The month portion of the current time
+     * @param year The year portion of the current time
      * @return True if the RTC value was successfully set, false otherwise.
      */
-    bool setRTC(uint8_t ss, uint8_t mm, uint8_t hh, uint8_t dd, uint8_t MM,
-                uint8_t yy);
+    bool setRTC(uint8_t seconds, uint8_t minutes, uint8_t hours, uint8_t day,
+                uint8_t month, uint8_t year);
 
     /**
      * @anchor debugging
