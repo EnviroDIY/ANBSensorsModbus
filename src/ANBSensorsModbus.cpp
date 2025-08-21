@@ -24,12 +24,11 @@ bool anbSensor::begin(byte modbusSlaveID, Stream* stream, int enablePin) {
     _stream  = stream;
     // Start up the modbus instance
     bool success = modbus.begin(modbusSlaveID, stream, enablePin);
-    // increase the wait time for a response to a modbus command from the
-    // default of 500ms to 5s
-    modbus.setCommandTimeout(5000L);
-    // increase the wait for the next byte mid-frame from 4ms to 10ms
+    // Set the command timeout
+    modbus.setCommandTimeout(1000L);
+    // Set the frame timeout
     modbus.setFrameTimeout(10L);
-    // set the number of command retries to 10 (the default)
+    // Set the number of command retries
     modbus.setCommandRetries(10);
     return success;
 }
@@ -83,8 +82,11 @@ bool anbSensor::setControlMode(ANBSensorMode newControlMode) {
         default: return false;  // Invalid mode
     }
     byte dataToSend[2] = {0x00, modeCode};
+    modbus.setCommandTimeout(5000L);
     // Write to holding register 0x0035 (decimal 53)
-    return modbus.setRegisters(0x0035, 1, dataToSend, false);
+    bool success = modbus.setRegisters(0x0035, 1, dataToSend, false);
+    modbus.setCommandTimeout(1000L);
+    return success;
 }
 
 // The salinity mode is in **holding** register 0x003E (decimal 62) and is write
@@ -108,8 +110,11 @@ bool anbSensor::setSalinityMode(ANBSalinityMode newSalinityMode) {
         default: return false;  // Invalid mode
     }
     byte dataToSend[2] = {0x00, modeCode};
+    modbus.setCommandTimeout(5000L);
     // Write to holding register 0x003E (decimal 62)
-    return modbus.setRegisters(0x003E, 1, dataToSend, false);
+    bool success = modbus.setRegisters(0x003E, 1, dataToSend, false);
+    modbus.setCommandTimeout(1000L);
+    return success;
 }
 
 // The power style is in **holding** register 0x003F (decimal 63) and is  write
@@ -133,8 +138,11 @@ bool anbSensor::setPowerStyle(ANBPowerStyle newPowerStyle) {
         default: return false;  // Invalid style
     }
     byte dataToSend[2] = {0x00, styleCode};
+    modbus.setCommandTimeout(5000L);
     // Write to holding register 0x003F (decimal 63)
-    return modbus.setRegisters(0x003F, 1, dataToSend, false);
+    bool success = modbus.setRegisters(0x003F, 1, dataToSend, false);
+    modbus.setCommandTimeout(1000L);
+    return success;
 }
 
 
@@ -152,8 +160,11 @@ bool anbSensor::setIntervalTime(uint8_t newIntervalTime) {
                        // for continuous
     }
     byte dataToSend[2] = {0x00, newIntervalTime};
+    modbus.setCommandTimeout(5000L);
     // Write to holding register 0x0036 (decimal 54)
-    return modbus.setRegisters(0x0036, 1, dataToSend, false);
+    bool success = modbus.setRegisters(0x0036, 1, dataToSend, false);
+    modbus.setCommandTimeout(1000L);
+    return success;
 }
 
 // The immersion sensor status (immersion rule) is in **holding** register
@@ -466,9 +477,12 @@ bool anbSensor::setBaud(ANBSensorBaud newSensorBaud) {
         case ANBSensorBaud::BAUD115200: baud_code = 8; break;
         default: return false;  // Unknown baud rate
     }
+    modbus.setCommandTimeout(5000L);
     // Write the baud rate code to the lower byte of **holding** register 0x003A
     // (decimal 58)
-    return modbus.byteToRegister(0x3A, 0, baud_code);
+    bool success = modbus.byteToRegister(0x3A, 0, baud_code);
+    modbus.setCommandTimeout(1000L);
+    return success;
 }
 
 // The address is in the lower byte of **holding** register 0x0039 (decimal 57)
@@ -485,8 +499,11 @@ bool anbSensor::setAddress(byte newSensorAddress) {
         // on ANB sensors
         return false;
     }
+    modbus.setCommandTimeout(5000L);
     // Write the new address to the lower byte of **holding** register 0x0039
-    return modbus.byteToRegister(0x39, 0, newSensorAddress);
+    bool success = modbus.byteToRegister(0x39, 0, newSensorAddress);
+    modbus.setCommandTimeout(1000L);
+    return success;
 }
 
 // The serial number takes up 3 holding registers starting at 0x000A (decimal
