@@ -170,6 +170,15 @@ bool anbSensor::reboot(void) {
     return modbus.setRegisters(0x1000, 1, value, false);
 }
 
+// To check if a measurement is complete, we will send the command to request
+// status and look for a modbus error code in response.
+// NOTE: We don't use the returned health code to tell if the measurement is
+// complete, just that the sensor responses and doesn't give an error code.
+bool anbSensor::isMeasurementComplete(void) {
+    getHealthCode();
+    return modbus.getLastError() == NO_ERROR;
+}
+
 //----------------------------------------------------------------------------
 //  Measurement output functions
 //----------------------------------------------------------------------------
@@ -198,8 +207,17 @@ float anbSensor::getSpecificConductance(void) {
 // The health code is stored in the lower byte of holding register 0x0008
 // (decimal 8)
 ANBHealthCode anbSensor::getHealthCode(void) {
-    uint8_t lowerByte = modbus.byteFromRegister(0x03, 0x0008, 0);
-    return static_cast<ANBHealthCode>(lowerByte);
+    uint8_t health = modbus.byteFromRegister(0x03, 0x0008, 0);
+    switch (health) {
+        case 0: return ANBHealthCode::OK;
+        case 1: return ANBHealthCode::ABRADE_SOON;
+        case 2: return ANBHealthCode::ABRADE_NOW;
+        case 3: return ANBHealthCode::REPLACE;
+        case 4: return ANBHealthCode::NOT_IMMERSED;
+        case 5: return ANBHealthCode::NO_REFERENCE;
+        case 6: return ANBHealthCode::NO_PH;
+        default: return ANBHealthCode::UNKNOWN;
+    }
 }
 
 // The raw conductivity value is stored in holding register 0x0043 (decimal 67)
@@ -207,11 +225,13 @@ float anbSensor::getRawConductivity(void) {
     return modbus.float32FromRegister(0x03, 0x0043, bigEndian);
 }
 
-// The status code is stored in the upper byte of holding register 0x0009
-// (decimal 9)
+// The status code is stored as the first digit of the two digit value stored in
+// the lower byte of holding register 0x0009 (decimal 9).
 ANBStatusCode anbSensor::getStatusCode(void) {
-    uint8_t upperByte = modbus.byteFromRegister(0x03, 0x0009, 1);
-    switch (upperByte) {
+    uint8_t status_diag = modbus.byteFromRegister(0x03, 0x0009, 0);
+    // bitwise and, then shift to get the first digit
+    uint8_t status = (status_diag & 0xF0) >> 4;
+    switch (status) {
         case 0: return ANBStatusCode::SLEEPING;
         case 1: return ANBStatusCode::INTERVAL_SCANNING;
         case 2: return ANBStatusCode::CONTINUOUS_SCANNING;
@@ -219,11 +239,19 @@ ANBStatusCode anbSensor::getStatusCode(void) {
     }
 }
 
-// The diagnostic code is stored in the lower byte of holding register 0x0009
-// (decimal 9)
+// The diagnostic code is stored as the second digit of the two digit value
+// stored in the lower byte of holding register 0x0009 (decimal 9).
 ANBDiagnosticCode anbSensor::getDiagnosticCode(void) {
-    uint8_t lowerByte = modbus.byteFromRegister(0x03, 0x0009, 0);
-    return static_cast<ANBDiagnosticCode>(lowerByte);
+    uint8_t status_diag = modbus.byteFromRegister(0x03, 0x0009, 0);
+    // bitwise and to get the second digit
+    uint8_t diagnostic = status_diag & 0x0F;
+    switch (diagnostic) {
+        case 0: return ANBDiagnosticCode::OK;
+        case 1: return ANBDiagnosticCode::BATTERY_ERROR;
+        case 2: return ANBDiagnosticCode::SD_ERROR;
+        case 3: return ANBDiagnosticCode::SYSTEM_ERROR;
+        default: return ANBDiagnosticCode::UNKNOWN;
+    }
 }
 
 // All parameters can be read from 11 (0x0B) holding registers starting at
@@ -236,7 +264,31 @@ bool anbSensor::getValues(float& pH, float& temperature, float& salinity,
                           float& specificConductance, float& rawConductivity,
                           ANBHealthCode& health, ANBStatusCode& status,
                           ANBDiagnosticCode& diagnostic) {
-    if (!modbus.getRegisters(0x03, 0, 12)) { return false; }
+    if (!modbus.getRegisters(0x03, 0, 11)) { return false; }
+
+    // NOTE: There are modbus map inconsistencies!
+    // The sensor responds to the programmed modbus commands to give the values
+    // as if they were in the expected registers, but it doesn't give the same
+    // responses for each register when asking for registers in bulk.
+
+    // In single commands the values are in these registers:
+    // - 0x0000: pH (two registers)
+    // - 0x0002: temperature (two registers)
+    // - 0x0004: salinity (two registers)
+    // - 0x0006: specific conductance (two registers)
+    // - 0x0008: health (one register)
+    // - 0x0009: status + diagnostic (one register)
+    // - 0x000A: Serial number (3 registers)
+    // - ... other things
+    // - 0x0140: raw conductivity (two registers)
+
+    // When pulling the registers starting from 0 in bulk, you get
+    // - 0x0000: pH (two registers)
+    // - 0x0002: temperature (two registers)
+    // - 0x0004: salinity (two registers)
+    // - 0x0006: specific conductance (two registers)
+    // - 0x0008: health + status + diagnostic (all in one register)
+    // - 0x0009: raw conductivity (two registers)
 
     // Parse the registers into the respective variables
     // The first 2 bytes are the address and the function code
@@ -246,19 +298,16 @@ bool anbSensor::getValues(float& pH, float& temperature, float& salinity,
     specificConductance = modbus.float32FromFrame(bigEndian,
                                                   15);  // next 4 bytes (15-18)
 
-    // The next four bytes (19-22) contain health, status, and diagnostic codes
-    // Byte 19: empty
-    // Byte 20: health
-    // Byte 21: status
-    // Byte 22: diagnostic
-    health     = static_cast<ANBHealthCode>(modbus.byteFromFrame(20));
-    status     = static_cast<ANBStatusCode>(modbus.byteFromFrame(21));
-    diagnostic = static_cast<ANBDiagnosticCode>(modbus.byteFromFrame(22));
+    // The next two bytes (19-20) contain health, status, and diagnostic codes
+    // Byte 19: health
+    // Byte 20: status + diagnostic
+    health              = static_cast<ANBHealthCode>(modbus.byteFromFrame(19));
+    uint8_t status_diag = modbus.byteFromFrame(20);
+    // bitwise and, then shift to get the first digit
+    status     = static_cast<ANBStatusCode>((status_diag & 0xF0) >> 4);
+    diagnostic = static_cast<ANBDiagnosticCode>(status_diag & 0x0F);
 
-    // NOTE: The raw conductivity is listed as being in 0x43 on its own, but
-    // it's also listed as included in the bulk read of 11 registers, so it must
-    // be in register 0x000A (decimal 10)
-    rawConductivity = modbus.float32FromFrame(bigEndian, 23);
+    rawConductivity = modbus.float32FromFrame(bigEndian, 21);
 
     return true;
 }

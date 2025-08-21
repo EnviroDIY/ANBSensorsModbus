@@ -599,6 +599,13 @@ class anbSensor {
      * @return True if the sensor was successfully rebooted, false if not.
      */
     bool shutdown(void) __attribute__((error("Command not available!")));
+
+    /**
+     * @brief Check if the sensor has completed its measurement.
+     *
+     * @return True if the measurement is complete, false if not.
+     */
+    bool isMeasurementComplete(void);
     /**@}*/
 
 
@@ -718,8 +725,8 @@ class anbSensor {
      * @return The status code; passes ANBStatusCode::UNKNOWN (0xFF) if the
      * sensor could not be read.
      *
-     * The status code is stored in the upper byte of holding register 0x0009
-     * (decimal 9).
+     * The status code is stored as the first digit of the two digit value
+     * stored in the lower byte of holding register 0x0009 (decimal 9).
      *
      * @see ANBStatusCode
      */
@@ -731,8 +738,8 @@ class anbSensor {
      * @return The diagnostics code; passes ANBDiagnosticCode::UNKNOWN (0xFF) if
      * the sensor could not be read.
      *
-     * The diagnostic code is stored in the lower byte of holding register
-     * 0x0009 (decimal 9).
+     * The diagnostic code is stored as the second digit of the two digit value
+     * stored in the lower byte of holding register 0x0009 (decimal 9).
      *
      * @see ANBDiagnosticCode
      */
