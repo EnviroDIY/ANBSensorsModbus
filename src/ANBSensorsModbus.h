@@ -30,11 +30,11 @@
  * here.](https://www.anbsensors.com/newdocs/docs/Sensor%20Controls%20&%20Functions/autonomous%20monitoring)
  */
 enum class ANBSensorMode {
-    CONTROLLED = 1,  /// use controlled mode - measurement taken when demanded
-                     /// by an external controller
-    AUTONOMOUS = 2,  /// use autonomous mode - sensor operates independently
-                     /// following a pre-set routine
-    UNKNOWN = 255    /// Unknown sensor mode; no response from the sensor
+    CONTROLLED = 1,  ///< use controlled mode - measurement taken when demanded
+                     ///< by an external controller
+    AUTONOMOUS = 2,  ///< use autonomous mode - sensor operates independently
+                     ///< following a pre-set routine
+    UNKNOWN = 255    ///< Unknown sensor mode; no response from the sensor
 };
 
 /**
@@ -43,9 +43,9 @@ enum class ANBSensorMode {
  * These modes configure the sensor for different salinity ranges.
  */
 enum class ANBSalinityMode : uint8_t {
-    LOW_SALINITY  = 1,   /// use low salinity mode - (0.05-2.5ppt)
-    HIGH_SALINITY = 2,   /// use high salinity mode - (2.5-40ppt)
-    UNKNOWN       = 255  /// Unknown salinity mode; no response from the sensor
+    LOW_SALINITY  = 1,   ///< use low salinity mode - (0.05-2.5ppt)
+    HIGH_SALINITY = 2,   ///< use high salinity mode - (2.5-40ppt)
+    UNKNOWN       = 255  ///< Unknown salinity mode; no response from the sensor
 };
 
 /**
@@ -56,9 +56,10 @@ enum class ANBSalinityMode : uint8_t {
  * power management strategy.
  */
 enum class ANBPowerStyle : uint8_t {
-    ALWAYS_POWERED = 1,  /// The sensor will be continuously powered
-    ON_MEASUREMENT = 2,  /// The sensor will be powered only during measurements
-    UNKNOWN        = 255  /// Unknown power style; no response from the sensor
+    ALWAYS_POWERED = 1,  ///< The sensor will be continuously powered
+    ON_MEASUREMENT =
+        2,         ///< The sensor will be powered only during measurements
+    UNKNOWN = 255  ///< Unknown power style; no response from the sensor
 };
 /**
  * @brief Baud rates for the ANB sensors.
@@ -72,15 +73,15 @@ enum class ANBPowerStyle : uint8_t {
  * here.](https://www.anbsensors.com/newdocs/docs/modbus#sensor-communication)
  */
 enum class ANBSensorBaud : uint8_t {
-    BAUD9600   = 1,   /// 9600 baud
-    BAUD14400  = 2,   /// 14400 baud
-    BAUD19200  = 3,   /// 19200 baud
-    BAUD28800  = 4,   /// 28800 baud
-    BAUD38400  = 5,   /// 38400 baud
-    BAUD56000  = 6,   /// 56000 baud
-    BAUD57600  = 7,   /// 57600 baud
-    BAUD115200 = 8,   /// 115200 baud
-    UNKNOWN    = 255  /// Unknown baud rate; no response from the sensor
+    BAUD9600   = 1,   ///< 9600 baud
+    BAUD14400  = 2,   ///< 14400 baud
+    BAUD19200  = 3,   ///< 19200 baud
+    BAUD28800  = 4,   ///< 28800 baud
+    BAUD38400  = 5,   ///< 38400 baud
+    BAUD56000  = 6,   ///< 56000 baud
+    BAUD57600  = 7,   ///< 57600 baud
+    BAUD115200 = 8,   ///< 115200 baud
+    UNKNOWN    = 255  ///< Unknown baud rate; no response from the sensor
 };
 
 // clang-format off
@@ -105,14 +106,14 @@ enum class ANBSensorBaud : uint8_t {
  * [Detailed maintenance guidelines including how to abrade the sensor can be found here.](https://www.anbsensors.com/newdocs/docs/transducer-maintenance/)
  */
 enum class ANBHealthCode:uint8_t {
-    OK           = 0,   /// Healthy Transducer; No action required
-    ABRADE_SOON  = 1,   /// Transducer will need abrading soon
-    ABRADE_NOW   = 2,   /// Transducer needs abrading now
-    REPLACE      = 3,   /// Transducer needs replacing
-    NOT_IMMERSED = 4,   /// Transducer is not immersed
-    NO_REFERENCE = 5,   /// No valid reference tracker measurement
-    NO_PH        = 6,   /// No valid pH measurement
-    UNKNOWN      = 255  /// Unknown health status; no response from the sensor
+    OK           = 0,   ///< Healthy Transducer; No action required
+    ABRADE_SOON  = 1,   ///< Transducer will need abrading soon
+    ABRADE_NOW   = 2,   ///< Transducer needs abrading now
+    REPLACE      = 3,   ///< Transducer needs replacing
+    NOT_IMMERSED = 4,   ///< Transducer is not immersed
+    NO_REFERENCE = 5,   ///< No valid reference tracker measurement
+    NO_PH        = 6,   ///< No valid pH measurement
+    UNKNOWN      = 255  ///< Unknown health status; no response from the sensor
 };
 // clang-format on
 
@@ -132,10 +133,10 @@ enum class ANBHealthCode:uint8_t {
  * [Sensor status code documentation is available here.](https://www.anbsensors.com/newdocs/docs/modbus#sensor-diagnostics)
  */
 enum class ANBStatusCode:uint8_t {
-    SLEEPING            = 0,   /// Sleep
-    INTERVAL_SCANNING   = 1,   /// Interval Scanning
-    CONTINUOUS_SCANNING = 2,   /// Continuous Scanning
-    UNKNOWN             = 255  /// Unknown status; no response from the sensor
+    SLEEPING            = 0,   ///< Sleep
+    INTERVAL_SCANNING   = 1,   ///< Interval Scanning
+    CONTINUOUS_SCANNING = 2,   ///< Continuous Scanning
+    UNKNOWN             = 255  ///< Unknown status; no response from the sensor
 };
 // clang-format on
 
@@ -154,11 +155,11 @@ enum class ANBStatusCode:uint8_t {
  * [Sensor diagnostic output details can be found here.](https://www.anbsensors.com/newdocs/docs/sensor-output#sensor-diagnostics)
  */
 enum class ANBDiagnosticCode:uint8_t {
-    OK            = 0,  /// Healthy Sensor; No action required
-    BATTERY_ERROR = 1,  /// Clock Battery Error
-    SD_ERROR      = 2,  /// SD Card Error
-    SYSTEM_ERROR  = 3,  /// System Error
-    UNKNOWN = 255  /// Unknown diagnostic status; no response from the sensor
+    OK            = 0,  ///< Healthy Sensor; No action required
+    BATTERY_ERROR = 1,  ///< Clock Battery Error
+    SD_ERROR      = 2,  ///< SD Card Error
+    SYSTEM_ERROR  = 3,  ///< System Error
+    UNKNOWN = 255  ///< Unknown diagnostic status; no response from the sensor
 };
 // clang-format on
 
@@ -441,8 +442,6 @@ class anbSensor {
     /**
      * @brief Enable or disable the immersion sensor
      *
-     * @param enable True to enable the immersion sensor, false to disable
-     *
      * @note The new immersion sensor status (immersion rule) is effective
      * immediately.  When power cycled, the immersion sensor defaults to enabled
      * and the sensor goes into a low power mode.
@@ -602,6 +601,9 @@ class anbSensor {
      *
      * The reboot command is set by writing 0xFFFF to ~~input~~ **holding**
      * register 0x1000
+     *
+     * @return True if the sensor was successfully rebooted and began responding
+     * to Modbus commands again, false if not.
      */
     bool reboot(void);
 
@@ -620,7 +622,6 @@ class anbSensor {
     /**@}*/
 
 
-    /**@}*/
     /**
      * @anchor measurement_output_fxns
      * @name Functions to get one or more values from a sensor.
@@ -826,8 +827,6 @@ class anbSensor {
     /**
      * @brief Attempt to force the sensor to enter Modbus mode by sending the
      * command via serial mode.
-     *
-     * @return True if the operation was successful, false otherwise.
      */
     void forceModbus();
 
@@ -851,8 +850,6 @@ class anbSensor {
     /**
      * @brief Attempt to force the sensor to immediately enter terminal mode by
      * sending the #700 command.
-     *
-     * @return True if the operation was successful, false otherwise.
      */
     void forceTerminal();
 
@@ -1026,6 +1023,7 @@ class anbSensor {
      */
     bool setRTC(uint8_t seconds, uint8_t minutes, uint8_t hours, uint8_t day,
                 uint8_t month, uint8_t year);
+    /**@}*/
 
     /**
      * @anchor debugging
