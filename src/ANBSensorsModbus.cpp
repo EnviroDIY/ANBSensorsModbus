@@ -37,6 +37,22 @@ bool anbSensor::begin(byte modbusSlaveID, Stream& stream, int enablePin) {
     return begin(modbusSlaveID, &stream, enablePin);
 }
 
+// To check for a response, we will send the command to request status
+// and look for any response at all.
+bool anbSensor::gotModbusResponse(void) {
+    getHealthCode();
+    return modbus.getLastError() != NO_RESPONSE;
+}
+
+// To check if a measurement is complete, we will send the command to request
+// status and look for a modbus error code in response.
+// NOTE: We don't use the returned health code to tell if the measurement is
+// complete, just that the sensor responses and doesn't give an error code.
+bool anbSensor::isMeasurementComplete(void) {
+    getHealthCode();
+    return modbus.getLastError() == NO_ERROR;
+}
+
 //----------------------------------------------------------------------------
 //  Measurement setting functions
 //----------------------------------------------------------------------------
@@ -181,20 +197,12 @@ bool anbSensor::reboot(void) {
     byte value[2] = {0xFF, 0xFF};
     modbus.setRegisters(0x1000, 1, value, false);
     // re-set the number of command retries to 10
-    modbus.setCommandRetries(1);
+    modbus.setCommandRetries(10);
     // wait for the reboot menu print
     uint32_t startTime = millis();
     while (millis() - startTime < 10000L && _stream->available() < 10);
     do { _stream->readString(); } while (_stream->available());
-}
-
-// To check if a measurement is complete, we will send the command to request
-// status and look for a modbus error code in response.
-// NOTE: We don't use the returned health code to tell if the measurement is
-// complete, just that the sensor responses and doesn't give an error code.
-bool anbSensor::isMeasurementComplete(void) {
-    getHealthCode();
-    return modbus.getLastError() == NO_ERROR;
+    return gotModbusResponse();
 }
 
 //----------------------------------------------------------------------------

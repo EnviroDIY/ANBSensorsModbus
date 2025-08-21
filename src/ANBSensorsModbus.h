@@ -212,6 +212,24 @@ class anbSensor {
      */
     bool begin(byte modbusSlaveID, Stream& stream, int enablePin = -1);
 
+    /**
+     * @brief Check if the sensor has responded to the last Modbus command.
+     *
+     * @warning This function only checks for a response to the last Modbus
+     * command. A correctly formatted Modbus error response is considered a
+     * valid response for this function.
+     *
+     * @return True if the sensor has responded, false if not.
+     */
+    bool gotModbusResponse(void);
+
+    /**
+     * @brief Check if the sensor has completed its measurement.
+     *
+     * @return True if the measurement is complete, false if not.
+     */
+    bool isMeasurementComplete(void);
+
 
     /**
      * @anchor measurement_setting_fxns
@@ -599,13 +617,6 @@ class anbSensor {
      * @return True if the sensor was successfully rebooted, false if not.
      */
     bool shutdown(void) __attribute__((error("Command not available!")));
-
-    /**
-     * @brief Check if the sensor has completed its measurement.
-     *
-     * @return True if the measurement is complete, false if not.
-     */
-    bool isMeasurementComplete(void);
     /**@}*/
 
 
