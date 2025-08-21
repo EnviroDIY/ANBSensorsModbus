@@ -225,11 +225,12 @@ class anbSensor {
     bool gotModbusResponse(void);
 
     /**
-     * @brief Check if the sensor has completed its measurement.
+     * @brief Check if the sensor is ready for a command or has completed a
+     * measurement.
      *
-     * @return True if the measurement is complete, false if not.
+     * @return True if the sensor is ready, false if not.
      */
-    bool isMeasurementComplete(void);
+    bool isSensorReady(void);
 
 
     /**
