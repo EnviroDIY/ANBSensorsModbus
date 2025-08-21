@@ -543,20 +543,29 @@ String anbSensor::getDriverVersion(void) {
 
 // The RTC value is stored in 6 holding registers starting at 0x003D (decimal
 // 61)
-bool anbSensor::getRTC(uint8_t& seconds, uint8_t& minutes, uint8_t& hours,
-                       uint8_t& day, uint8_t& month, uint8_t& year) {
+bool anbSensor::getRTC(uint16_t& seconds, uint16_t& minutes, uint16_t& hours,
+                       uint16_t& day, uint16_t& month, uint16_t& year) {
     if (!modbus.getRegisters(0x03, 0x003D, 6)) { return false; }
-    seconds = modbus.byteFromFrame(3);
-    minutes = modbus.byteFromFrame(4);
-    hours   = modbus.byteFromFrame(5);
-    day     = modbus.byteFromFrame(6);
-    month   = modbus.byteFromFrame(7);
-    year    = modbus.byteFromFrame(8);
+    seconds = modbus.uint16FromFrame(bigEndian, 3);
+    minutes = modbus.uint16FromFrame(bigEndian, 5);
+    hours   = modbus.uint16FromFrame(bigEndian, 7);
+    day     = modbus.uint16FromFrame(bigEndian, 9);
+    month   = modbus.uint16FromFrame(bigEndian, 11);
+    year    = modbus.uint16FromFrame(bigEndian, 13);
     return true;
 }
-bool anbSensor::setRTC(uint8_t seconds, uint8_t minutes, uint8_t hours,
-                       uint8_t day, uint8_t month, uint8_t year) {
+bool anbSensor::setRTC(uint16_t seconds, uint16_t minutes, uint16_t hours,
+                       uint16_t day, uint16_t month, uint16_t year) {
     // Write the RTC values to the holding registers starting at 0x003D
-    byte rtc_values[6] = {seconds, minutes, hours, day, month, year};
-    return modbus.setRegisters(0x003D, 6, rtc_values);
+    byte rtc_values[12];
+    modbus.uint16ToFrame(seconds, bigEndian, rtc_values, 0);
+    modbus.uint16ToFrame(minutes, bigEndian, rtc_values, 2);
+    modbus.uint16ToFrame(hours, bigEndian, rtc_values, 4);
+    modbus.uint16ToFrame(day, bigEndian, rtc_values, 6);
+    modbus.uint16ToFrame(month, bigEndian, rtc_values, 8);
+    modbus.uint16ToFrame(year, bigEndian, rtc_values, 10);
+    modbus.setCommandTimeout(5000L);
+    bool success = modbus.setRegisters(0x003D, 6, rtc_values);
+    modbus.setCommandTimeout(1000L);
+    return success;
 }

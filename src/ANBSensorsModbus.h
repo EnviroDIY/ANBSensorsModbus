@@ -399,7 +399,7 @@ class anbSensor {
      * @param minutes Reference to a uint8_t where the minutes part of the start
      * delay will be stored.
      */
-    bool getStartDelay(uint8_t& hours, uint8_t& minutes)
+    bool getStartDelay(uint16_t& hours, uint16_t& minutes)
         __attribute__((error("Command not available!")));
     /**
      * @brief Set the sensor start delay
@@ -417,7 +417,7 @@ class anbSensor {
      * @param minutes The minutes part of the new start delay (0-59)
      * @return True if the start delay was successfully set, false if not.
      */
-    bool setStartDelay(uint8_t hours, uint8_t minutes)
+    bool setStartDelay(uint16_t hours, uint16_t minutes)
         __attribute__((error("Command not available!")));
 
     /**
@@ -1006,8 +1006,8 @@ class anbSensor {
      * @param month Reference to a variable where the month will be stored
      * @param year Reference to a variable where the year will be stored
      */
-    bool getRTC(uint8_t& seconds, uint8_t& minutes, uint8_t& hours,
-                uint8_t& day, uint8_t& month, uint8_t& year);
+    bool getRTC(uint16_t& seconds, uint16_t& minutes, uint16_t& hours,
+                uint16_t& day, uint16_t& month, uint16_t& year);
     /**
      * @brief Set a new RTC (Real-Time Clock) value on the sensor.
      *
@@ -1022,8 +1022,8 @@ class anbSensor {
      * @param year The year portion of the current time
      * @return True if the RTC value was successfully set, false otherwise.
      */
-    bool setRTC(uint8_t seconds, uint8_t minutes, uint8_t hours, uint8_t day,
-                uint8_t month, uint8_t year);
+    bool setRTC(uint16_t seconds, uint16_t minutes, uint16_t hours,
+                uint16_t day, uint16_t month, uint16_t year);
     /**@}*/
 
     /**
