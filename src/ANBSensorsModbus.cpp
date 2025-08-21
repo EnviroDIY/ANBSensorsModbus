@@ -29,6 +29,8 @@ bool anbSensor::begin(byte modbusSlaveID, Stream* stream, int enablePin) {
     modbus.setCommandTimeout(5000L);
     // increase the wait for the next byte mid-frame from 4ms to 10ms
     modbus.setFrameTimeout(10L);
+    // set the number of command retries to 10 (the default)
+    modbus.setCommandRetries(10);
     return success;
 }
 bool anbSensor::begin(byte modbusSlaveID, Stream& stream, int enablePin) {
@@ -170,9 +172,20 @@ bool anbSensor::stop(void) {
 
 // The reboot command is set by writing 0xFFFF to **holding** register 0x1000
 // (decimal 4096)
+// NOTE: The response to the reboot command often has a junk 0x00 byte at the
+// end, which will throw off the modbus response parsing.  Because of the junk
+// byte, we turn off the retries for this command.
 bool anbSensor::reboot(void) {
+    // set the number of command retries to 1 (don't retry)
+    modbus.setCommandRetries(1);
     byte value[2] = {0xFF, 0xFF};
-    return modbus.setRegisters(0x1000, 1, value, false);
+    modbus.setRegisters(0x1000, 1, value, false);
+    // re-set the number of command retries to 10
+    modbus.setCommandRetries(1);
+    // wait for the reboot menu print
+    uint32_t startTime = millis();
+    while (millis() - startTime < 10000L && _stream->available() < 10);
+    do { _stream->readString(); } while (_stream->available());
 }
 
 // To check if a measurement is complete, we will send the command to request
