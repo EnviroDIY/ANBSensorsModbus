@@ -327,41 +327,66 @@ bool anbSensor::enableModbus() {
     return modbus.uint16ToRegister(0x0140, set_value, bigEndian, false);
 }
 void anbSensor::forceModbus() {
+    uint32_t currentTimeout =
+        _stream->getTimeout();  // save the current timeout
+    _stream->setTimeout(750);  // set a longer timeout for the terminal commands
+    // clear anything hanging in the buffer
+    do { _stream->readString(); } while (_stream->available());
+    forceTerminal();
     // enter the main menu of the terminal
-    _stream->println("menu");
+    delay(15);  // short delay before the command
+    _stream->print("menu\r");
     _stream->flush();
     // dump the response - we're not trying to parse the menu!
-    while (_stream->available()) { _stream->read(); }
+    uint32_t startTime = millis();
+    while (millis() - startTime < 5000L && _stream->available() < 10);
+    do { _stream->readString(); } while (_stream->available());
     // enter the interface option
-    _stream->println("interface");
+    delay(15);  // short delay before the command
+    _stream->print("interface\r");
     _stream->flush();
     // dump the response - we're not trying to parse the options!
-    while (_stream->available()) { _stream->read(); }
+    startTime = millis();
+    while (millis() - startTime < 5000L && _stream->available() < 10);
+    do { _stream->readString(); } while (_stream->available());
     // select option 2 for modbus
-    _stream->println("2");
+    delay(15);  // short delay before the command
+    _stream->print("2\r");
     _stream->flush();
     // dump the response
-    while (_stream->available()) { _stream->read(); }
+    startTime = millis();
+    while (millis() - startTime < 5000L && _stream->available() < 10);
+    do { _stream->readString(); } while (_stream->available());
     // set the modbus address
-    _stream->println("mb_address");
+    delay(15);  // short delay before the command
+    _stream->print("mb_address\r");
     _stream->flush();
     // dump the response
-    while (_stream->available()) { _stream->read(); }
+    startTime = millis();
+    while (millis() - startTime < 5000L && _stream->available() < 10);
+    do { _stream->readString(); } while (_stream->available());
     // set the modbus address
+    delay(15);  // short delay before the command
     if (_slaveID <= 0xF) {
         _stream->print("0");  // zero pad
     }
-    _stream->println(_slaveID, HEX);
+    _stream->print(_slaveID, HEX);
+    _stream->print('\r');
     _stream->flush();
     // dump the response
-    while (_stream->available()) { _stream->read(); }
+    startTime = millis();
+    while (millis() - startTime < 5000L && _stream->available() < 10);
+    do { _stream->readString(); } while (_stream->available());
     // reboot the sensor for the setting to take
-    _stream->println("reboot");
+    delay(15);  // short delay before the command
+    _stream->print("reboot\r");
     _stream->flush();
     // dump the response
-    while (_stream->available()) { _stream->read(); }
-    delay(1000);  // wait for the sensor to reboot
+    startTime = millis();
+    while (millis() - startTime < 10000L && _stream->available() < 10);
+    do { _stream->readString(); } while (_stream->available());
     /// @todo Figure out how long the reboot takes!
+    _stream->setTimeout(currentTimeout);  // restore the original timeout
 }
 
 // The terminal enable command is in **holding** register 0x003B (decimal 59)
@@ -370,8 +395,21 @@ bool anbSensor::enableTerminal() {
     return modbus.uint16ToRegister(0x003B, set_value, bigEndian, false);
 }
 void anbSensor::forceTerminal() {
+    // clear anything hanging in the buffer
+    while (_stream->available()) { _stream->readString(); }
+    delay(15);             // short delay before the command
+    _stream->print("\r");  // send a naked carriage return to clear the input
+                           // command buffer
+    _stream->flush();
+    // clear any error response, if it's there
+    do { _stream->readString(); } while (_stream->available());
+    delay(15);  // short delay before the command
     _stream->print("#700\r");
     _stream->flush();
+    // dump the response: Sensor Setup functions are now available
+    uint32_t startTime = millis();
+    while (millis() - startTime < 5000L && _stream->available() < 10);
+    do { _stream->readString(); } while (_stream->available());
 }
 
 // The baud rate is in the lower byte of **holding** register 0x003A (decimal
