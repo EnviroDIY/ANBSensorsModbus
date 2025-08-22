@@ -11,6 +11,7 @@
     - [Using Modbus](#using-modbus)
     - [RS232 or RS485](#rs232-or-rs485)
     - [Modbus Irregularities](#modbus-irregularities)
+  - [Library installation](#library-installation)
   - [Contributing](#contributing)
   - [License](#license)
   - [Acknowledgments](#acknowledgments)
@@ -88,6 +89,13 @@ When pulling the 11 registers starting from 0 in bulk, you get:
 
 The Modbus instructions from ANB sensors also state that the "source" for all of the measurement setting functions and some of the administrative functions are input (read only) registers, but in all cases the functions use commands for **holding** (read/write) registers.
 Most of the registers in question are, however, **write only** from within the modbus interface - attempting to read the registers will give an illegal function error.
+
+## Library installation
+
+This library is available through both the Arduino and PlatformIO library registries.
+[Here is the PlatformIO registry page.](https://registry.platformio.org/libraries/envirodiy/ANBSensorsModbus)
+Use the Arduino IDE to find the library in that registry.
+The build and ingest logs for this library into the Arduino library registry are available [here](https://downloads.arduino.cc/libraries/logs/github.com/EnviroDIY/ANBSensorsModbus/).
 
 ## Contributing<!--! {#mainpage_contributing} -->
 
