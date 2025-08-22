@@ -1,0 +1,3696 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8" />
+  <title>anbSensor class | ANBSensorsModbus0.0.1</title>
+  <link rel="stylesheet" href="m-EnviroDIY+documentation.compiled.css" />
+
+<!-- clean talk scripts -->
+<!-- clean talk scripts -->
+<!-- clean talk scripts -->
+<!-- clean talk scripts -->
+<!-- clean talk scripts -->
+<!-- emoji scripts -->
+<!-- emoji scripts -->
+<!-- emoji scripts -->
+<!-- emoji scripts -->
+<!-- emoji scripts -->
+<!-- highlighter stylesheet -->
+<!-- highlighter stylesheet -->
+<!-- highlighter stylesheet -->
+<!-- highlighter stylesheet -->
+<!-- highlighter stylesheet -->
+<!-- post query stylesheets -->
+<!-- post query stylesheets -->
+<!-- post query stylesheets -->
+<!-- post query stylesheets -->
+<!-- post query stylesheets -->
+<!-- emoji in-line css -->
+<!-- emoji in-line css -->
+<!-- emoji in-line css -->
+<!-- emoji in-line css -->
+<!-- emoji in-line css -->
+<style id="wp-emoji-styles-inline-css" type="text/css">
+  img.wp-smiley,
+  img.emoji {
+    display: inline !important;
+    border: none !important;
+    box-shadow: none !important;
+    height: 1em !important;
+    width: 1em !important;
+    margin: 0 0.07em !important;
+    vertical-align: -0.1em !important;
+    background: none !important;
+    padding: 0 !important;
+  }
+</style>
+<!-- block stylesheets -->
+<!-- block stylesheets -->
+<!-- block stylesheets -->
+<!-- block stylesheets -->
+<!-- block stylesheets -->
+<link
+  rel="stylesheet"
+  id="wp-block-library-css"
+  href="https://www.envirodiy.org/wp-includes/css/dist/block-library/style.min.css?ver=6.8.1"
+  type="text/css"
+  media="all"
+/>
+<style id="classic-theme-styles-inline-css" type="text/css">
+  /*! This file is auto-generated */
+  .wp-block-button__link {
+    color: #fff;
+    background-color: #32373c;
+    border-radius: 9999px;
+    box-shadow: none;
+    text-decoration: none;
+    padding: calc(0.667em + 2px) calc(1.333em + 2px);
+    font-size: 1.125em;
+  }
+  .wp-block-file__button {
+    background: #32373c;
+    color: #fff;
+    text-decoration: none;
+  }
+</style>
+<!-- buddypress stylesheets -->
+<!-- buddypress stylesheets -->
+<!-- buddypress stylesheets -->
+<!-- buddypress stylesheets -->
+<!-- buddypress stylesheets -->
+<!-- heroic knowledge base stylesheets -->
+<!-- heroic knowledge base stylesheets -->
+<!-- heroic knowledge base stylesheets -->
+<!-- heroic knowledge base stylesheets -->
+<!-- heroic knowledge base stylesheets -->
+<!-- word press stylesheets -->
+<!-- word press stylesheets -->
+<!-- word press stylesheets -->
+<!-- word press stylesheets -->
+<!-- word press stylesheets -->
+<link
+  rel="stylesheet"
+  id="wp-components-css"
+  href="https://www.envirodiy.org/wp-includes/css/dist/components/style.min.css?ver=6.8.1"
+  type="text/css"
+  media="all"
+/>
+<link
+  rel="stylesheet"
+  id="wp-preferences-css"
+  href="https://www.envirodiy.org/wp-includes/css/dist/preferences/style.min.css?ver=6.8.1"
+  type="text/css"
+  media="all"
+/>
+<link
+  rel="stylesheet"
+  id="wp-block-editor-css"
+  href="https://www.envirodiy.org/wp-includes/css/dist/block-editor/style.min.css?ver=6.8.1"
+  type="text/css"
+  media="all"
+/>
+<link
+  rel="stylesheet"
+  id="wp-reusable-blocks-css"
+  href="https://www.envirodiy.org/wp-includes/css/dist/reusable-blocks/style.min.css?ver=6.8.1"
+  type="text/css"
+  media="all"
+/>
+<link
+  rel="stylesheet"
+  id="wp-patterns-css"
+  href="https://www.envirodiy.org/wp-includes/css/dist/patterns/style.min.css?ver=6.8.1"
+  type="text/css"
+  media="all"
+/>
+<link
+  rel="stylesheet"
+  id="wp-editor-css"
+  href="https://www.envirodiy.org/wp-includes/css/dist/editor/style.min.css?ver=6.8.1"
+  type="text/css"
+  media="all"
+/>
+<link
+  rel="stylesheet"
+  id="ht-formatting-blocks-modules-styles-css"
+  href="https://www.envirodiy.org/wp-content/plugins/ht-knowledge-base/formatting-blocks/dist/css/ht-formatting-blocks-modules-styles.css?ver=4.0.0"
+  type="text/css"
+  media="all"
+/>
+<!-- word press stylesheets -->
+<!-- word press stylesheets -->
+<!-- word press stylesheets -->
+<!-- word press stylesheets -->
+<!-- word press stylesheets -->
+<link
+  rel="stylesheet"
+  id="wp-components-css"
+  href="https://www.envirodiy.org/wp-includes/css/dist/components/style.min.css?ver=6.8.1"
+  type="text/css"
+  media="all"
+/>
+<link
+  rel="stylesheet"
+  id="wp-preferences-css"
+  href="https://www.envirodiy.org/wp-includes/css/dist/preferences/style.min.css?ver=6.8.1"
+  type="text/css"
+  media="all"
+/>
+<link
+  rel="stylesheet"
+  id="wp-block-editor-css"
+  href="https://www.envirodiy.org/wp-includes/css/dist/block-editor/style.min.css?ver=6.8.1"
+  type="text/css"
+  media="all"
+/>
+<link
+  rel="stylesheet"
+  id="wp-reusable-blocks-css"
+  href="https://www.envirodiy.org/wp-includes/css/dist/reusable-blocks/style.min.css?ver=6.8.1"
+  type="text/css"
+  media="all"
+/>
+<link
+  rel="stylesheet"
+  id="wp-patterns-css"
+  href="https://www.envirodiy.org/wp-includes/css/dist/patterns/style.min.css?ver=6.8.1"
+  type="text/css"
+  media="all"
+/>
+<link
+  rel="stylesheet"
+  id="wp-editor-css"
+  href="https://www.envirodiy.org/wp-includes/css/dist/editor/style.min.css?ver=6.8.1"
+  type="text/css"
+  media="all"
+/>
+<link
+  rel="stylesheet"
+  id="ht-formatting-blocks-modules-styles-css"
+  href="https://www.envirodiy.org/wp-content/plugins/ht-knowledge-base/formatting-blocks/dist/css/ht-formatting-blocks-modules-styles.css?ver=4.0.0"
+  type="text/css"
+  media="all"
+/>
+<!-- word press global inline styles -->
+<!-- word press global inline styles -->
+<!-- word press global inline styles -->
+<!-- word press global inline styles -->
+<!-- word press global inline styles -->
+<style id="global-styles-inline-css" type="text/css">
+  :root {
+    --wp--preset--aspect-ratio--square: 1;
+    --wp--preset--aspect-ratio--4-3: 4/3;
+    --wp--preset--aspect-ratio--3-4: 3/4;
+    --wp--preset--aspect-ratio--3-2: 3/2;
+    --wp--preset--aspect-ratio--2-3: 2/3;
+    --wp--preset--aspect-ratio--16-9: 16/9;
+    --wp--preset--aspect-ratio--9-16: 9/16;
+    --wp--preset--color--black: #000000;
+    --wp--preset--color--cyan-bluish-gray: #abb8c3;
+    --wp--preset--color--white: #ffffff;
+    --wp--preset--color--pale-pink: #f78da7;
+    --wp--preset--color--vivid-red: #cf2e2e;
+    --wp--preset--color--luminous-vivid-orange: #ff6900;
+    --wp--preset--color--luminous-vivid-amber: #fcb900;
+    --wp--preset--color--light-green-cyan: #7bdcb5;
+    --wp--preset--color--vivid-green-cyan: #00d084;
+    --wp--preset--color--pale-cyan-blue: #8ed1fc;
+    --wp--preset--color--vivid-cyan-blue: #0693e3;
+    --wp--preset--color--vivid-purple: #9b51e0;
+    --wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(
+      135deg,
+      rgba(6, 147, 227, 1) 0%,
+      rgb(155, 81, 224) 100%
+    );
+    --wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(
+      135deg,
+      rgb(122, 220, 180) 0%,
+      rgb(0, 208, 130) 100%
+    );
+    --wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(
+      135deg,
+      rgba(252, 185, 0, 1) 0%,
+      rgba(255, 105, 0, 1) 100%
+    );
+    --wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(
+      135deg,
+      rgba(255, 105, 0, 1) 0%,
+      rgb(207, 46, 46) 100%
+    );
+    --wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(
+      135deg,
+      rgb(238, 238, 238) 0%,
+      rgb(169, 184, 195) 100%
+    );
+    --wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(
+      135deg,
+      rgb(74, 234, 220) 0%,
+      rgb(151, 120, 209) 20%,
+      rgb(207, 42, 186) 40%,
+      rgb(238, 44, 130) 60%,
+      rgb(251, 105, 98) 80%,
+      rgb(254, 248, 76) 100%
+    );
+    --wp--preset--gradient--blush-light-purple: linear-gradient(
+      135deg,
+      rgb(255, 206, 236) 0%,
+      rgb(152, 150, 240) 100%
+    );
+    --wp--preset--gradient--blush-bordeaux: linear-gradient(
+      135deg,
+      rgb(254, 205, 165) 0%,
+      rgb(254, 45, 45) 50%,
+      rgb(107, 0, 62) 100%
+    );
+    --wp--preset--gradient--luminous-dusk: linear-gradient(
+      135deg,
+      rgb(255, 203, 112) 0%,
+      rgb(199, 81, 192) 50%,
+      rgb(65, 88, 208) 100%
+    );
+    --wp--preset--gradient--pale-ocean: linear-gradient(
+      135deg,
+      rgb(255, 245, 203) 0%,
+      rgb(182, 227, 212) 50%,
+      rgb(51, 167, 181) 100%
+    );
+    --wp--preset--gradient--electric-grass: linear-gradient(
+      135deg,
+      rgb(202, 248, 128) 0%,
+      rgb(113, 206, 126) 100%
+    );
+    --wp--preset--gradient--midnight: linear-gradient(
+      135deg,
+      rgb(2, 3, 129) 0%,
+      rgb(40, 116, 252) 100%
+    );
+    --wp--preset--font-size--small: 13px;
+    --wp--preset--font-size--medium: 20px;
+    --wp--preset--font-size--large: 36px;
+    --wp--preset--font-size--x-large: 42px;
+    --wp--preset--spacing--20: 0.44rem;
+    --wp--preset--spacing--30: 0.67rem;
+    --wp--preset--spacing--40: 1rem;
+    --wp--preset--spacing--50: 1.5rem;
+    --wp--preset--spacing--60: 2.25rem;
+    --wp--preset--spacing--70: 3.38rem;
+    --wp--preset--spacing--80: 5.06rem;
+    --wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);
+    --wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);
+    --wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);
+    --wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1),
+      6px 6px rgba(0, 0, 0, 1);
+    --wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);
+  }
+  :where(.is-layout-flex) {
+    gap: 0.5em;
+  }
+  :where(.is-layout-grid) {
+    gap: 0.5em;
+  }
+  body .is-layout-flex {
+    display: flex;
+  }
+  .is-layout-flex {
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .is-layout-flex > :is(*, div) {
+    margin: 0;
+  }
+  body .is-layout-grid {
+    display: grid;
+  }
+  .is-layout-grid > :is(*, div) {
+    margin: 0;
+  }
+  :where(.wp-block-columns.is-layout-flex) {
+    gap: 2em;
+  }
+  :where(.wp-block-columns.is-layout-grid) {
+    gap: 2em;
+  }
+  :where(.wp-block-post-template.is-layout-flex) {
+    gap: 1.25em;
+  }
+  :where(.wp-block-post-template.is-layout-grid) {
+    gap: 1.25em;
+  }
+  .has-black-color {
+    color: var(--wp--preset--color--black) !important;
+  }
+  .has-cyan-bluish-gray-color {
+    color: var(--wp--preset--color--cyan-bluish-gray) !important;
+  }
+  .has-white-color {
+    color: var(--wp--preset--color--white) !important;
+  }
+  .has-pale-pink-color {
+    color: var(--wp--preset--color--pale-pink) !important;
+  }
+  .has-vivid-red-color {
+    color: var(--wp--preset--color--vivid-red) !important;
+  }
+  .has-luminous-vivid-orange-color {
+    color: var(--wp--preset--color--luminous-vivid-orange) !important;
+  }
+  .has-luminous-vivid-amber-color {
+    color: var(--wp--preset--color--luminous-vivid-amber) !important;
+  }
+  .has-light-green-cyan-color {
+    color: var(--wp--preset--color--light-green-cyan) !important;
+  }
+  .has-vivid-green-cyan-color {
+    color: var(--wp--preset--color--vivid-green-cyan) !important;
+  }
+  .has-pale-cyan-blue-color {
+    color: var(--wp--preset--color--pale-cyan-blue) !important;
+  }
+  .has-vivid-cyan-blue-color {
+    color: var(--wp--preset--color--vivid-cyan-blue) !important;
+  }
+  .has-vivid-purple-color {
+    color: var(--wp--preset--color--vivid-purple) !important;
+  }
+  .has-black-background-color {
+    background-color: var(--wp--preset--color--black) !important;
+  }
+  .has-cyan-bluish-gray-background-color {
+    background-color: var(--wp--preset--color--cyan-bluish-gray) !important;
+  }
+  .has-white-background-color {
+    background-color: var(--wp--preset--color--white) !important;
+  }
+  .has-pale-pink-background-color {
+    background-color: var(--wp--preset--color--pale-pink) !important;
+  }
+  .has-vivid-red-background-color {
+    background-color: var(--wp--preset--color--vivid-red) !important;
+  }
+  .has-luminous-vivid-orange-background-color {
+    background-color: var(--wp--preset--color--luminous-vivid-orange) !important;
+  }
+  .has-luminous-vivid-amber-background-color {
+    background-color: var(--wp--preset--color--luminous-vivid-amber) !important;
+  }
+  .has-light-green-cyan-background-color {
+    background-color: var(--wp--preset--color--light-green-cyan) !important;
+  }
+  .has-vivid-green-cyan-background-color {
+    background-color: var(--wp--preset--color--vivid-green-cyan) !important;
+  }
+  .has-pale-cyan-blue-background-color {
+    background-color: var(--wp--preset--color--pale-cyan-blue) !important;
+  }
+  .has-vivid-cyan-blue-background-color {
+    background-color: var(--wp--preset--color--vivid-cyan-blue) !important;
+  }
+  .has-vivid-purple-background-color {
+    background-color: var(--wp--preset--color--vivid-purple) !important;
+  }
+  .has-black-border-color {
+    border-color: var(--wp--preset--color--black) !important;
+  }
+  .has-cyan-bluish-gray-border-color {
+    border-color: var(--wp--preset--color--cyan-bluish-gray) !important;
+  }
+  .has-white-border-color {
+    border-color: var(--wp--preset--color--white) !important;
+  }
+  .has-pale-pink-border-color {
+    border-color: var(--wp--preset--color--pale-pink) !important;
+  }
+  .has-vivid-red-border-color {
+    border-color: var(--wp--preset--color--vivid-red) !important;
+  }
+  .has-luminous-vivid-orange-border-color {
+    border-color: var(--wp--preset--color--luminous-vivid-orange) !important;
+  }
+  .has-luminous-vivid-amber-border-color {
+    border-color: var(--wp--preset--color--luminous-vivid-amber) !important;
+  }
+  .has-light-green-cyan-border-color {
+    border-color: var(--wp--preset--color--light-green-cyan) !important;
+  }
+  .has-vivid-green-cyan-border-color {
+    border-color: var(--wp--preset--color--vivid-green-cyan) !important;
+  }
+  .has-pale-cyan-blue-border-color {
+    border-color: var(--wp--preset--color--pale-cyan-blue) !important;
+  }
+  .has-vivid-cyan-blue-border-color {
+    border-color: var(--wp--preset--color--vivid-cyan-blue) !important;
+  }
+  .has-vivid-purple-border-color {
+    border-color: var(--wp--preset--color--vivid-purple) !important;
+  }
+  .has-vivid-cyan-blue-to-vivid-purple-gradient-background {
+    background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;
+  }
+  .has-light-green-cyan-to-vivid-green-cyan-gradient-background {
+    background: var(
+      --wp--preset--gradient--light-green-cyan-to-vivid-green-cyan
+    ) !important;
+  }
+  .has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background {
+    background: var(
+      --wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange
+    ) !important;
+  }
+  .has-luminous-vivid-orange-to-vivid-red-gradient-background {
+    background: var(
+      --wp--preset--gradient--luminous-vivid-orange-to-vivid-red
+    ) !important;
+  }
+  .has-very-light-gray-to-cyan-bluish-gray-gradient-background {
+    background: var(
+      --wp--preset--gradient--very-light-gray-to-cyan-bluish-gray
+    ) !important;
+  }
+  .has-cool-to-warm-spectrum-gradient-background {
+    background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;
+  }
+  .has-blush-light-purple-gradient-background {
+    background: var(--wp--preset--gradient--blush-light-purple) !important;
+  }
+  .has-blush-bordeaux-gradient-background {
+    background: var(--wp--preset--gradient--blush-bordeaux) !important;
+  }
+  .has-luminous-dusk-gradient-background {
+    background: var(--wp--preset--gradient--luminous-dusk) !important;
+  }
+  .has-pale-ocean-gradient-background {
+    background: var(--wp--preset--gradient--pale-ocean) !important;
+  }
+  .has-electric-grass-gradient-background {
+    background: var(--wp--preset--gradient--electric-grass) !important;
+  }
+  .has-midnight-gradient-background {
+    background: var(--wp--preset--gradient--midnight) !important;
+  }
+  .has-small-font-size {
+    font-size: var(--wp--preset--font-size--small) !important;
+  }
+  .has-medium-font-size {
+    font-size: var(--wp--preset--font-size--medium) !important;
+  }
+  .has-large-font-size {
+    font-size: var(--wp--preset--font-size--large) !important;
+  }
+  .has-x-large-font-size {
+    font-size: var(--wp--preset--font-size--x-large) !important;
+  }
+  :where(.wp-block-post-template.is-layout-flex) {
+    gap: 1.25em;
+  }
+  :where(.wp-block-post-template.is-layout-grid) {
+    gap: 1.25em;
+  }
+  :where(.wp-block-columns.is-layout-flex) {
+    gap: 2em;
+  }
+  :where(.wp-block-columns.is-layout-grid) {
+    gap: 2em;
+  }
+  :root :where(.wp-block-pullquote) {
+    font-size: 1.5em;
+    line-height: 1.6;
+  }
+</style>
+<!-- more buddy press stylesheets -->
+<!-- more buddy press stylesheets -->
+<!-- more buddy press stylesheets -->
+<!-- more buddy press stylesheets -->
+<!-- more buddy press stylesheets -->
+<!-- cleantalk stylesheets -->
+<!-- cleantalk stylesheets -->
+<!-- cleantalk stylesheets -->
+<!-- cleantalk stylesheets -->
+<!-- cleantalk stylesheets -->
+<!-- woocommerce stylesheets -->
+<!-- woocommerce stylesheets -->
+<!-- woocommerce stylesheets -->
+<!-- woocommerce stylesheets -->
+<!-- woocommerce stylesheets -->
+<!-- more stylesheets -->
+<!-- more stylesheets -->
+<!-- more stylesheets -->
+<!-- more stylesheets -->
+<!-- more stylesheets -->
+<link
+  rel="stylesheet"
+  id="dashicons-css"
+  href="https://www.envirodiy.org/wp-includes/css/dashicons.min.css?ver=6.8.1"
+  type="text/css"
+  media="all"
+/>
+<link
+  rel="stylesheet"
+  id="brands-styles-css"
+  href="https://www.envirodiy.org/wp-content/plugins/woocommerce/assets/css/brands.css?ver=9.9.5"
+  type="text/css"
+  media="all"
+/>
+<link
+  rel="stylesheet"
+  id="gp-parent-style-css"
+  href="https://www.envirodiy.org/wp-content/themes/socialize/style.css?ver=6.8.1"
+  type="text/css"
+  media="all"
+/>
+<link
+  rel="stylesheet"
+  id="redux-extendify-styles-css"
+  href="https://www.envirodiy.org/wp-content/themes/socialize/lib/framework/redux/assets/css/extendify-utilities.css?ver=4.4.11"
+  type="text/css"
+  media="all"
+/>
+<link
+  rel="stylesheet"
+  id="ghostpool-style-css"
+  href="https://www.envirodiy.org/wp-content/themes/socialize-child/style.css?ver=6.8.1"
+  type="text/css"
+  media="all"
+/>
+<style id="ghostpool-style-inline-css" type="text/css">
+  #gp-main-header {
+    min-height: 80px;
+  }
+  .gp-desktop-scrolling #gp-main-header {
+    min-height: 80px;
+  }
+  .gp-header-standard #gp-logo {
+    padding: 19px 0;
+  }
+  .gp-desktop-scrolling.gp-header-standard #gp-logo {
+    padding: 12.5px 0;
+  }
+  .gp-header-standard #gp-primary-main-nav .menu > li > a {
+    padding: 30.5px 0;
+  }
+  .gp-header-standard #gp-cart-button,
+  .gp-header-standard #gp-search-button,
+  .gp-header-standard #gp-profile-button {
+    padding: 31px 0;
+  }
+  .gp-desktop-scrolling.gp-header-standard #gp-primary-main-nav .menu > li > a {
+    padding: 30.5px 0;
+  }
+  .gp-desktop-scrolling.gp-header-standard #gp-cart-button,
+  .gp-desktop-scrolling.gp-header-standard #gp-search-button,
+  .gp-desktop-scrolling.gp-header-standard #gp-profile-button {
+    padding: 31px 0;
+  }
+  .gp-nav .menu > .gp-standard-menu > .sub-menu > li:hover > a {
+    color: #fff;
+  }
+  .gp-theme li:hover .gp-primary-dropdown-icon {
+    color: #fff;
+  }
+  .gp-theme .sub-menu li:hover .gp-secondary-dropdown-icon {
+    color: #fff;
+  }
+  .gp-header-centered #gp-cart-button,
+  .gp-header-centered #gp-search-button,
+  .gp-header-centered #gp-profile-button {
+    line-height: 18px;
+  }
+  .gp-header-standard #gp-secondary-main-nav .menu > li > a {
+    padding: 31.5px 0;
+  }
+  .gp-desktop-scrolling.gp-header-standard #gp-secondary-main-nav .menu > li > a {
+    padding: 31.5px 0;
+  }
+  .gp-header-centered #gp-secondary-main-nav .menu > li > a {
+    line-height: 16px;
+  }
+  .gp-active {
+    color: #000;
+  }
+  .gp-theme .widget.buddypress div.item-options a.selected:hover {
+    color: #0579bd !important;
+  }
+  .gp-theme #buddypress .activity-list .activity-content blockquote a {
+    color: #0579bd;
+  }
+  .gp-theme #buddypress .activity-list .activity-content blockquote a:hover {
+    color: #000;
+  }
+  @media only screen and (max-width: 1082px) {
+    .gp-header-standard #gp-primary-main-nav .menu > li > a {
+      padding: 30.5px 0;
+    }
+    .gp-desktop-scrolling.gp-header-standard #gp-primary-main-nav .menu > li > a {
+      padding: 30.5px 0;
+    }
+    .gp-header-standard #gp-cart-button,
+    .gp-header-standard #gp-search-button,
+    .gp-header-standard #gp-profile-button {
+      padding: 31px 0;
+    }
+    .gp-desktop-scrolling.gp-header-standard #gp-cart-button,
+    .gp-desktop-scrolling.gp-header-standard #gp-search-button,
+    .gp-desktop-scrolling.gp-header-standard #gp-profile-button {
+      padding: 31px 0;
+    }
+    .gp-header-standard #gp-secondary-main-nav .menu > li > a {
+      padding: 31.5px 0;
+    }
+    .gp-desktop-scrolling.gp-header-standard #gp-secondary-main-nav .menu > li > a {
+      padding: 31.5px 0;
+    }
+  }
+  @media only screen and (max-width: 1023px) {
+    .gp-responsive #gp-main-header {
+      min-height: 80px;
+    }
+    .gp-responsive #gp-logo {
+      padding: 26px 0;
+    }
+    .gp-responsive #gp-mobile-nav-button,
+    .gp-responsive #gp-cart-button,
+    .gp-responsive #gp-search-button,
+    .gp-responsive #gp-profile-button {
+      padding: 31px 0;
+    }
+  }
+</style>
+<link
+  rel="stylesheet"
+  id="fontawesome-css"
+  href="https://www.envirodiy.org/wp-content/themes/socialize/lib/fonts/font-awesome/css/font-awesome.min.css?ver=6.8.1"
+  type="text/css"
+  media="all"
+/>
+<link
+  rel="stylesheet"
+  id="prettyphoto-css"
+  href="https://www.envirodiy.org/wp-content/plugins/js_composer/assets/lib/vendor/prettyphoto/css/prettyPhoto.min.css?ver=8.5"
+  type="text/css"
+  media="all"
+/>
+<link
+  rel="stylesheet"
+  id="mediaelement-css"
+  href="https://www.envirodiy.org/wp-includes/js/mediaelement/mediaelementplayer-legacy.min.css?ver=4.2.17"
+  type="text/css"
+  media="all"
+/>
+<link
+  rel="stylesheet"
+  id="wp-mediaelement-css"
+  href="https://www.envirodiy.org/wp-includes/js/mediaelement/wp-mediaelement.min.css?ver=6.8.1"
+  type="text/css"
+  media="all"
+/>
+<!-- more buddy press and woo commerce stylesheets -->
+<!-- more buddy press and woo commerce stylesheets -->
+<!-- more buddy press and woo commerce stylesheets -->
+<!-- more buddy press and woo commerce stylesheets -->
+<!-- more buddy press and woo commerce stylesheets -->
+<!-- google font stylesheets -->
+<!-- google font stylesheets -->
+<!-- google font stylesheets -->
+<!-- google font stylesheets -->
+<!-- google font stylesheets -->
+<link
+  rel="preload"
+  as="style"
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500%7CRoboto%20Slab:400&#038;subset=latin&#038;display=swap&#038;ver=6.7.1"
+/>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500%7CRoboto%20Slab:400&#038;subset=latin&#038;display=swap&#038;ver=6.7.1"
+  media="print"
+  onload="this.media='all'"
+/>
+<noscript
+  ><link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500%7CRoboto%20Slab:400&#038;subset=latin&#038;display=swap&#038;ver=6.7.1"
+/></noscript>
+<!-- jquery -->
+<!-- jquery -->
+<!-- jquery -->
+<!-- jquery -->
+<!-- jquery -->
+<script
+  type="text/javascript"
+  src="https://www.envirodiy.org/wp-includes/js/jquery/jquery.min.js?ver=3.7.1"
+  id="jquery-core-js"
+></script>
+<script
+  type="text/javascript"
+  src="https://www.envirodiy.org/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1"
+  id="jquery-migrate-js"
+></script>
+<!-- buddy press scripts -->
+<!-- buddy press scripts -->
+<!-- buddy press scripts -->
+<!-- buddy press scripts -->
+<!-- buddy press scripts -->
+<!-- woo commerce scripts -->
+<!-- woo commerce scripts -->
+<!-- woo commerce scripts -->
+<!-- woo commerce scripts -->
+<!-- woo commerce scripts -->
+<!-- woo commerce scripts -->
+<!-- more inclusions -->
+<!-- more inclusions -->
+<!-- more inclusions -->
+<!-- more inclusions -->
+<!-- more inclusions -->
+<!-- HKB CSS Variables -->
+<!-- HKB CSS Variables -->
+<!-- HKB CSS Variables -->
+<!-- HKB CSS Variables -->
+<!-- HKB CSS Variables -->
+<!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
+<!-- images and wp-custom-css -->
+<!-- images and wp-custom-css -->
+<!-- images and wp-custom-css -->
+<!-- images and wp-custom-css -->
+<!-- images and wp-custom-css -->
+<link
+  rel="icon"
+  href="https://www.envirodiy.org/wp-content/uploads/2016/05/cropped-EnviroDIY_LogoMaster_TrueSquare_V5_TwoTree_Trans_notext-32x32.png"
+  sizes="32x32"
+/>
+<link
+  rel="icon"
+  href="https://www.envirodiy.org/wp-content/uploads/2016/05/cropped-EnviroDIY_LogoMaster_TrueSquare_V5_TwoTree_Trans_notext-192x192.png"
+  sizes="192x192"
+/>
+<link
+  rel="apple-touch-icon"
+  href="https://www.envirodiy.org/wp-content/uploads/2016/05/cropped-EnviroDIY_LogoMaster_TrueSquare_V5_TwoTree_Trans_notext-180x180.png"
+/>
+<meta
+  name="msapplication-TileImage"
+  content="https://www.envirodiy.org/wp-content/uploads/2016/05/cropped-EnviroDIY_LogoMaster_TrueSquare_V5_TwoTree_Trans_notext-270x270.png"
+/>
+<style type="text/css" id="wp-custom-css">
+  /* Print Styles */
+  @media print {
+    @page {
+      margin: 10mm 0;
+    }
+    body {
+      background: white;
+      color: black;
+      background-image: none;
+      margin: 0 !important;
+      padding: 0;
+    }
+
+    body:not(.gp-full-page-page-header) .gp-page-header.gp-has-text:before,
+    body:not(.gp-full-page-page-header)
+      .gp-page-header.gp-has-teaser-video.gp-has-text
+      .gp-video-header:before {
+      background-image: none !important;
+    }
+    /* End print styles */
+
+    #gp-main-header,
+    #gp-small-header,
+    #gp-header-area,
+    #gp-footer,
+    #gp-sidebar-right,
+    #swrc-post-navigation,
+    .hkb-subheader,
+    .hkb-feedback,
+    .hkb-mainpage__sidebar,
+    .print-page {
+      display: none;
+    }
+    .hkb-mainpage-wrapper {
+      padding: 0 !important;
+      background-image: none !important;
+    }
+    a#gp-to-top,
+    span#toTopHover {
+      display: none;
+    }
+    a[href]:after {
+      content: ' (' attr(href) ')';
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-size: 1.25em;
+      page-break-after: avoid;
+      page-break-inside: avoid;
+    }
+    .hkb-article__content h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-size: 1.25em;
+      page-break-after: avoid;
+      page-break-inside: avoid;
+    }
+    table {
+      page-break-before: avoid;
+      page-break-inside: avoid;
+      page-break-after: avoid;
+    }
+    img {
+      page-break-inside: avoid;
+      visibility: visible;
+      float: none;
+    }
+    blockquote,
+    table,
+    pre {
+      page-break-inside: avoid;
+    }
+    ul,
+    ol,
+    dl {
+      page-break-before: avoid;
+    }
+  }
+
+  /*Gutenberg styles*/
+  /*Buttons*/
+  a.wp-block-button__link {
+    background-color: #538122;
+    border-radius: 5px;
+    text-decoration: none !important;
+  }
+  .wp-block-button__link:hover {
+    background: #365516 !important;
+    color: #ffffff !important;
+  }
+  figcaption {
+    font-style: italic;
+  }
+  /*End Gutenberg styles*/
+  #gp-content a,
+  .gp-sidebar a {
+    font-weight: 400;
+    text-decoration: underline;
+  }
+  /* Style print link */
+  .pdfprnt-buttons > a > span {
+    margin: 15px 0;
+    padding-left: 0;
+    text-decoration: underline;
+  }
+  /*Change caption text color and size*/
+  .wp-caption-text {
+    color: #333;
+    font-size: 14px;
+  }
+  /*Collapse table borders */
+  #gp-content table {
+    border-collapse: collapse;
+  }
+  /*Add borders to Tableizer tables */
+  .tableizer table,
+  th,
+  td {
+    border: 1px solid #333;
+  }
+  /*Nested list styles*/
+  #gp-content,
+  .hkb-article ol ol li {
+    list-style-type: lower-alpha;
+  }
+  #gp-content,
+  .hkb-article ol ol ol li {
+    list-style-type: lower-roman;
+  }
+  #gp-content,
+  .hkb-article ul ul li {
+    list-style-type: circle !important;
+  }
+  /* Add border */
+  tr:last-child td {
+    border-width: 1px;
+  }
+  #gp-copyright-text,
+  #gp-copyright-text a:link,
+  #gp-copyright-text a:visited {
+    color: #fff;
+    font-weight: 400;
+  }
+  #gp-sidebar-right
+    > div
+    > div.tribe-common.tribe-events.tribe-events-view.tribe-events-view--widget-events-list.tribe-events-widget {
+    background-color: #fff;
+    padding: 15px;
+  }
+  #gp-sidebar-right
+    > div
+    > div.tribe-common.tribe-events.tribe-events-view.tribe-events-view--widget-events-list.tribe-events-widget
+    > div
+    > header {
+    text-transform: uppercase;
+    color: #000;
+    border-bottom: 3px solid #92d050;
+  }
+  #gp-sidebar-right
+    > div
+    > div.tribe-common.tribe-events.tribe-events-view.tribe-events-view--widget-events-list.tribe-events-widget
+    > div
+    > header
+    > h3 {
+    font-family: Roboto !important;
+    font-size: 14px !important;
+    font-weight: 500;
+    padding-bottom: 11px;
+  }
+  #gp-sidebar-right
+    > div
+    > div.tribe-common.tribe-events.tribe-events-view.tribe-events-view--widget-events-list.tribe-events-widget
+    > div
+    > div.tribe-events-widget-events-list__view-more.tribe-common-b1.tribe-common-b2--min-medium
+    > a {
+    color: #26a9e0;
+  }
+  /*Hero Knowledge Base styles*/
+  #hkb .hkb-fullwcontainer {
+    max-width: var(--hkb-main-container-width);
+    margin: 0 auto;
+    padding: 20px 20px;
+    left: 0 !important;
+    right: 0 !important;
+  }
+  h1.hkb-article__title {
+    font-weight: 300 !important;
+    margin: 0 0 0.5em !important;
+  }
+  .hkb-categoryheader__title {
+    font-weight: 300 !important;
+    font-size: 40px !important;
+  }
+  .hkb-articlepreview__title a {
+    font-weight: 300 !important;
+    font-size: 28px !important;
+    text-decoration: underline !important;
+    color: #0579bd !important;
+    font-size: 28px !important;
+  }
+  #hkb a {
+    text-decoration: underline;
+    font-weight: 400;
+  }
+  a.hkb_widget_exit__btn {
+    background-color: #538122 !important;
+    border-radius: 5px;
+    text-decoration: none !important;
+  }
+  a.hkb_widget_exit__btn:hover {
+    background: #365516 !important;
+    color: #ffffff !important;
+  }
+  /* End Heroic KB styles */
+  #swrc-post-navigation a {
+    font-size: small;
+  }
+  p.last-updated {
+    font-size: 12px;
+    font-style: italic;
+  }
+  aside#gp-sidebar-right.gp-sidebar p.last-updated {
+    display: none;
+  }
+  #gp-content p.last-updated {
+    display: none;
+  }
+  #gp-content ul {
+    margin: 0 0 0 20px !important;
+  }
+</style>
+<style id="socialize-dynamic-css" title="dynamic-css" class="redux-options-output">
+  #footer-image img {
+    margin-top: 10px;
+    margin-right: 0px;
+    margin-bottom: 10px;
+    margin-left: 0px;
+  }
+  body {
+    background-color: #f1f1f1;
+  }
+  body:not(.gp-full-page-page-header) #gp-page-wrapper,
+  body:not(.gp-full-page-page-header) #gp-small-header .gp-container,
+  .gp-homepage .widgettitle.gp-fancy-title:before {
+    background-color: #e8e8e8;
+  }
+  body:not(.gp-full-page-page-header) #gp-small-header .gp-left-triangle {
+    border-left-color: #e8e8e8;
+  }
+  body:not(.gp-full-page-page-header) #gp-small-header .gp-right-triangle {
+    border-bottom-color: #e8e8e8;
+  }
+  #gp-content {
+    background-color: #ffffff;
+  }
+  body {
+    font-family: Roboto, 'Arial Black', Gadget, sans-serif;
+    line-height: 28px;
+    font-weight: 300;
+    font-style: normal;
+    color: #000;
+    font-size: 16px;
+  }
+  a {
+    color: #0579bd;
+  }
+  a:hover {
+    color: #000;
+  }
+  h1 {
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+    line-height: 40px;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 36px;
+  }
+  h2 {
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+    line-height: 32px;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 28px;
+  }
+  h3,
+  #tab-description h2,
+  .woocommerce #comments h2,
+  .woocommerce #reviews h3,
+  .woocommerce .related h2,
+  .woocommerce-checkout .woocommerce h2,
+  .woocommerce-checkout .woocommerce h3 {
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+    line-height: 28px;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 24px;
+  }
+  h4 {
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+    line-height: 30px;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 20px;
+  }
+  h5 {
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+    line-height: 26px;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 18px;
+  }
+  h6 {
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+    line-height: 24px;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+  }
+  .gp-entry-meta .gp-post-meta-row-1,
+  .gp-homepage #gp-content .gp-vc-element-3,
+  .gp-homepage #gp-content .gp-vc-element-4,
+  .gp-homepage #gp-content .gp-vc-element-5,
+  .gp-homepage #gp-content .gp-vc-element-6,
+  #comments .commentlist li .comment_container,
+  .gp-loop-divider:before,
+  .gp-recent-comments ul li,
+  .gp-search {
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  .gp-entry-video-wrapper .gp-entry-meta .gp-post-meta-row-1,
+  .gp-footer-widget .gp-recent-comments ul li {
+    border-top: 1px solid #50504b;
+    border-bottom: 1px solid #50504b;
+  }
+  #gp-main-header {
+    background-color: #222222;
+  }
+  .gp-desktop-scrolling #gp-main-header {
+    background-color: #222222;
+  }
+  #gp-primary-main-nav .menu > li,
+  #gp-primary-main-nav .menu > li > a {
+    font-family: Roboto;
+    text-transform: none;
+    line-height: 16px;
+    font-weight: 400;
+    font-style: normal;
+    color: #ababab;
+    font-size: 16px;
+  }
+  #gp-primary-main-nav .menu > li:hover > a,
+  #gp-primary-main-nav .menu > li > a {
+    color: #fff;
+  }
+  #gp-primary-main-nav .menu > li:hover > a:hover,
+  #gp-primary-main-nav .menu > li > a:hover {
+    color: #fff;
+  }
+  #gp-primary-main-nav .menu > li > a:hover,
+  #gp-primary-main-nav .menu > li:hover > a {
+    border-top: 3px solid #fff;
+  }
+  #gp-secondary-main-nav .menu > li,
+  #gp-secondary-main-nav .menu > li > a {
+    font-family: Roboto;
+    text-transform: none;
+    line-height: 14px;
+    font-weight: 400;
+    font-style: normal;
+    color: #fff;
+    font-size: 14px;
+  }
+  #gp-secondary-main-nav .menu > li:hover > a,
+  #gp-secondary-main-nav .menu > li > a {
+    color: #fff;
+  }
+  #gp-secondary-main-nav .menu > li:hover > a:hover,
+  #gp-secondary-main-nav .menu > li > a:hover {
+    color: #fff;
+  }
+  #gp-secondary-main-nav .menu > li > a:hover,
+  #gp-secondary-main-nav .menu > li:hover > a {
+    border-top: 3px solid #fff;
+  }
+  #gp-search-button,
+  #gp-cart-button {
+    color: #fff;
+  }
+  #gp-search-button:hover,
+  #gp-cart-button:hover {
+    color: #fff;
+  }
+  .gp-nav .sub-menu,
+  .gp-nav .menu li .gp-menu-tabs li:hover,
+  .gp-nav .menu li .gp-menu-tabs li.gp-selected,
+  #gp-search-box {
+    background-color: #fff;
+  }
+  .gp-nav .menu > .gp-standard-menu > .sub-menu > li a:hover,
+  .gp-nav .menu > .gp-standard-menu > .sub-menu > li:hover > a {
+    background-color: #353535;
+  }
+  .gp-nav .gp-standard-menu .sub-menu li,
+  .gp-nav .gp-standard-menu .sub-menu li a,
+  .gp-nav li.gp-megamenu .sub-menu li,
+  .gp-nav .gp-megamenu .sub-menu li a {
+    font-family: Roboto;
+    font-weight: 400;
+    font-style: normal;
+    color: #000;
+    font-size: 14px;
+  }
+  .gp-nav .menu > .gp-standard-menu > .sub-menu > li a {
+    color: #000;
+  }
+  .gp-nav .menu > .gp-standard-menu > .sub-menu > li a:hover {
+    color: #fff;
+  }
+  .gp-nav .sub-menu li,
+  #gp-dropdowncart .total,
+  #gp-dropdowncart .buttons {
+    border-top: 1px solid #e0e0e0;
+  }
+  .gp-nav .gp-megamenu > .sub-menu > li > a,
+  .gp-nav .gp-megamenu > .sub-menu > li > span {
+    color: #000000;
+  }
+  .gp-nav li.gp-megamenu a {
+    color: #000;
+  }
+  .gp-nav li.gp-megamenu a:hover {
+    color: #e93100;
+  }
+  .gp-primary-dropdown-icon {
+    color: #fff;
+  }
+  .gp-primary-dropdown-icon:hover {
+    color: #fff;
+  }
+  .gp-secondary-dropdown-icon {
+    color: #000;
+  }
+  .gp-secondary-dropdown-icon:hover {
+    color: #fff;
+  }
+  .gp-menu-tabs {
+    background-color: #353535;
+  }
+  .gp-nav .menu li .gp-menu-tabs li {
+    color: #ffffff;
+  }
+  .gp-nav .menu li .gp-menu-tabs li:hover,
+  .gp-nav .menu li .gp-menu-tabs li.gp-selected {
+    color: #e93100;
+  }
+  #gp-small-header #gp-top-nav {
+    background-color: #26a9e0;
+  }
+  #gp-small-header .menu > li,
+  #gp-small-header .menu > li > a {
+    color: #ffffff;
+  }
+  #gp-small-header .menu > li:hover,
+  #gp-small-header .menu > li > a:hover {
+    color: #e0e0e0;
+  }
+  #gp-mobile-nav-button,
+  #gp-profile-button,
+  #gp-mobile-nav-close-button {
+    color: #ffffff;
+  }
+  #gp-mobile-nav {
+    background-color: #fff;
+  }
+  #gp-mobile-nav-close-button {
+    background-color: #0579bd;
+  }
+  #gp-mobile-nav li {
+    color: #000000;
+  }
+  #gp-mobile-nav .menu li span,
+  #gp-mobile-nav .menu li a {
+    color: #000;
+  }
+  #gp-mobile-nav .menu li span:hover,
+  #gp-mobile-nav .menu li a:hover {
+    color: #000;
+  }
+  #gp-mobile-nav li a:hover {
+    background-color: #f1f1f1;
+  }
+  #gp-mobile-nav li {
+    border-top: 1px solid #e0e0e0;
+  }
+  #gp-mobile-nav .gp-megamenu > .sub-menu > li > a {
+    color: #000000;
+  }
+  .gp-large-page-header .gp-page-header,
+  .gp-fullwidth-page-header .gp-page-header,
+  #gp-full-page-bg {
+    background-color: #353535;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover;
+  }
+  .gp-page-header h1,
+  .gp-page-header h2 {
+    font-family: Roboto;
+    line-height: 90px;
+    font-weight: normal;
+    font-style: normal;
+    color: #fff;
+    font-size: 80px;
+  }
+  .gp-page-header .gp-container {
+    height: 250px;
+  }
+  .gp-entry-title,
+  .woocommerce .page-title,
+  .woocommerce div.product .entry-title.product_title {
+    font-family: Roboto;
+    line-height: 46px;
+    font-weight: 300;
+    font-style: normal;
+    color: #000;
+    font-size: 40px;
+  }
+  .gp-subtitle {
+    font-family: Roboto;
+    line-height: 32px;
+    font-weight: 300;
+    font-style: normal;
+    color: #0579bd;
+    font-size: 20px;
+  }
+  #gp-post-links a,
+  .gp-pagination-arrows a.prev,
+  .gp-pagination-arrows a.next,
+  .gp-carousel-wrapper .flex-direction-nav a {
+    color: #aaa;
+  }
+  #gp-post-links a:hover,
+  .gp-pagination-arrows a.prev:hover,
+  .gp-pagination-arrows a.next:hover,
+  .gp-carousel-wrapper .flex-direction-nav a:hover {
+    color: #333;
+  }
+  .gp-entry-meta,
+  .gp-meta-comments a {
+    color: #aaaaaa;
+  }
+  .gp-entry-cats,
+  .gp-entry-cats a,
+  .gp-entry-cats a:hover {
+    color: #ffffff;
+  }
+  .gp-entry-cats {
+    background-color: #92d050;
+  }
+  .gp-entry-tags a,
+  .gp-entry-tags a:hover {
+    color: #ffffff;
+  }
+  .gp-entry-tags a {
+    background-color: #353535;
+  }
+  .gp-author-info,
+  #gp-post-navigation #gp-share-icons {
+    background-color: #353535;
+  }
+  .gp-author-info,
+  .gp-author-info a,
+  #gp-post-navigation #gp-share-icons h3 {
+    line-height: 24px;
+    color: #fff;
+    font-size: 14px;
+  }
+  .gp-author-info a {
+    color: #b1b1b1;
+  }
+  .gp-author-info a:hover {
+    color: #fff;
+  }
+  .gp-entry-video-wrapper {
+    background-color: #353535;
+  }
+  .gp-entry-video-wrapper .gp-entry-title {
+    color: #ffffff;
+  }
+  .gp-entry-video-wrapper .gp-video-description {
+    color: #777777;
+  }
+  blockquote {
+    background-color: #0579bd;
+  }
+  blockquote,
+  blockquote a,
+  blockquote a:hover {
+    font-family: 'Roboto Slab';
+    line-height: 38px;
+    font-weight: 400;
+    font-style: normal;
+    color: #fff;
+    font-size: 24px;
+  }
+  .gp-loop-title {
+    line-height: 22px;
+    font-weight: 400;
+    font-size: 19px;
+  }
+  .gp-blog-large .gp-loop-title {
+    line-height: 46px;
+    font-weight: 200;
+    font-size: 40px;
+  }
+  .gp-loop-title a,
+  .bboss_search_item .entry-title a {
+    color: #000;
+  }
+  .gp-loop-title a:hover,
+  .bboss_search_item .entry-title a:hover {
+    color: #0579bd;
+  }
+  .gp-loop-text,
+  .gp-login-wrapper p {
+    color: #545454;
+  }
+  .gp-loop-meta,
+  .gp-loop-meta a,
+  #gp-breadcrumbs,
+  #gp-breadcrumbs a,
+  .woocommerce .woocommerce-breadcrumb a,
+  .woocommerce .woocommerce-breadcrumb,
+  .comment-text time,
+  div.bbp-breadcrumb,
+  div.bbp-breadcrumb a,
+  .gp-statistics-wrapper .gp-stat-title,
+  .widget_display_replies ul li div,
+  .widget_display_topics ul li div {
+    color: #545454;
+  }
+  .gp-loop-cats,
+  .gp-loop-cats a,
+  .gp-loop-cats a:hover {
+    color: #545454;
+  }
+  .gp-loop-tags,
+  .gp-loop-tags a,
+  .gp-loop-tags a:hover {
+    color: #0579bd;
+  }
+  .gp-blog-masonry section,
+  section.sticky {
+    background-color: #f8f8f8;
+  }
+  ul.page-numbers .page-numbers {
+    background-color: #538122;
+  }
+  ul.page-numbers .page-numbers:hover,
+  ul.page-numbers .page-numbers.current,
+  ul.page-numbers > span.page-numbers {
+    background-color: #353535;
+  }
+  ul.page-numbers .page-numbers {
+    color: #ffffff;
+  }
+  .widgettitle,
+  .widget-title,
+  .wp-block-search__label {
+    font-family: Roboto;
+    line-height: 18px;
+    font-weight: 500;
+    font-style: normal;
+    color: #000;
+    font-size: 14px;
+  }
+  .widgettitle a,
+  .widget-title a,
+  .wp-block-search__label {
+    color: #0579bd;
+  }
+  .widgettitle a:hover,
+  .widget-title a:hover,
+  .wp-block-search__label:hover {
+    color: #000;
+  }
+  .gp-sidebar .widgettitle,
+  .widgettitle.gp-standard-title,
+  .gp-sidebar .widget-title,
+  .gp-sidebar .wp-block-search__label {
+    border-bottom: 3px solid #538122;
+  }
+  .widget,
+  .gp-vc-element,
+  .widgettitle.gp-fancy-title .gp-widget-title,
+  .widgettitle.gp-fancy-title .gp-element-icon,
+  .widget .woocommerce {
+    background-color: #ffffff;
+  }
+  .widgettitle.gp-fancy-title .gp-triangle {
+    border-left-color: #ffffff;
+  }
+  input,
+  textarea,
+  .gp-search-bar,
+  .wp-block-search__input,
+  .gp-theme #buddypress .dir-search input[type='search'],
+  .gp-theme #buddypress .dir-search input[type='text'],
+  .gp-theme #buddypress .groups-members-search input[type='search'],
+  .gp-theme #buddypress .standard-form input[type='color'],
+  .gp-theme #buddypress .standard-form input[type='date'],
+  .gp-theme #buddypress .standard-form input[type='datetime-local'],
+  .gp-theme #buddypress .standard-form input[type='datetime'],
+  .gp-theme #buddypress .standard-form input[type='email'],
+  .gp-theme #buddypress .standard-form input[type='month'],
+  .gp-theme #buddypress .standard-form input[type='number'],
+  .gp-theme #buddypress .standard-form input[type='password'],
+  .gp-theme #buddypress .standard-form input[type='range'],
+  .gp-theme #buddypress .standard-form input[type='search'],
+  .gp-theme #buddypress .standard-form input[type='tel'],
+  .gp-theme #buddypress .standard-form input[type='text'],
+  .gp-theme #buddypress .standard-form input[type='time'],
+  .gp-theme #buddypress .standard-form input[type='url'],
+  .gp-theme #buddypress .standard-form input[type='week'],
+  .gp-theme #buddypress .standard-form textarea,
+  .gp-theme #buddypress div.activity-comments form .ac-textarea,
+  .gp-theme #buddypress form#whats-new-form textarea {
+    background-color: #fafafa;
+  }
+  input,
+  textarea,
+  .gp-search-bar,
+  .wp-block-search__input,
+  .gp-login-wrapper .gp-login-icon,
+  .gp-login-wrapper .gp-password-icon,
+  .gp-login-wrapper .gp-email-icon,
+  .gp-theme #buddypress .dir-search input[type='search'],
+  .gp-theme #buddypress .dir-search input[type='text'],
+  .gp-theme #buddypress .groups-members-search input[type='search'],
+  .gp-theme #buddypress .standard-form input[type='color'],
+  .gp-theme #buddypress .standard-form input[type='date'],
+  .gp-theme #buddypress .standard-form input[type='datetime-local'],
+  .gp-theme #buddypress .standard-form input[type='datetime'],
+  .gp-theme #buddypress .standard-form input[type='email'],
+  .gp-theme #buddypress .standard-form input[type='month'],
+  .gp-theme #buddypress .standard-form input[type='number'],
+  .gp-theme #buddypress .standard-form input[type='password'],
+  .gp-theme #buddypress .standard-form input[type='range'],
+  .gp-theme #buddypress .standard-form input[type='search'],
+  .gp-theme #buddypress .standard-form input[type='tel'],
+  .gp-theme #buddypress .standard-form input[type='text'],
+  .gp-theme #buddypress .standard-form input[type='time'],
+  .gp-theme #buddypress .standard-form input[type='url'],
+  .gp-theme #buddypress .standard-form input[type='week'],
+  .gp-theme #buddypress .standard-form textarea,
+  .gp-theme #buddypress div.activity-comments form .ac-textarea,
+  .bb-global-search-ac.ui-autocomplete {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+  }
+  input,
+  textarea,
+  .gp-search-bar,
+  .wp-block-search__input,
+  .gp-theme #buddypress .dir-search input[type='search'],
+  .gp-theme #buddypress .dir-search input[type='text'],
+  .gp-theme #buddypress .groups-members-search input[type='search'],
+  .gp-theme #buddypress .groups-members-search input[type='text'],
+  .gp-theme #buddypress .standard-form input[type='color'],
+  .gp-theme #buddypress .standard-form input[type='date'],
+  .gp-theme #buddypress .standard-form input[type='datetime-local'],
+  .gp-theme #buddypress .standard-form input[type='datetime'],
+  .gp-theme #buddypress .standard-form input[type='email'],
+  .gp-theme #buddypress .standard-form input[type='month'],
+  .gp-theme #buddypress .standard-form input[type='number'],
+  .gp-theme #buddypress .standard-form input[type='password'],
+  .gp-theme #buddypress .standard-form input[type='range'],
+  .gp-theme #buddypress .standard-form input[type='search'],
+  .gp-theme #buddypress .standard-form input[type='tel'],
+  .gp-theme #buddypress .standard-form input[type='text'],
+  .gp-theme #buddypress .standard-form input[type='time'],
+  .gp-theme #buddypress .standard-form input[type='url'],
+  .gp-theme #buddypress .standard-form input[type='week'],
+  .gp-theme #buddypress .standard-form textarea,
+  .gp-theme #buddypress div.activity-comments form .ac-textarea,
+  .gp-theme #buddypress form#whats-new-form textarea {
+    color: #000000;
+  }
+  select,
+  .gp-theme #buddypress .standard-form select,
+  .gp-theme #buddypress form#whats-new-form #whats-new-options select,
+  #buddypress .standard-form select:focus {
+    background-color: #353535;
+  }
+  select,
+  .gp-theme #buddypress .standard-form select,
+  .gp-theme #buddypress form#whats-new-form #whats-new-options select {
+    color: #ffffff;
+  }
+  input[type='button'],
+  input[type='submit'],
+  input[type='reset'],
+  button,
+  .button,
+  .wp-block-search__button,
+  .gp-theme #buddypress .comment-reply-link,
+  .gp-notification-counter,
+  #gp-cart-counter,
+  .gp-theme #buddypress a.button,
+  .gp-theme #buddypress button,
+  .gp-theme #buddypress div.generic-button a,
+  .gp-theme #buddypress input[type='button'],
+  .gp-theme #buddypress input[type='reset'],
+  .gp-theme #buddypress input[type='submit'],
+  .gp-theme #buddypress ul.button-nav li a,
+  a.bp-title-button,
+  .gp-theme #buddypress .activity-list #reply-title small a span,
+  .gp-theme #buddypress .activity-list a.bp-primary-action span,
+  .tribe-events-calendar thead th,
+  #tribe-events .tribe-events-button,
+  #tribe-events .tribe-events-button:hover,
+  #tribe_events_filters_wrapper input[type='submit'],
+  .tribe-events-button,
+  .tribe-events-button.tribe-active:hover,
+  .tribe-events-button.tribe-inactive,
+  .tribe-events-button:hover,
+  .tribe-events-calendar td.tribe-events-present div[id*='tribe-events-daynum-'],
+  .tribe-events-calendar td.tribe-events-present div[id*='tribe-events-daynum-'] > a,
+  #tribe-bar-form .tribe-bar-submit input[type='submit'],
+  .woocommerce #respond input#submit.alt,
+  .woocommerce a.button.alt,
+  .woocommerce button.button.alt,
+  .woocommerce input.button.alt,
+  #gp-dropdowncart .woocommerce a.button {
+    background-color: #0579bd;
+  }
+  input[type='button']:hover,
+  input[type='submit']:hover,
+  input[type='reset']:hover,
+  button:hover,
+  .button:hover,
+  .wp-block-search__button:hover,
+  .gp-theme #buddypress .comment-reply-link:hover,
+  .gp-theme #buddypress a.button:hover,
+  .gp-theme #buddypress button:hover,
+  .gp-theme #buddypress div.generic-button a:hover,
+  .gp-theme #buddypress input[type='button']:hover,
+  .gp-theme #buddypress input[type='reset']:hover,
+  .gp-theme #buddypress input[type='submit']:hover,
+  .gp-theme #buddypress ul.button-nav li a:hover,
+  a.bp-title-button:hover,
+  .gp-theme #buddypress .activity-list #reply-title small a:hover span,
+  .gp-theme #buddypress .activity-list a.bp-primary-action:hover span,
+  .woocommerce #respond input#submit.alt:hover,
+  .woocommerce a.button.alt:hover,
+  .woocommerce button.button.alt:hover,
+  .woocommerce input.button.alt:hover,
+  #gp-dropdowncart .woocommerce a.button:hover {
+    background-color: #353535;
+  }
+  input[type='button'],
+  input[type='submit'],
+  input[type='reset'],
+  button,
+  .button,
+  .wp-block-search__button,
+  a.gp-notification-counter,
+  a.gp-notification-counter:hover,
+  #gp-cart-counter:hover,
+  .gp-theme #buddypress .comment-reply-link,
+  .gp-theme #buddypress a.button,
+  .gp-theme #buddypress button,
+  .gp-theme #buddypress div.generic-button a,
+  .gp-theme #buddypress input[type='button'],
+  .gp-theme #buddypress input[type='reset'],
+  .gp-theme #buddypress input[type='submit'],
+  .gp-theme #buddypress ul.button-nav li a,
+  a.bp-title-button,
+  .gp-theme #buddypress .activity-list #reply-title small a span,
+  .gp-theme #buddypress .activity-list a.bp-primary-action span,
+  #gp-dropdowncart .woocommerce a.button {
+    color: #ffffff;
+  }
+  input[type='button']:hover,
+  input[type='submit']:hover,
+  input[type='reset']:hover,
+  button,
+  .button:hover,
+  .wp-block-search__button:hover,
+  .gp-theme #buddypress .comment-reply-link:hover,
+  .gp-theme #buddypress a.button:hover,
+  .gp-theme #buddypress button:hover,
+  .gp-theme #buddypress div.generic-button a:hover,
+  .gp-theme #buddypress input[type='button']:hover,
+  .gp-theme #buddypress input[type='reset']:hover,
+  .gp-theme #buddypress input[type='submit']:hover,
+  .gp-theme #buddypress ul.button-nav li a:hover,
+  a.bp-title-button:hover,
+  .gp-theme #buddypress .activity-list #reply-title small a span,
+  .gp-theme #buddypress .activity-list a.bp-primary-action span,
+  #gp-dropdowncart .woocommerce a.button:hover {
+    color: #ffffff;
+  }
+  #gp-footer {
+    background-color: #353535;
+  }
+  .gp-footer-widget .widgettitle,
+  .gp-footer-widget .widget-title,
+  .gp-footer-widget .wp-block-search__label {
+    font-family: Roboto;
+    line-height: 20px;
+    font-weight: 300;
+    font-style: normal;
+    color: #fff;
+    font-size: 16px;
+  }
+  .gp-footer-widget {
+    font-family: Roboto;
+    line-height: 20px;
+    font-weight: 300;
+    font-style: normal;
+    color: #ffffff;
+    font-size: 14px;
+  }
+  .gp-footer-widget a {
+    color: #f9bd16;
+  }
+  .gp-footer-widget a:hover {
+    color: #b1b1b1;
+  }
+  #gp-copyright {
+    background-color: #353535;
+  }
+  #gp-copyright {
+    border-top: 1px solid #444;
+  }
+  #gp-copyright {
+    color: #777777;
+  }
+  #gp-copyright a {
+    color: #999;
+  }
+  #gp-copyright a:hover {
+    color: #e0e0e0;
+  }
+  #gp-to-top {
+    background-color: #0579bd;
+  }
+  #gp-to-top {
+    color: #ffffff;
+  }
+</style>
+<!-- other header scripts -->
+<!-- other header scripts -->
+<!-- other header scripts -->
+<!-- other header scripts -->
+<!-- other header scripts -->
+  <link rel="icon" href="enviroDIY_Favicon.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#cb4b16" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="clipboard.js"></script>
+  <script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+</head>
+
+<body
+    class="theme-socialize page-template-socialize-child gp-theme gp-responsive gp-wide-layout gp-retina gp-normal-scrolling gp-no-back-to-top gp-relative-header gp-header-standard gp-cart-disabled gp-search-all gp-profile-disabled gp-small-header-all gp-standard-page-header gp-no-sidebar"
+>
+	<div id="gp-site-wrapper">
+
+  <nav id="gp-mobile-nav">
+    <div id="gp-mobile-nav-close-button"></div>
+    <ul class="menu">
+      <li
+        class="gp-standard-menu gp-columns-1 gp-show-all main-menu-item menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children"
+      >
+<a href="index.html" class="menu-link main-menu-link">About</a>        <ul class="sub-menu menu-odd menu-depth-1">
+          <li
+            class="gp-standard-menu gp-menu-link gp-show-all sub-menu-item menu-item-odd menu-item-depth-1 menu-item menu-item-type-post_type menu-item-object-page"
+          >
+<a href="change_log.html">ChangeLog</a>          </li>
+        </ul>
+      </li>
+      <li
+        class="gp-standard-menu gp-columns-1 gp-show-all main-menu-item menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page"
+      >
+<a href="classanbsensor.html">The anbSensor Class</a>      </li>
+      <li
+        class="gp-standard-menu gp-columns-1 gp-show-all main-menu-item menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children"
+      >
+<a href="page_the_examples.html" class="menu-link main-menu-link">Examples using the ANB Sensors Modbus Library</a>        <ul class="sub-menu menu-odd menu-depth-1">
+          <li
+            class="gp-standard-menu gp-menu-link gp-show-all sub-menu-item menu-item-odd menu-item-depth-1 menu-item menu-item-type-post_type menu-item-object-page"
+          >
+<a href="example_get_values.html">Reading Sensor Values</a>          </li>
+          <li
+            class="gp-standard-menu gp-menu-link gp-show-all sub-menu-item menu-item-odd menu-item-depth-1 menu-item menu-item-type-post_type menu-item-object-page"
+          >
+<a href="example_change_modbus_settings.html">Changing Modbus Serial Settings</a>          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav> <!-- gp-mobile-nav -->
+  <div id="gp-mobile-nav-bg"></div>
+
+  <div id="gp-page-wrapper">
+
+    <header id="gp-main-header">
+      <div class="gp-container">
+        <div id="gp-logo">
+          <a href="index.html" title="ANBSensorsModbus 0.0.1">
+            <img
+              src="gp-desktop-logo.png"
+              alt="ANBSensorsModbus 0.0.1"
+              width="200"
+              height="42"
+              class="gp-desktop-logo"
+            />
+            <img
+              src="gp-scrolling-logo.png"
+              alt="ANBSensorsModbus 0.0.1"
+              width="264"
+              height="55"
+              class="gp-scrolling-logo"
+            />
+            <img
+              src="gp-mobile-logo.png"
+              alt="ANBSensorsModbus 0.0.1"
+              width="132"
+              height="28"
+              class="gp-mobile-logo"
+            />
+          </a>
+        </div> <!-- gp-logo -->
+
+        <a id="gp-mobile-nav-button"></a>
+
+        <nav id="gp-main-nav" class="gp-nav">
+          <nav id="gp-primary-main-nav">
+            <ul id="menu-main-menu-1" class="menu">
+              <li
+                class="gp-standard-menu gp-columns-1 gp-show-all main-menu-item menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children"
+              >
+<a href="index.html" class="menu-link main-menu-link" >About</a>                <ul class="sub-menu menu-odd menu-depth-1">
+                  <li
+                    class="gp-standard-menu gp-menu-link gp-show-all sub-menu-item menu-item-odd menu-item-depth-1 menu-item menu-item-type-post_type menu-item-object-page"
+                  >
+<a href="change_log.html">ChangeLog</a>                  </li>
+                </ul>
+              </li>
+              <li
+                class="gp-standard-menu gp-columns-1 gp-show-all main-menu-item menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page"
+              >
+<a href="classanbsensor.html">The anbSensor Class</a>              </li>
+              <li
+                class="gp-standard-menu gp-columns-1 gp-show-all main-menu-item menu-item-even menu-item-depth-0 menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children"
+              >
+<a href="page_the_examples.html" class="menu-link main-menu-link" >Examples using the ANB Sensors Modbus Library</a>                <ul class="sub-menu menu-odd menu-depth-1">
+                  <li
+                    class="gp-standard-menu gp-menu-link gp-show-all sub-menu-item menu-item-odd menu-item-depth-1 menu-item menu-item-type-post_type menu-item-object-page"
+                  >
+<a href="example_get_values.html">Reading Sensor Values</a>                  </li>
+                  <li
+                    class="gp-standard-menu gp-menu-link gp-show-all sub-menu-item menu-item-odd menu-item-depth-1 menu-item menu-item-type-post_type menu-item-object-page"
+                  >
+<a href="example_change_modbus_settings.html">Changing Modbus Serial Settings</a>                  </li>
+                </ul>
+              </li>
+            </ul>
+          </nav> <!-- gp-primary-main-nav -->
+
+          <div id="gp-search">
+            <div id="m-search-button" class="m-show-m" onclick="return showSearch()">
+            </div> <!-- gp-search-box -->
+          </div> <!-- gp-search -->
+
+          <nav id="gp-secondary-main-nav"></nav>
+        </nav> <!-- gp-main-nav -->
+      </div> <!-- gp-container -->
+    </header> <!-- gp-main-header -->
+
+    <header id="gp-small-header">
+      <div class="gp-container">
+        <div class="gp-left-triangle"></div>
+        <div class="gp-right-triangle"></div>
+
+        <nav id="gp-top-nav" class="gp-nav">
+          <div id="gp-left-top-nav">
+            <p style="color:#fff">An Arduino library for communication with ANB Sensors pH sensors via Modbus.</p>
+          </div>
+
+          <div id="gp-right-top-nav">
+            <ul id="menu-icon-links" class="menu">
+              <li
+                class="gp-standard-menu gp-columns-1 gp-show-all main-menu-item menu-item-even menu-item-depth-0 fa fa-github menu-item menu-item-type-custom menu-item-object-custom"
+              >
+                <a
+                  title="See it on GitHub"
+                  href="https://github.com/EnviroDIY/ANBSensorsModbus"
+                  class="menu-link main-menu-link"
+                  >See the source code on GitHub</a
+                >
+              </li>
+            </ul>
+          </div>
+
+        </nav>
+      </div>
+    </header> <!-- gp-small-header -->
+
+    <div id="gp-fixed-header-padding"></div>
+
+    <div class="m-doc-search" id="search">
+      <a href="#!" onclick="return hideSearch()"></a>
+      <div id="gp-header-area">
+        <div class="gp-container">
+          <div style="background-color:#fff;padding:20px;">
+            <div class="m-doc-search-header m-text m-small">
+              <div><span class="m-label m-info">Tab</span> / <span class="m-label m-info">T</span> to search, <span class="m-label m-info">Esc</span> to close</div>
+              <div id="search-symbolcount">&hellip;</div>
+            </div>
+            <div class="m-doc-search-content">
+              <form>
+                <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+              </form>
+              <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+              <div id="search-help" class="m-text m-dim m-text-center">
+                <p class="m-noindent">Search for symbols, directories, files, pages or
+            topics. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+              </div>
+              <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+              <ul id="search-results"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="search-v2.js"></script>
+    <script src="searchdata-v2.js" async="async"></script>
+
+    <div class="gp-clear"></div>
+
+    <div id="gp-content-wrapper" class="gp-container">
+      <div id="gp-inner-container">
+        <div id="gp-left-column">
+          <div id="gp-content">
+
+            <main>
+              <article>
+                <div class="breadcrumbs" typeof="BreadcrumbList" vocab="http://schema.org/">
+        <span class="m-breadcrumb">
+          <a href="index.html">
+            ANBSensorsModbus
+          </a> &gt; <wbr/>
+        </span>
+        <span class="m-breadcrumb">
+          <a href="annotated.html">
+            Classes
+          </a> &gt; <wbr/>
+        </span>
+                <span class="m-breadcrumb">
+          anbSensor
+        </span>
+        <br>
+                </div>
+                <header class="gp-entry-header">
+                  <h1 class="gp-entry-title" itemprop="headline">
+
+            <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="_a_n_b_sensors_modbus_8h.html">&lt;src/ANBSensorsModbus.h&gt;</a></div>
+
+            anbSensor
+            <span class="m-thin">class</span>
+
+                </h1>
+                </header>
+        <p>The Main Class.</p>
+        <nav class="m-block m-default">
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#functions-to-configure-measurements">Functions to configure measurements</a></li>
+                <li><a href="#functions-to-start-and-stop-measurements">Functions to start and stop measurements</a></li>
+                <li><a href="#functions-to-get-one-or-more-values-from-a-sensor">Functions to get one or more values from a sensor.</a></li>
+                <li><a href="#admin-functions">Admin Functions</a></li>
+                <li><a href="#debugging-functions">Debugging functions</a></li>
+              </ul>
+            </li>
+            <li>
+              Detailed Descriptions
+              <ul>
+                <li><a href="#function-details">Functions</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+          <p>This is the class for communication with ANB pH sensors via modbus.</p>
+        <section id="pub-methods">
+          <h2>Public functions</h2>
+          <dl class="m-doc">
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#a3b89a1a58e79e73b78b93a0dc87115df" class="m-doc">begin</a>(</span><span class="m-doc-wrap"><span class="m-dim">byte</span> <span class="m-param">modbusSlaveID</span>,
+              <span class="m-dim">Stream*</span> <span class="m-param">stream</span>,
+              <span class="m-dim">int</span> <span class="m-param">enablePin</span><span class="m-dim"> = -1</span>) -&gt; bool</span>
+            </dt>
+            <dd>This function sets up the communication.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#ac5b1ef8f4b333920b62f9b8fa92ee496" class="m-doc">begin</a>(</span><span class="m-doc-wrap"><span class="m-dim">byte</span> <span class="m-param">modbusSlaveID</span>,
+              <span class="m-dim">Stream&amp;</span> <span class="m-param">stream</span>,
+              <span class="m-dim">int</span> <span class="m-param">enablePin</span><span class="m-dim"> = -1</span>) -&gt; bool</span>
+            </dt>
+            <dd>This function sets up the communication.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#ac97d06cc9a7236a8f80807672e67a680" class="m-doc">gotModbusResponse</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; bool</span>
+            </dt>
+            <dd>Check if the sensor has responded to the last Modbus command.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#a2c25ef434dc20559ef25eebac8047bfd" class="m-doc">isSensorReady</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; bool</span>
+            </dt>
+            <dd>Check if the sensor is ready for a command or has completed a measurement.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#a2f969f149a06b9d118fcc2befdd20ddc" class="m-doc">isMeasurementComplete</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; bool</span>
+            </dt>
+            <dd>Check if a measurement is complete.</dd>
+          </dl>
+        </section>
+        <hr>
+
+        <section id="functions-to-configure-measurements">
+          <h2>Functions to configure measurements</h2>
+            <p><a name="measurement_setting_fxns"></a></p><p>These functions allow you to set mode, set salinity, set interval time, etc.</p><p><a href="https://www.anbsensors.com/newdocs/docs/modbus/#measurement-setting-functions">Detailed function documentation is available here.</a></p><aside class="m-note m-info"><h4>Note</h4><p>The Modbus instructions from ANB sensors state that the &quot;source&quot; for all of the measurement setting functions are input (read only) registers, but in all cases the functions use <strong>holding</strong> (read/write) registers. Most of the registers are, however, <strong>write only</strong> from within the modbus interface - attempting to read the registers will give an illegal function error.</p></aside>
+          <dl class="m-doc">
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a3b1deb940808f73ba4844cae7c299397" class="m-doc">ANBSensorMode</a> </span><a href="#a55e3ee71b942c9930ff799c53c5c020b" class="m-doc">getControlMode</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; <a href="_a_n_b_sensors_modbus_8h.html#a3b1deb940808f73ba4844cae7c299397" class="m-doc">ANBSensorMode</a></span>
+            </dt>
+            <dd>Get the sensor control mode.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#a484b67c711c9cc84d66bfc11494ff087" class="m-doc">setControlMode</a>(</span><span class="m-doc-wrap"><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a3b1deb940808f73ba4844cae7c299397" class="m-doc">ANBSensorMode</a></span> <span class="m-param">newControlMode</span>) -&gt; bool</span>
+            </dt>
+            <dd>Set the sensor control mode.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a950b508646da9d8018f7d7f3aaf3210b" class="m-doc">ANBSalinityMode</a> </span><a href="#a241398aa01f09f779ba1c9bd14654cd5" class="m-doc">getSalinityMode</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; <a href="_a_n_b_sensors_modbus_8h.html#a950b508646da9d8018f7d7f3aaf3210b" class="m-doc">ANBSalinityMode</a></span>
+            </dt>
+            <dd>Get the sensor salinity mode.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#a60f99dae40f546d8c3c79019bf3b463f" class="m-doc">setSalinityMode</a>(</span><span class="m-doc-wrap"><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a950b508646da9d8018f7d7f3aaf3210b" class="m-doc">ANBSalinityMode</a></span> <span class="m-param">newSalinityMode</span>) -&gt; bool</span>
+            </dt>
+            <dd>Set the sensor salinity mode.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a3479585d29aee3ef7695e222278e2858" class="m-doc">ANBPowerStyle</a> </span><a href="#adc5f2f2825318aa42bcb74d7269f8375" class="m-doc">getPowerStyle</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; <a href="_a_n_b_sensors_modbus_8h.html#a3479585d29aee3ef7695e222278e2858" class="m-doc">ANBPowerStyle</a></span>
+            </dt>
+            <dd>Get the sensor power style.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#a53483df45d49e3764c1734645d8427fe" class="m-doc">setPowerStyle</a>(</span><span class="m-doc-wrap"><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a3479585d29aee3ef7695e222278e2858" class="m-doc">ANBPowerStyle</a></span> <span class="m-param">newPowerStyle</span>) -&gt; bool</span>
+            </dt>
+            <dd>Set the sensor power style.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">uint8_t </span><a href="#a588cf9c78a3210678746f3e6db8126af" class="m-doc">getIntervalTime</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; uint8_t</span>
+            </dt>
+            <dd>Get the current interval time.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#aa7675a1d34848195df0f2b6860cfcfe9" class="m-doc">setIntervalTime</a>(</span><span class="m-doc-wrap"><span class="m-dim">uint8_t</span> <span class="m-param">newIntervalTime</span>) -&gt; bool</span>
+            </dt>
+            <dd>Set the sensor interval time.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#a896b5b5af9173e03cc0879c5df875ab5" class="m-doc">getStartDelay</a>(</span><span class="m-doc-wrap"><span class="m-dim">uint16_t&amp;</span> <span class="m-param">hours</span>,
+              <span class="m-dim">uint16_t&amp;</span> <span class="m-param">minutes</span>) -&gt; bool</span>
+            </dt>
+            <dd>Get the current sensor start delay.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#a6bc49d4a042ae054c28f7a1e31ee78c1" class="m-doc">setStartDelay</a>(</span><span class="m-doc-wrap"><span class="m-dim">uint16_t</span> <span class="m-param">hours</span>,
+              <span class="m-dim">uint16_t</span> <span class="m-param">minutes</span>) -&gt; bool</span>
+            </dt>
+            <dd>Set the sensor start delay.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#aaca0261f25b80dfa893e60b8856c92f4" class="m-doc">isImmersionSensorEnabled</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; bool</span>
+            </dt>
+            <dd>Check if the immersion sensor is enabled.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#a1daa27df10ade31ad6cb935cb4b99570" class="m-doc">enableImmersionSensor</a>(</span><span class="m-doc-wrap"><span class="m-dim">bool</span> <span class="m-param">enable</span><span class="m-dim"> = true</span>) -&gt; bool</span>
+            </dt>
+            <dd>Enable or disable the immersion sensor.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#a97639c1438c3d8a79f5d4d44200d12a8" class="m-doc">isFastProfilingEnabled</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; bool</span>
+            </dt>
+            <dd>Check if fast profiling is enabled.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#a78a6ba4602dc755e880ca95f1fa80949" class="m-doc">enableFastProfiling</a>(</span><span class="m-doc-wrap"><span class="m-dim">bool</span> <span class="m-param">enable</span><span class="m-dim"> = true</span>) -&gt; bool</span>
+            </dt>
+            <dd>Enables or disables the fast profiling mode.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#a1a0db7008f3a53e56dabfb31c2d83b0d" class="m-doc">isSDCardEnabled</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; bool</span>
+            </dt>
+            <dd>Check if SD card is enabled.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#a2493ec4438c1e0c2e95398ac472b22ed" class="m-doc">enableSDCard</a>(</span><span class="m-doc-wrap"><span class="m-dim">bool</span> <span class="m-param">enable</span><span class="m-dim"> = true</span>) -&gt; bool</span>
+            </dt>
+            <dd>Enables or disables the SD card.</dd>
+          </dl>
+        </section>
+        <hr>
+        <section id="functions-to-start-and-stop-measurements">
+          <h2>Functions to start and stop measurements</h2>
+            <p><a name="command_fxns"></a></p><p><a href="https://www.anbsensors.com/newdocs/docs/modbus/#command-functions">Detailed function documentation is available here.</a></p>
+          <dl class="m-doc">
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#a18ca7780446b8b48942853cfbaad0ae4" class="m-doc">start</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; bool</span>
+            </dt>
+            <dd>Tells the sensor to begin a scan (taking measurements)</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#aad524bb971c5f4d871715032f57267c0" class="m-doc">abradeSensor</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; bool</span>
+            </dt>
+            <dd>Inform the sensor that the transducer has been abraded.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#a5b8bda7434d362de90cd03217a194532" class="m-doc">stop</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; bool</span>
+            </dt>
+            <dd>Tells the sensors to stop scanning (taking measurements)</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#a5358d4481b27f3f23a917047a04fcad9" class="m-doc">reboot</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; bool</span>
+            </dt>
+            <dd>Tells the sensors to save the current sensor configuration and restart the sensor so it is ready to run with the saved configurations.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#aefab5aab21abdc6f85a4969951996784" class="m-doc">shutdown</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; bool</span>
+            </dt>
+            <dd>Tells the sensors to save the current results and turn off the sensor.</dd>
+          </dl>
+        </section>
+        <hr>
+        <section id="functions-to-get-one-or-more-values-from-a-sensor">
+          <h2>Functions to get one or more values from a sensor.</h2>
+            <p><a name="measurement_output_fxns"></a></p><p><a href="https://www.anbsensors.com/newdocs/docs/modbus/#measurement-output-functions">Detailed function documentation is available here.</a></p>
+          <dl class="m-doc">
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">float </span><a href="#ad85dfa9d7e4ca57ff088628455a6568b" class="m-doc">getpH</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; float</span>
+            </dt>
+            <dd>Gets the current pH value from the sensor.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">float </span><a href="#a223a364296bd8d9272daf5b7c23c9bef" class="m-doc">getTemperature</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; float</span>
+            </dt>
+            <dd>Gets the current temperature in degrees Celsius (°C) from the sensor.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">float </span><a href="#adde87b9fa94dc69df64619683c13e912" class="m-doc">getSalinity</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; float</span>
+            </dt>
+            <dd>Gets the current salinity in parts per thousand (ppt) from the sensor.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">float </span><a href="#aabb1fbda795c61a2b3e432c1a9dcbf5a" class="m-doc">getSpecificConductance</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; float</span>
+            </dt>
+            <dd>Gets the current specific conductance in millisiemens per centimeter (mS/cm) from the sensor.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#ac075c53878b35483ebebc71e34e28cde" class="m-doc">ANBHealthCode</a> </span><a href="#ae8b43f72fe2bbd0a8965bfc7518cb33f" class="m-doc">getHealthCode</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; <a href="_a_n_b_sensors_modbus_8h.html#ac075c53878b35483ebebc71e34e28cde" class="m-doc">ANBHealthCode</a></span>
+            </dt>
+            <dd>Gets the current transducer health code from the sensor.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">float </span><a href="#ae9d9aac129961aa0d8719f670e548203" class="m-doc">getRawConductivity</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; float</span>
+            </dt>
+            <dd>Gets the current raw (non-temperature compensated) conductivity in millisiemens per centimeter (mS/cm) from the sensor.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a979abff66caa549f49fe1b5b3fdad560" class="m-doc">ANBStatusCode</a> </span><a href="#ad242fdd137ec378b2a8898208bb46028" class="m-doc">getStatusCode</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; <a href="_a_n_b_sensors_modbus_8h.html#a979abff66caa549f49fe1b5b3fdad560" class="m-doc">ANBStatusCode</a></span>
+            </dt>
+            <dd>Gets the current status code from the sensor.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a5daa4dc2ee49b93517e437e7401c5eb2" class="m-doc">ANBDiagnosticCode</a> </span><a href="#a646f10868dd8ae698d9486dcd64cd2b9" class="m-doc">getDiagnosticCode</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; <a href="_a_n_b_sensors_modbus_8h.html#a5daa4dc2ee49b93517e437e7401c5eb2" class="m-doc">ANBDiagnosticCode</a></span>
+            </dt>
+            <dd>Gets the current diagnostics code from the sensor.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#ab9212d883ab58a95cdd1297773b7f4f4" class="m-doc">getValues</a>(</span><span class="m-doc-wrap"><span class="m-dim">float&amp;</span> <span class="m-param">pH</span>,
+              <span class="m-dim">float&amp;</span> <span class="m-param">temperature</span>,
+              <span class="m-dim">float&amp;</span> <span class="m-param">salinity</span>,
+              <span class="m-dim">float&amp;</span> <span class="m-param">specificConductance</span>,
+              <span class="m-dim">float&amp;</span> <span class="m-param">rawConductivity</span>,
+              <span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#ac075c53878b35483ebebc71e34e28cde" class="m-doc">ANBHealthCode</a>&amp;</span> <span class="m-param">health</span>,
+              <span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a979abff66caa549f49fe1b5b3fdad560" class="m-doc">ANBStatusCode</a>&amp;</span> <span class="m-param">status</span>,
+              <span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a5daa4dc2ee49b93517e437e7401c5eb2" class="m-doc">ANBDiagnosticCode</a>&amp;</span> <span class="m-param">diagnostic</span>) -&gt; bool</span>
+            </dt>
+            <dd>Gets bulk values from all parameters.</dd>
+          </dl>
+        </section>
+        <hr>
+        <section id="admin-functions">
+          <h2>Admin Functions</h2>
+            <p><a name="admin_fxns"></a></p><p><a href="https://www.anbsensors.com/newdocs/docs/modbus#admin-functions">Administrative functions</a> to get and set the sensor address, communication settings, and clock and to get sensor metadata</p><aside class="m-note m-info"><h4>Note</h4><p>The Modbus instructions from ANB sensors state that the &quot;source&quot; for several of the administrative functions are input (read only) registers, but in all cases the functions use <strong>holding</strong> (read/write) registers. Most of the mislabeled registers are, however, <strong>write only</strong> from within the modbus interface - attempting to read the registers will give an illegal function error.</p></aside>
+          <dl class="m-doc">
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#a1748c60e2e5b27e7f9fa8b75d3671397" class="m-doc">enableModbus</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Enable Modbus communication on the sensor.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">void </span><a href="#aad0aba0d6bfff4ab7c0dc9a0d5e61bcb" class="m-doc">forceModbus</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Attempt to force the sensor to enter Modbus mode by sending the command via serial mode.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#ae0ae3cfc4da64de56fddf66f44d7679a" class="m-doc">enableTerminal</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Change to terminal (RS232) communication mode on the sensor.</dd>
+                          <dt id="aa630a1f7bace68795c4044453ca87b21">
+              <span class="m-doc-wrap-bumper"><span class="m-dim">void </span><a href="#aa630a1f7bace68795c4044453ca87b21" class="m-doc-self">forceTerminal</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Attempt to force the sensor to immediately enter terminal mode by sending the #700 command.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a54c07bbd116af3304b00ae4257583572" class="m-doc">ANBSensorBaud</a> </span><a href="#a4ee9e87584f31c4ed2728f30664dd3b7" class="m-doc">getBaud</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; <a href="_a_n_b_sensors_modbus_8h.html#a54c07bbd116af3304b00ae4257583572" class="m-doc">ANBSensorBaud</a></span>
+            </dt>
+            <dd>Get the sensor modbus baud rate.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#a8701bb598a1c707164dd27dd17f9dd08" class="m-doc">setBaud</a>(</span><span class="m-doc-wrap"><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a54c07bbd116af3304b00ae4257583572" class="m-doc">ANBSensorBaud</a></span> <span class="m-param">newSensorBaud</span>) -&gt; bool</span>
+            </dt>
+            <dd>Set the sensor modbus baud.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">byte </span><a href="#a66c657598cea3546c88fd5284b065dfe" class="m-doc">getAddress</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; byte</span>
+            </dt>
+            <dd>Gets the modbus sensor (slave) address.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#a1049df025501d7e692206adf8a1800af" class="m-doc">setAddress</a>(</span><span class="m-doc-wrap"><span class="m-dim">byte</span> <span class="m-param">newSensorAddress</span>) -&gt; bool</span>
+            </dt>
+            <dd>Set a new modbus sensor (slave) address.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">String </span><a href="#ac412e3764ce86539150603439d2e405a" class="m-doc">getSerialNumber</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; String</span>
+            </dt>
+            <dd>Gets the instrument serial number as a String.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">String </span><a href="#a84c69b26207e15f5e4352642437ce199" class="m-doc">getManufacturer</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; String</span>
+            </dt>
+            <dd>Gets the instrument manufacturer as a String.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">String </span><a href="#ab2952263195c45221ddee958cefebbf6" class="m-doc">getName</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; String</span>
+            </dt>
+            <dd>Gets the sensor name as a String.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">String </span><a href="#a0633ab896f2fef817bf308e1e56c46cd" class="m-doc">getSubName</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; String</span>
+            </dt>
+            <dd>Gets the sensor sub-name as a String.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">String </span><a href="#afcdb095ada384b6ea486c1ed7d55bc95" class="m-doc">getInterfaceVersion</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; String</span>
+            </dt>
+            <dd>Gets the interface firmware (IF) version as a String.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">String </span><a href="#a2af9ac353f154b519391e0a4bf14e20f" class="m-doc">getDriverVersion</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>) -&gt; String</span>
+            </dt>
+            <dd>Gets the driver (DV) firmware version as a String.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#a8f74abf5dff4519944f6bb08b55b8eea" class="m-doc">getRTC</a>(</span><span class="m-doc-wrap"><span class="m-dim">uint16_t&amp;</span> <span class="m-param">seconds</span>,
+              <span class="m-dim">uint16_t&amp;</span> <span class="m-param">minutes</span>,
+              <span class="m-dim">uint16_t&amp;</span> <span class="m-param">hours</span>,
+              <span class="m-dim">uint16_t&amp;</span> <span class="m-param">day</span>,
+              <span class="m-dim">uint16_t&amp;</span> <span class="m-param">month</span>,
+              <span class="m-dim">uint16_t&amp;</span> <span class="m-param">year</span>) -&gt; bool</span>
+            </dt>
+            <dd>Gets the current RTC (Real-Time Clock) value on the sensor.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool </span><a href="#adc34cfe98a243d2dc6492184075f1c9f" class="m-doc">setRTC</a>(</span><span class="m-doc-wrap"><span class="m-dim">uint16_t</span> <span class="m-param">seconds</span>,
+              <span class="m-dim">uint16_t</span> <span class="m-param">minutes</span>,
+              <span class="m-dim">uint16_t</span> <span class="m-param">hours</span>,
+              <span class="m-dim">uint16_t</span> <span class="m-param">day</span>,
+              <span class="m-dim">uint16_t</span> <span class="m-param">month</span>,
+              <span class="m-dim">uint16_t</span> <span class="m-param">year</span>) -&gt; bool</span>
+            </dt>
+            <dd>Set a new RTC (Real-Time Clock) value on the sensor.</dd>
+          </dl>
+        </section>
+        <hr>
+        <section id="debugging-functions">
+          <h2>Debugging functions</h2>
+            <p><a name="debugging"></a></p><aside class="m-note m-info"><h4>Note</h4><p>These functions control the debugging output of the Modbus communication. They are intended for debugging the communication and Modbus commands. These functions should not be used in production code as they can affect performance.</p></aside><aside class="m-note m-danger"><h4>Warning</h4><p>These functions are <strong>not</strong> for debugging the actual operation and quality of the sensor values!</p></aside>
+          <dl class="m-doc">
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">void </span><a href="#a1c68435d12d2c767183ed7eab83fb37a" class="m-doc">setDebugStream</a>(</span><span class="m-doc-wrap"><span class="m-dim">Stream*</span> <span class="m-param">stream</span>)</span>
+            </dt>
+            <dd>Set a stream for debugging information to go to.</dd>
+                          <dt>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">void </span><a href="#abd5eaf3f723962d66e34c6602d17c1eb" class="m-doc">setDebugStream</a>(</span><span class="m-doc-wrap"><span class="m-dim">Stream&amp;</span> <span class="m-param">stream</span>)</span>
+            </dt>
+            <dd>Set a stream for debugging information to go to.</dd>
+                          <dt id="a4892c941d65b1aa89069dc82ac9a535c">
+              <span class="m-doc-wrap-bumper"><span class="m-dim">void </span><a href="#a4892c941d65b1aa89069dc82ac9a535c" class="m-doc-self">stopDebugging</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span class="m-param"></span>)</span>
+            </dt>
+            <dd>Un-set the stream for debugging information to go to; stop debugging.</dd>
+          </dl>
+        </section>
+        <hr>
+
+        <section id="function-details">
+          <h2>Function documentation</h2>
+                      <section class="m-doc-details" id="a3b89a1a58e79e73b78b93a0dc87115df"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a3b89a1a58e79e73b78b93a0dc87115df" class="m-doc-self">begin</a>(</span><span class="m-doc-wrap"><span class="m-dim">byte</span> <span
+                    class="m-param">modbusSlaveID</span>,
+              <span class="m-dim">Stream*</span> <span
+                    class="m-param">stream</span>,
+              <span class="m-dim">int</span> <span
+                    class="m-param">enablePin</span><span class="m-dim"> = -1</span>)</span></span>
+            </h3>
+            <p>This function sets up the communication.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="m-param"  style="width: 1%"><span class="m-param">modbusSlaveID</span></td>
+                  <td>The byte identifier of the modbus slave device.</td>
+                </tr>
+                <tr>
+                  <td class="m-param" ><span class="m-param">stream</span></td>
+                  <td>A pointer to the Arduino stream object to communicate with.</td>
+                </tr>
+                <tr>
+                  <td class="m-param" ><span class="m-param">enablePin</span></td>
+                  <td>A pin on the Arduino processor to use to send an enable signal to an RS485 to TTL adapter. Use a negative number if this does not apply. Optional with a default value of -1.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><span class="m-dim">bool</span> True if the starting communication was successful, false if not.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>It should be run during the arduino &quot;setup&quot; function. The &quot;stream&quot; device must be initialized prior to running this.</p><aside class="m-note m-info"><h4>Note</h4><p>The default Modbus address is 0x55 (decimal 85), but it can be any value between 0x01 and 0xFE <em>except 0x23</em>.</p></aside><aside class="m-note m-danger"><h4>Warning</h4><p>The address 0x23 cannot be used!</p></aside>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="ac5b1ef8f4b333920b62f9b8fa92ee496"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#ac5b1ef8f4b333920b62f9b8fa92ee496" class="m-doc-self">begin</a>(</span><span class="m-doc-wrap"><span class="m-dim">byte</span> <span
+                    class="m-param">modbusSlaveID</span>,
+              <span class="m-dim">Stream&amp;</span> <span
+                    class="m-param">stream</span>,
+              <span class="m-dim">int</span> <span
+                    class="m-param">enablePin</span><span class="m-dim"> = -1</span>)</span></span>
+            </h3>
+            <p>This function sets up the communication.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="m-param"  style="width: 1%"><span class="m-param">modbusSlaveID</span></td>
+                  <td>The byte identifier of the modbus slave device.</td>
+                </tr>
+                <tr>
+                  <td class="m-param" ><span class="m-param">stream</span></td>
+                  <td>A reference to the Arduino stream object to communicate with.</td>
+                </tr>
+                <tr>
+                  <td class="m-param" ><span class="m-param">enablePin</span></td>
+                  <td>A pin on the Arduino processor to use to send an enable signal to an RS485 to TTL adapter. Use a negative number if this does not apply. Optional with a default value of -1.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><span class="m-dim">bool</span> True if the starting communication was successful, false if not.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>It should be run during the arduino &quot;setup&quot; function. The &quot;stream&quot; device must be initialized prior to running this.</p><aside class="m-note m-info"><h4>Note</h4><p>The default Modbus address is 0x55, but it can be any number between 0x01 and 0xFE <em>except 0x23</em>.</p></aside><aside class="m-note m-danger"><h4>Warning</h4><p>The address 0x23 cannot be used!</p></aside>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="ac97d06cc9a7236a8f80807672e67a680"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#ac97d06cc9a7236a8f80807672e67a680" class="m-doc-self">gotModbusResponse</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Check if the sensor has responded to the last Modbus command.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">bool</span> True if the sensor has responded, false if not.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <aside class="m-note m-danger"><h4>Warning</h4><p>This function only checks for a response to the last Modbus command. A correctly formatted Modbus error response is considered a valid response for this function.</p></aside>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a2c25ef434dc20559ef25eebac8047bfd"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a2c25ef434dc20559ef25eebac8047bfd" class="m-doc-self">isSensorReady</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Check if the sensor is ready for a command or has completed a measurement.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">bool</span> True if the sensor is ready, false if not.</td>
+                </tr>
+              </tfoot>
+            </table>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a2f969f149a06b9d118fcc2befdd20ddc"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a2f969f149a06b9d118fcc2befdd20ddc" class="m-doc-self">isMeasurementComplete</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Check if a measurement is complete.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">bool</span> True if the measurement is complete, false if not.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <blockquote><p><strong>First Scan Command Delay</strong></p><p>After sending the first scan command there is a 2-3 min delay before the sensor will return a valid pH value. In this 90s the sensor will output an Exception which is signified by setting the MSB in the command byte and adding a payload byte that specifies the reason for the exception.</p><p>i.e. for the request:</p><p><code>&lt; ADDRESS &gt;&lt; 03 &gt;&lt; 00 &gt;&lt; 00 &gt;&lt; 00 &gt;&lt; 02 &gt;&lt; CRC &gt;</code></p><p>The exception reply when there is currently not a pH value to return is:</p></blockquote><blockquote><p><code>&lt; ADDRESS &gt;&lt; 83 &gt;&lt; 05 &gt;&lt; CRC &gt;</code></p></blockquote><blockquote><p>Where 05 = ACKNOWLEDGE This exception signifies that the sensor has received the Modbus communication but cannot currently perform the requested function. For example, requesting the current pH value when the sensor is not scanning.</p><p>or</p><p><code>&lt; ADDRESS &gt;&lt; 83 &gt;&lt; 06 &gt;&lt; CRC &gt;</code></p><p>Where 06 = BUSY This exception is transmitted when the sensor needs more time before it can perform the requested function. It will be necessary to re-transmit the request again at a later time. For example, requesting the current pH value, before the sensor has been able to calculate the value.</p></blockquote><p>The error responses documented by ANB Sensors will be returned for requests for pH values or health codes, but <strong>not</strong> when requesting the status code. The request for the status code will return a valid response even before the sensor is ready to start scanning.</p>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a55e3ee71b942c9930ff799c53c5c020b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a3b1deb940808f73ba4844cae7c299397" class="m-doc">ANBSensorMode</a>  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a55e3ee71b942c9930ff799c53c5c020b" class="m-doc-self">getControlMode</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Get the sensor control mode.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a3b1deb940808f73ba4844cae7c299397" class="m-doc">ANBSensorMode</a></span> A code for the control mode</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>The control mode is in <s>input</s> <strong>holding</strong> register 0x0035 (decimal 53).</p><aside class="m-note m-danger"><h4>Warning</h4><p>NOT YET SUPPORTED BY MODBUS COMMANDS. The sensor control mode is <strong>write only</strong> from within the modbus interface.</p></aside><aside class="m-note m-default"><h4>See also</h4><p><a href="_a_n_b_sensors_modbus_8h.html#a3b1deb940808f73ba4844cae7c299397" class="m-doc">ANBSensorMode</a></p></aside>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a484b67c711c9cc84d66bfc11494ff087"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a484b67c711c9cc84d66bfc11494ff087" class="m-doc-self">setControlMode</a>(</span><span class="m-doc-wrap"><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a3b1deb940808f73ba4844cae7c299397" class="m-doc">ANBSensorMode</a></span> <span
+                    class="m-param">newControlMode</span>)</span></span>
+            </h3>
+            <p>Set the sensor control mode.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="m-param"  style="width: 1%"><span class="m-param">newControlMode</span></td>
+                  <td>The new control mode to use</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><span class="m-dim">bool</span> True if the control mode was successfully set, false if not.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>Change this value to any of the following valid values: <a href="_a_n_b_sensors_modbus_8h.html#a3b1deb940808f73ba4844cae7c299397af3747d996531ebba24995fc9347092f5" class="m-doc">ANBSensorMode::<wbr />CONTROLLED</a>, <a href="_a_n_b_sensors_modbus_8h.html#a3b1deb940808f73ba4844cae7c299397ade7d660fc991e08c2d3526fec8a46c4a" class="m-doc">ANBSensorMode::<wbr />AUTONOMOUS</a></p><aside class="m-note m-info"><h4>Note</h4><p>Requires power cycle to invoke autonomous mode</p></aside><p>The control mode is in <s>input</s> <strong>holding</strong> register 0x0035 (decimal 53).</p><aside class="m-note m-default"><h4>See also</h4><p><a href="_a_n_b_sensors_modbus_8h.html#a3b1deb940808f73ba4844cae7c299397" class="m-doc">ANBSensorMode</a></p></aside>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a241398aa01f09f779ba1c9bd14654cd5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a950b508646da9d8018f7d7f3aaf3210b" class="m-doc">ANBSalinityMode</a>  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a241398aa01f09f779ba1c9bd14654cd5" class="m-doc-self">getSalinityMode</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Get the sensor salinity mode.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a950b508646da9d8018f7d7f3aaf3210b" class="m-doc">ANBSalinityMode</a></span> A code for the salinity mode</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>The salinity mode is in <s>input</s> <strong>holding</strong> register 0x003E (decimal 62).</p><aside class="m-note m-danger"><h4>Warning</h4><p>NOT YET SUPPORTED BY MODBUS COMMANDS. The salinity mode is <strong>write only</strong> from within the modbus interface.</p></aside>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a60f99dae40f546d8c3c79019bf3b463f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a60f99dae40f546d8c3c79019bf3b463f" class="m-doc-self">setSalinityMode</a>(</span><span class="m-doc-wrap"><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a950b508646da9d8018f7d7f3aaf3210b" class="m-doc">ANBSalinityMode</a></span> <span
+                    class="m-param">newSalinityMode</span>)</span></span>
+            </h3>
+            <p>Set the sensor salinity mode.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="m-param"  style="width: 1%"><span class="m-param">newSalinityMode</span></td>
+                  <td>The new salinity mode to use</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><span class="m-dim">bool</span> True if the salinity mode was successfully set, false if not.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>Change this value to any of the following valid values: <a href="_a_n_b_sensors_modbus_8h.html#a950b508646da9d8018f7d7f3aaf3210ba53d709f9f30ec8f66ee61277b8b8c933" class="m-doc">ANBSalinityMode::<wbr />LOW_SALINITY</a>, <a href="_a_n_b_sensors_modbus_8h.html#a950b508646da9d8018f7d7f3aaf3210ba7e911e2cccc3930c652bbf25651155cc" class="m-doc">ANBSalinityMode::<wbr />HIGH_SALINITY</a></p><aside class="m-note m-info"><h4>Note</h4><p>Before scanning set the expected salinity.</p></aside><p>The salinity mode is in <s>input</s> <strong>holding</strong> register 0x003E (decimal 62).</p>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="adc5f2f2825318aa42bcb74d7269f8375"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a3479585d29aee3ef7695e222278e2858" class="m-doc">ANBPowerStyle</a>  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#adc5f2f2825318aa42bcb74d7269f8375" class="m-doc-self">getPowerStyle</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Get the sensor power style.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a3479585d29aee3ef7695e222278e2858" class="m-doc">ANBPowerStyle</a></span> A code for the power style</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>The power style is in <s>input</s> <strong>holding</strong> register 0x003F (decimal 63).</p><aside class="m-note m-danger"><h4>Warning</h4><p>NOT YET SUPPORTED BY MODBUS COMMANDS. The power style is <strong>write only</strong> from within the modbus interface.</p></aside>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a53483df45d49e3764c1734645d8427fe"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a53483df45d49e3764c1734645d8427fe" class="m-doc-self">setPowerStyle</a>(</span><span class="m-doc-wrap"><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a3479585d29aee3ef7695e222278e2858" class="m-doc">ANBPowerStyle</a></span> <span
+                    class="m-param">newPowerStyle</span>)</span></span>
+            </h3>
+            <p>Set the sensor power style.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="m-param"  style="width: 1%"><span class="m-param">newPowerStyle</span></td>
+                  <td>The new power style to use</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><span class="m-dim">bool</span> True if the power style was successfully set, false if not.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>Change this value to any of the following valid values: <a href="_a_n_b_sensors_modbus_8h.html#a3479585d29aee3ef7695e222278e2858ae1a6ec4b6f5b0b61d29c5210f417253a" class="m-doc">ANBPowerStyle::<wbr />ALWAYS_POWERED</a>, <a href="_a_n_b_sensors_modbus_8h.html#a3479585d29aee3ef7695e222278e2858a28fbe6a459e9f9cf16ee3c846cc9d12b" class="m-doc">ANBPowerStyle::<wbr />ON_MEASUREMENT</a></p><aside class="m-note m-info"><h4>Note</h4><p>Before scanning set the desired power style.</p></aside><p>The power style is in <s>input</s> <strong>holding</strong> register 0x003F (decimal 63).</p>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a588cf9c78a3210678746f3e6db8126af"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">uint8_t  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a588cf9c78a3210678746f3e6db8126af" class="m-doc-self">getIntervalTime</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Get the current interval time.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">uint8_t</span> The current interval time in minutes. 0 indicates continuous operation.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>Returns the interval time in minutes. A value of 0 indicates continuous operation, while any other value represents the interval in minutes between measurements. The minimum interval time for interval mode is 10 minutes. The maximum interval time is 240 minutes.</p><p>The interval time is stored in <s>input</s> <strong>holding</strong> register 0x0036 (decimal 54).</p><aside class="m-note m-info"><h4>Note</h4><p>The interval time only applies if the sensor is in autonomous mode and always powered. The sensor will go into a low power state during the set interval.</p></aside>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="aa7675a1d34848195df0f2b6860cfcfe9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#aa7675a1d34848195df0f2b6860cfcfe9" class="m-doc-self">setIntervalTime</a>(</span><span class="m-doc-wrap"><span class="m-dim">uint8_t</span> <span
+                    class="m-param">newIntervalTime</span>)</span></span>
+            </h3>
+            <p>Set the sensor interval time.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="m-param"  style="width: 1%"><span class="m-param">newIntervalTime</span></td>
+                  <td>The new interval time to use</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><span class="m-dim">bool</span> True if the interval time was successfully set, false if not.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>Change this value to any of the following valid values:</p><ul><li>0 for continuous operation</li><li>10-240 for interval mode (in minutes)</li></ul><p>The new interval time <strong>does not take effect</strong> until the next bootup.</p><aside class="m-note m-info"><h4>Note</h4><p>The interval time only applies if the sensor is in autonomous mode and always powered. The sensor will go into a low power state during the set interval.</p></aside><p>The interval time is stored in <s>input</s> <strong>holding</strong> register 0x0036 (decimal 54).</p>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a896b5b5af9173e03cc0879c5df875ab5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a896b5b5af9173e03cc0879c5df875ab5" class="m-doc-self">getStartDelay</a>(</span><span class="m-doc-wrap"><span class="m-dim">uint16_t&amp;</span> <span
+                    class="m-param">hours</span>,
+              <span class="m-dim">uint16_t&amp;</span> <span
+                    class="m-param">minutes</span>)</span></span>
+            </h3>
+            <p>Get the current sensor start delay.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="m-param"  style="width: 1%"><span class="m-param">hours</span></td>
+                  <td>Reference to a uint8_t where the hours part of the start delay will be stored.</td>
+                </tr>
+                <tr>
+                  <td class="m-param" ><span class="m-param">minutes</span></td>
+                  <td>Reference to a uint8_t where the minutes part of the start delay will be stored.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><span class="m-dim">bool</span> True if the start delay was successfully retrieved, false if not.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>The start delay is the time that the sensor waits before taking its first measurement after booting up. A value of 0 indicates no delay. The maximum value is 24 hours.</p><aside class="m-note m-info"><h4>Note</h4><p>The start delay only applies if the sensor is in autonomous mode and always powered.</p></aside><aside class="m-note m-danger"><h4>Warning</h4><p>NOT YET SUPPORTED BY MODBUS COMMANDS</p></aside>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a6bc49d4a042ae054c28f7a1e31ee78c1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a6bc49d4a042ae054c28f7a1e31ee78c1" class="m-doc-self">setStartDelay</a>(</span><span class="m-doc-wrap"><span class="m-dim">uint16_t</span> <span
+                    class="m-param">hours</span>,
+              <span class="m-dim">uint16_t</span> <span
+                    class="m-param">minutes</span>)</span></span>
+            </h3>
+            <p>Set the sensor start delay.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="m-param"  style="width: 1%"><span class="m-param">hours</span></td>
+                  <td>The hours part of the new start delay (0-24)</td>
+                </tr>
+                <tr>
+                  <td class="m-param" ><span class="m-param">minutes</span></td>
+                  <td>The minutes part of the new start delay (0-59)</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><span class="m-dim">bool</span> True if the start delay was successfully set, false if not.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>The start delay is the time that the sensor waits before taking its first measurement after booting up. A value of 0 indicates no delay. The maximum value is 24 hours.</p><aside class="m-note m-info"><h4>Note</h4><p>The start delay only applies if the sensor is in autonomous mode and always powered.</p></aside><aside class="m-note m-danger"><h4>Warning</h4><p>NOT YET SUPPORTED BY MODBUS COMMANDS</p></aside>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="aaca0261f25b80dfa893e60b8856c92f4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#aaca0261f25b80dfa893e60b8856c92f4" class="m-doc-self">isImmersionSensorEnabled</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Check if the immersion sensor is enabled.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">bool</span> True if the immersion sensor is enabled, false otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <blockquote><ul><li>The immersion sensor checks whether the sensor is submerged in water.</li><li>If the sensor is not immersed, it will stop measurement and set the Transducer Health status to 4.</li><li>In Continuous Mode, the sensor will wait for 5 minutes before checking again.</li><li>In Interval Delay Mode, the sensor will wait for the configured interval delay before rechecking.</li><li>Measurement will automatically resume once immersion is detected.</li></ul></blockquote><aside class="m-note m-info"><h4>Note</h4><p>This function is not available on ATX sensors (S/N &lt;300200).</p></aside><p>The immersion sensor status (immersion rule) is in <s>input</s> <strong>holding</strong> register 0x003C (decimal 60).</p>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a1daa27df10ade31ad6cb935cb4b99570"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a1daa27df10ade31ad6cb935cb4b99570" class="m-doc-self">enableImmersionSensor</a>(</span><span class="m-doc-wrap"><span class="m-dim">bool</span> <span
+                    class="m-param">enable</span><span class="m-dim"> = true</span>)</span></span>
+            </h3>
+            <p>Enable or disable the immersion sensor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="m-param"  style="width: 1%"><span class="m-param">enable</span></td>
+                  <td>True to enable the immersion sensor, false to disable</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><span class="m-dim">bool</span> True if the immersion sensor status was successfully set, false if not.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <aside class="m-note m-info"><h4>Note</h4><p>The new immersion sensor status (immersion rule) is effective immediately. When power cycled, the immersion sensor defaults to enabled and the sensor goes into a low power mode.</p></aside><p>The immersion sensor status (immersion rule) is in <s>input</s> <strong>holding</strong> register 0x003C (decimal 60).</p>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a97639c1438c3d8a79f5d4d44200d12a8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a97639c1438c3d8a79f5d4d44200d12a8" class="m-doc-self">isFastProfilingEnabled</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Check if fast profiling is enabled.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">bool</span> True if fast profiling is enabled, false otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <aside class="m-note m-info"><h4>Note</h4><p>Fast profiling allows for a faster response to pH changes, with an accuracy of +/- 0.1 pH unit. Fast profiling is only available when taking continuous measurements - which also requires that the sensor be in autonomous mode and always powered.</p></aside><aside class="m-note m-danger"><h4>Warning</h4><p>NOT YET SUPPORTED BY MODBUS COMMANDS</p></aside>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a78a6ba4602dc755e880ca95f1fa80949"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a78a6ba4602dc755e880ca95f1fa80949" class="m-doc-self">enableFastProfiling</a>(</span><span class="m-doc-wrap"><span class="m-dim">bool</span> <span
+                    class="m-param">enable</span><span class="m-dim"> = true</span>)</span></span>
+            </h3>
+            <p>Enables or disables the fast profiling mode.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="m-param"  style="width: 1%"><span class="m-param">enable</span></td>
+                  <td>True to enable fast profiling mode, false to disable</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><span class="m-dim">bool</span> True if the command was successfully sent, false if not.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <aside class="m-note m-danger"><h4>Warning</h4><p>NOT YET SUPPORTED BY MODBUS COMMANDS. Use ABN utils or the serial terminal prompt to enable or disable this feature.</p></aside>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a1a0db7008f3a53e56dabfb31c2d83b0d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a1a0db7008f3a53e56dabfb31c2d83b0d" class="m-doc-self">isSDCardEnabled</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Check if SD card is enabled.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">bool</span> True if SD card is enabled, false otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <aside class="m-note m-info"><h4>Note</h4><p>The sensor has internal memory which can be switched off to save power if necessary. If the internal memory is switched off, no data will be saved in the sensor. All data must be saved externally.</p><p>Data can only be downloaded the you computer of uploaded to the ANB cloud using the serial terminal interface or ANB utils.</p></aside><aside class="m-note m-danger"><h4>Warning</h4><p>NOT YET SUPPORTED BY MODBUS COMMANDS</p></aside>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a2493ec4438c1e0c2e95398ac472b22ed"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a2493ec4438c1e0c2e95398ac472b22ed" class="m-doc-self">enableSDCard</a>(</span><span class="m-doc-wrap"><span class="m-dim">bool</span> <span
+                    class="m-param">enable</span><span class="m-dim"> = true</span>)</span></span>
+            </h3>
+            <p>Enables or disables the SD card.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="m-param"  style="width: 1%"><span class="m-param">enable</span></td>
+                  <td>True to enable SD card, false to disable</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><span class="m-dim">bool</span> True if the command was successfully sent, false if not.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <aside class="m-note m-info"><h4>Note</h4><p>Disabling the SD card will reduce power consumption by the sensor.</p></aside><aside class="m-note m-danger"><h4>Warning</h4><p>NOT YET SUPPORTED BY MODBUS COMMANDS. Use ABN utils or the serial terminal prompt to enable or disable this feature.</p></aside>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a18ca7780446b8b48942853cfbaad0ae4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a18ca7780446b8b48942853cfbaad0ae4" class="m-doc-self">start</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Tells the sensor to begin a scan (taking measurements)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">bool</span> True if the scan was successfully started, false if not.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>The start scan command is set with <strong>coil</strong> 0x0100 (decimal 256).</p><blockquote><p>After sending the first scan command there is a 2-3 min delay before the sensor will return a valid pH value. In this 90s the sensor will output an Exception which is signified by setting the MSB in the command byte and adding a payload byte that specifies the reason for the exception.</p><p>i.e. for the request:</p><p>&lt; ADDRESS &gt;&lt; 03 &gt;&lt; 00 &gt;&lt; 00 &gt;&lt; 00 &gt;&lt; 02 &gt;&lt; CRC &gt;</p><p>The exception reply when there is currently not a pH value to return is:</p><p>&lt; ADDRESS &gt;&lt; 83 &gt;&lt; 05 &gt;&lt; CRC &gt;</p><p>Where 05 = ACKNOWLEDGE This exception signifies that the sensor has received the Modbus communication but cannot currently perform the requested function. For example, requesting the current pH value when the sensor is not scanning.</p><p>or</p><p>&lt; ADDRESS &gt;&lt; 83 &gt;&lt; 06 &gt;&lt; CRC &gt;</p><p>Where 06 = BUSY This exception is transmitted when the sensor needs more time before it can perform the requested function. It will be necessary to re-transmit the request again at a later time. For example, requesting the current pH value before the sensor has been able to calculate the value.</p><p>NB. All data is big endian</p></blockquote><aside class="m-note m-danger"><h4>Warning</h4><p>Do not run the sensors in pH buffer solutions. They are for use in seawater - freshwater.</p></aside>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="aad524bb971c5f4d871715032f57267c0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#aad524bb971c5f4d871715032f57267c0" class="m-doc-self">abradeSensor</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Inform the sensor that the transducer has been abraded.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">bool</span> True if the sensor was successfully informed of the abrasion, false if not.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>If the sensor is told that it has been abraded, it resets all internal sensor settings.</p><p>The abrade sensor command is set with <strong>coil</strong> 0x0180 (decimal 384).</p><p>[Detailed maintenance guidelines including how to abrade the sensor can be found here.](<a href="https://www.anbsensors.com/newdocs/docs/transducer-maintenance/">https:/<wbr />/<wbr />www.anbsensors.com/<wbr />newdocs/<wbr />docs/<wbr />transducer-maintenance/<wbr /></a>)</p>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a5b8bda7434d362de90cd03217a194532"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a5b8bda7434d362de90cd03217a194532" class="m-doc-self">stop</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Tells the sensors to stop scanning (taking measurements)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">bool</span> True if the scan was successfully stopped, false if not.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>This saves the current results and closes the pH results file, but leaves the sensor powered. The next start-measurement command will open a new file, if the SD card is enabled.</p><p>The stop command is set with <strong>coil</strong> 0x0000</p>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a5358d4481b27f3f23a917047a04fcad9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a5358d4481b27f3f23a917047a04fcad9" class="m-doc-self">reboot</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Tells the sensors to save the current sensor configuration and restart the sensor so it is ready to run with the saved configurations.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">bool</span> True if the sensor was successfully rebooted and began responding to Modbus commands again, false if not.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>The reboot command is set by writing 0xFFFF to <s>input</s> <strong>holding</strong> register 0x1000</p><aside class="m-note m-danger"><h4>Warning</h4><p>Due to firmware errors, after sending this command, the sensor may revert to terminal mode, requiring a <code><a href="#aad0aba0d6bfff4ab7c0dc9a0d5e61bcb" class="m-doc">forceModbus()</a></code> command to put it back into modbus mode.</p></aside>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="aefab5aab21abdc6f85a4969951996784"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#aefab5aab21abdc6f85a4969951996784" class="m-doc-self">shutdown</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Tells the sensors to save the current results and turn off the sensor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">bool</span> True if the sensor was successfully rebooted, false if not.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>This saves the current results and closes the pH results file leaving the sensor ready to power down.</p><aside class="m-note m-danger"><h4>Warning</h4><p>NOT YET SUPPORTED BY MODBUS COMMANDS</p></aside>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="ad85dfa9d7e4ca57ff088628455a6568b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">float  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#ad85dfa9d7e4ca57ff088628455a6568b" class="m-doc-self">getpH</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Gets the current pH value from the sensor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">float</span> The pH value as a float. Passes the sensor returned 99.99 for a bad value and returns -9999 if the sensor could not be read.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <aside class="m-note m-info"><h4>Note</h4><p>If the pH output is 99.99, check the transducer health number for instruction.</p></aside><p>The pH value is stored in holding register 0x0000 (decimal 0).</p>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a223a364296bd8d9272daf5b7c23c9bef"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">float  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a223a364296bd8d9272daf5b7c23c9bef" class="m-doc-self">getTemperature</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Gets the current temperature in degrees Celsius (°C) from the sensor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">float</span> The temperature value in degrees Celsius (°C) as a float. Passes the sensor returned 99.99 for a bad value and returns -9999 if the sensor could not be read.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>The temperature value is stored in holding register 0x0002 (decimal 2).</p>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="adde87b9fa94dc69df64619683c13e912"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">float  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#adde87b9fa94dc69df64619683c13e912" class="m-doc-self">getSalinity</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Gets the current salinity in parts per thousand (ppt) from the sensor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">float</span> The salinity value as a float. Passes the sensor returned 99.99 for a bad value and returns -9999 if the sensor could not be read.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <aside class="m-note m-info"><h4>Note</h4><p>If the salinity output is 99.99 but the pH output is OK, the salinity is out of range.</p><ul><li>Try changing your salinity setting</li><li>If expected salinity is &gt; 7ppt no salinity output is given</li></ul><p>If both the pH and salinity output is 99.99, check the transducer health number for instruction.</p></aside><p>The salinity value is stored in holding register 0x0004 (decimal 4).</p>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="aabb1fbda795c61a2b3e432c1a9dcbf5a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">float  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#aabb1fbda795c61a2b3e432c1a9dcbf5a" class="m-doc-self">getSpecificConductance</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Gets the current specific conductance in millisiemens per centimeter (mS/cm) from the sensor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">float</span> The specific conductance value as a float. Passes the sensor returned 99.99 for a bad value and returns -9999 if the sensor could not be read.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <aside class="m-note m-info"><h4>Note</h4><p>If the specific conductance output is 99.99 but the pH output is OK, the salinity is out of range.</p><ul><li>Try changing your salinity setting</li><li>If expected salinity is &gt; 7ppt no salinity output is given</li></ul><p>If both the pH and specific conductance output is 99.99, check the transducer health number for instruction.</p></aside><p>The specific conductance value is stored in holding register 0x0006 (decimal 6).</p>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="ae8b43f72fe2bbd0a8965bfc7518cb33f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#ac075c53878b35483ebebc71e34e28cde" class="m-doc">ANBHealthCode</a>  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#ae8b43f72fe2bbd0a8965bfc7518cb33f" class="m-doc-self">getHealthCode</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Gets the current transducer health code from the sensor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#ac075c53878b35483ebebc71e34e28cde" class="m-doc">ANBHealthCode</a></span> The transducer health code; passes <a href="_a_n_b_sensors_modbus_8h.html#ac075c53878b35483ebebc71e34e28cdea696b031073e74bf2cb98e5ef201d4aa3" class="m-doc">ANBHealthCode::<wbr />UNKNOWN</a> (0xFF) if the sensor could not be read.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>The health code is stored in the lower byte of holding register 0x0008 (decimal 8).</p><aside class="m-note m-default"><h4>See also</h4><p><a href="_a_n_b_sensors_modbus_8h.html#ac075c53878b35483ebebc71e34e28cde" class="m-doc">ANBHealthCode</a></p></aside>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="ae9d9aac129961aa0d8719f670e548203"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">float  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#ae9d9aac129961aa0d8719f670e548203" class="m-doc-self">getRawConductivity</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Gets the current raw (non-temperature compensated) conductivity in millisiemens per centimeter (mS/cm) from the sensor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">float</span> The raw (actual) conductivity value as a float. Passes the sensor returned 99.99 for a bad value and returns -9999 if the sensor could not be read.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <aside class="m-note m-info"><h4>Note</h4><p>If the raw conductivity output is 99.99 but the pH output is OK, the salinity is out of range.</p><ul><li>Try changing your salinity setting</li><li>If expected salinity is &gt; 7ppt no salinity output is given</li></ul><p>If both the pH and raw conductivity output is 99.99, check the transducer health number for instruction.</p></aside><p>The raw conductivity value is stored in holding register 0x0043 (decimal 67).</p>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="ad242fdd137ec378b2a8898208bb46028"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a979abff66caa549f49fe1b5b3fdad560" class="m-doc">ANBStatusCode</a>  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#ad242fdd137ec378b2a8898208bb46028" class="m-doc-self">getStatusCode</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Gets the current status code from the sensor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a979abff66caa549f49fe1b5b3fdad560" class="m-doc">ANBStatusCode</a></span> The status code; passes <a href="_a_n_b_sensors_modbus_8h.html#a979abff66caa549f49fe1b5b3fdad560a696b031073e74bf2cb98e5ef201d4aa3" class="m-doc">ANBStatusCode::<wbr />UNKNOWN</a> (0xFF) if the sensor could not be read.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>The status code is stored as the first digit of the two digit value stored in the lower byte of holding register 0x0009 (decimal 9).</p><aside class="m-note m-default"><h4>See also</h4><p><a href="_a_n_b_sensors_modbus_8h.html#a979abff66caa549f49fe1b5b3fdad560" class="m-doc">ANBStatusCode</a></p></aside>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a646f10868dd8ae698d9486dcd64cd2b9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a5daa4dc2ee49b93517e437e7401c5eb2" class="m-doc">ANBDiagnosticCode</a>  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a646f10868dd8ae698d9486dcd64cd2b9" class="m-doc-self">getDiagnosticCode</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Gets the current diagnostics code from the sensor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a5daa4dc2ee49b93517e437e7401c5eb2" class="m-doc">ANBDiagnosticCode</a></span> The diagnostics code; passes <a href="_a_n_b_sensors_modbus_8h.html#a5daa4dc2ee49b93517e437e7401c5eb2a696b031073e74bf2cb98e5ef201d4aa3" class="m-doc">ANBDiagnosticCode::<wbr />UNKNOWN</a> (0xFF) if the sensor could not be read.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>The diagnostic code is stored as the second digit of the two digit value stored in the lower byte of holding register 0x0009 (decimal 9).</p><aside class="m-note m-default"><h4>See also</h4><p><a href="_a_n_b_sensors_modbus_8h.html#a5daa4dc2ee49b93517e437e7401c5eb2" class="m-doc">ANBDiagnosticCode</a></p></aside>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="ab9212d883ab58a95cdd1297773b7f4f4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#ab9212d883ab58a95cdd1297773b7f4f4" class="m-doc-self">getValues</a>(</span><span class="m-doc-wrap"><span class="m-dim">float&amp;</span> <span
+                    class="m-param">pH</span>,
+              <span class="m-dim">float&amp;</span> <span
+                    class="m-param">temperature</span>,
+              <span class="m-dim">float&amp;</span> <span
+                    class="m-param">salinity</span>,
+              <span class="m-dim">float&amp;</span> <span
+                    class="m-param">specificConductance</span>,
+              <span class="m-dim">float&amp;</span> <span
+                    class="m-param">rawConductivity</span>,
+              <span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#ac075c53878b35483ebebc71e34e28cde" class="m-doc">ANBHealthCode</a>&amp;</span> <span
+                    class="m-param">health</span>,
+              <span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a979abff66caa549f49fe1b5b3fdad560" class="m-doc">ANBStatusCode</a>&amp;</span> <span
+                    class="m-param">status</span>,
+              <span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a5daa4dc2ee49b93517e437e7401c5eb2" class="m-doc">ANBDiagnosticCode</a>&amp;</span> <span
+                    class="m-param">diagnostic</span>)</span></span>
+            </h3>
+            <p>Gets bulk values from all parameters.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="m-param"  style="width: 1%"><span class="m-param">pH</span></td>
+                  <td>The pH value</td>
+                </tr>
+                <tr>
+                  <td class="m-param" ><span class="m-param">temperature</span></td>
+                  <td>The temperature value</td>
+                </tr>
+                <tr>
+                  <td class="m-param" ><span class="m-param">salinity</span></td>
+                  <td>The salinity value</td>
+                </tr>
+                <tr>
+                  <td class="m-param" ><span class="m-param">specificConductance</span></td>
+                  <td>The specific conductance value</td>
+                </tr>
+                <tr>
+                  <td class="m-param" ><span class="m-param">rawConductivity</span></td>
+                  <td>The &quot;actual&quot; (raw) conductivity value</td>
+                </tr>
+                <tr>
+                  <td class="m-param" ><span class="m-param">health</span></td>
+                  <td>The transducer health code</td>
+                </tr>
+                <tr>
+                  <td class="m-param" ><span class="m-param">status</span></td>
+                  <td>The transducer status code</td>
+                </tr>
+                <tr>
+                  <td class="m-param" ><span class="m-param">diagnostic</span></td>
+                  <td>The diagnostics code</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><span class="m-dim">bool</span> True if the measurements were successfully obtained, false if not.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>All parameters can be read from 11 (0x0B) holding registers starting at 0x0000.</p><p>BUT &ndash; the documentation also says that pH, temp, salinity, conductivity, and actual conductivity can all be read from those registers.. which would require 12 registers when you account for the codes.</p><aside class="m-note m-dim"><h4><a href="todo.html#_todo000002" class="m-doc">Todo</a></h4><p>figure out what&#x27;s up with the raw conductivity register location</p></aside><p>If the values could not be read, the function will return false and the float output parameters (pH, temperature, salinity, specificConductance, rawConductivity) will be set to -9999. The non-float output parameters (status, diagnostics) will be set to 0xFF.</p>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a1748c60e2e5b27e7f9fa8b75d3671397"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a1748c60e2e5b27e7f9fa8b75d3671397" class="m-doc-self">enableModbus</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Enable Modbus communication on the sensor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">bool</span> True if the operation was successful, false otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>The modbus enable command is in <s>input</s> <strong>holding</strong> register 0x0140 (decimal 320).</p><p>Modbus is enabled immediately after the response</p><aside class="m-note m-info"><h4>Note</h4><p>The reverse of this command is <a href="#ae0ae3cfc4da64de56fddf66f44d7679a" class="m-doc">enableTerminal()</a></p></aside><aside class="m-note m-danger"><h4>Warning</h4><p>This command does not seem to work properly!</p></aside>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="aad0aba0d6bfff4ab7c0dc9a0d5e61bcb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">void  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#aad0aba0d6bfff4ab7c0dc9a0d5e61bcb" class="m-doc-self">forceModbus</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Attempt to force the sensor to enter Modbus mode by sending the command via serial mode.</p>
+            <aside class="m-note m-dim"><h4><a href="todo.html#_todo000001" class="m-doc">Todo</a></h4><p>Figure out how long the reboot takes!</p></aside>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="ae0ae3cfc4da64de56fddf66f44d7679a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#ae0ae3cfc4da64de56fddf66f44d7679a" class="m-doc-self">enableTerminal</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Change to terminal (RS232) communication mode on the sensor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">bool</span> True if the operation was successful, false otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>The terminal enable command is in <s>input</s> <strong>holding</strong> register 0x003B (decimal 59).</p><p>Terminal communication is enabled <strong>on the next boot</strong>. If you need to immediately switch to terminal mode without rebooting, you can send the characters #700. This action prohibits the use of 0x23 (0x23 = #) as a Modbus address.</p><aside class="m-note m-info"><h4>Note</h4><p>The reverse of this command is <a href="#a1748c60e2e5b27e7f9fa8b75d3671397" class="m-doc">enableModbus()</a></p></aside>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a4ee9e87584f31c4ed2728f30664dd3b7"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a54c07bbd116af3304b00ae4257583572" class="m-doc">ANBSensorBaud</a>  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a4ee9e87584f31c4ed2728f30664dd3b7" class="m-doc-self">getBaud</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Get the sensor modbus baud rate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a54c07bbd116af3304b00ae4257583572" class="m-doc">ANBSensorBaud</a></span> A code for the baud rate</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>The baud rate is in the lower byte of <s>input</s> <strong>holding</strong> register 0x003A (decimal 58).</p><p>The factory default value is <a href="_a_n_b_sensors_modbus_8h.html#a54c07bbd116af3304b00ae4257583572a64864b9332ddf712853b865c63ceed3e" class="m-doc">ANBSensorBaud::<wbr />BAUD57600</a> (7), corresponding to a baud rate of 57600.</p><aside class="m-note m-danger"><h4>Warning</h4><p>NOT YET SUPPORTED BY MODBUS COMMANDS. The baud rate is <strong>write only</strong> from within the modbus interface.</p></aside>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a8701bb598a1c707164dd27dd17f9dd08"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a8701bb598a1c707164dd27dd17f9dd08" class="m-doc-self">setBaud</a>(</span><span class="m-doc-wrap"><span class="m-dim"><a href="_a_n_b_sensors_modbus_8h.html#a54c07bbd116af3304b00ae4257583572" class="m-doc">ANBSensorBaud</a></span> <span
+                    class="m-param">newSensorBaud</span>)</span></span>
+            </h3>
+            <p>Set the sensor modbus baud.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="m-param"  style="width: 1%"><span class="m-param">newSensorBaud</span></td>
+                  <td>The new baud rate to use</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><span class="m-dim">bool</span> True if the baud rate was successfully set, false if not.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>The baud rate is in <s>input</s> <strong>holding</strong> register 0x003A (decimal 58).</p><p>The new baud rate <strong>does not take effect</strong> until the next bootup.</p><p>Change this value to any of the following valid values:</p><p><a href="_a_n_b_sensors_modbus_8h.html#a54c07bbd116af3304b00ae4257583572a9be512a4edf5a33858c5b731d273ea44" class="m-doc">ANBSensorBaud::<wbr />BAUD9600</a> (1), <a href="_a_n_b_sensors_modbus_8h.html#a54c07bbd116af3304b00ae4257583572aead3f790ebe20323a62103245c490122" class="m-doc">ANBSensorBaud::<wbr />BAUD14400</a> (2), <a href="_a_n_b_sensors_modbus_8h.html#a54c07bbd116af3304b00ae4257583572abe046d6ceccce9d36a983ec2b9d6bcb0" class="m-doc">ANBSensorBaud::<wbr />BAUD19200</a> (3), <a href="_a_n_b_sensors_modbus_8h.html#a54c07bbd116af3304b00ae4257583572af414813c50f4a98c562e508904762e42" class="m-doc">ANBSensorBaud::<wbr />BAUD28800</a> (4), <a href="_a_n_b_sensors_modbus_8h.html#a54c07bbd116af3304b00ae4257583572a8494b6c137227734c4e771c9747e5eee" class="m-doc">ANBSensorBaud::<wbr />BAUD38400</a> (5), <a href="_a_n_b_sensors_modbus_8h.html#a54c07bbd116af3304b00ae4257583572aadf5f23bee99185a444416d280b0189f" class="m-doc">ANBSensorBaud::<wbr />BAUD56000</a> (6), <a href="_a_n_b_sensors_modbus_8h.html#a54c07bbd116af3304b00ae4257583572a64864b9332ddf712853b865c63ceed3e" class="m-doc">ANBSensorBaud::<wbr />BAUD57600</a> (7), <a href="_a_n_b_sensors_modbus_8h.html#a54c07bbd116af3304b00ae4257583572a0f7639fdd1803af75abc0dfa9cfe97a8" class="m-doc">ANBSensorBaud::<wbr />BAUD115200</a> (8)</p>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a66c657598cea3546c88fd5284b065dfe"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">byte  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a66c657598cea3546c88fd5284b065dfe" class="m-doc-self">getAddress</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Gets the modbus sensor (slave) address.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">byte</span> The modbus address of the ANB pH sensor</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>The address is in the lower byte of <s>input</s> <strong>holding</strong> register 0x0039 (decimal 57).</p><aside class="m-note m-danger"><h4>Warning</h4><p>NOT YET SUPPORTED BY MODBUS COMMANDS. The modbus address is <strong>write only</strong> from within the modbus interface.</p></aside>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a1049df025501d7e692206adf8a1800af"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a1049df025501d7e692206adf8a1800af" class="m-doc-self">setAddress</a>(</span><span class="m-doc-wrap"><span class="m-dim">byte</span> <span
+                    class="m-param">newSensorAddress</span>)</span></span>
+            </h3>
+            <p>Set a new modbus sensor (slave) address.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="m-param"  style="width: 1%"><span class="m-param">newSensorAddress</span></td>
+                  <td>The new address (slave ID) for the ANB pH sensor</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><span class="m-dim">bool</span> True if the slave ID was successfully set, false if not.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>The address change will take effect on the next boot.</p><aside class="m-note m-info"><h4>Note</h4><p>The default Modbus address is 0x55, but it can be any number between 1 and 247 <strong>except</strong> 0x23 (decimal 35).</p></aside><aside class="m-note m-danger"><h4>Warning</h4><p>The address 0x23 cannot be used!</p></aside><p>The address is in the lower byte of <s>input</s> <strong>holding</strong> register 0x0039 (decimal 57).</p>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="ac412e3764ce86539150603439d2e405a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">String  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#ac412e3764ce86539150603439d2e405a" class="m-doc-self">getSerialNumber</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Gets the instrument serial number as a String.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">String</span> The serial number of the ANB pH sensor</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>The serial number takes up 3 holding registers starting at 0x000A (decimal 10).</p>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a84c69b26207e15f5e4352642437ce199"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">String  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a84c69b26207e15f5e4352642437ce199" class="m-doc-self">getManufacturer</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Gets the instrument manufacturer as a String.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">String</span> The manufacturer of the ANB pH sensor; this should return &quot;ANB
+Sensors&quot;</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>The manufacturer information takes up 8 holding registers starting at 0x000D (decimal 13).</p>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="ab2952263195c45221ddee958cefebbf6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">String  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#ab2952263195c45221ddee958cefebbf6" class="m-doc-self">getName</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Gets the sensor name as a String.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">String</span> The name of the ANB pH sensor</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>The sensor name takes up 8 holding registers starting at 0x0015 (decimal 21).</p>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a0633ab896f2fef817bf308e1e56c46cd"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">String  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a0633ab896f2fef817bf308e1e56c46cd" class="m-doc-self">getSubName</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Gets the sensor sub-name as a String.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">String</span> The sub-name of the ANB pH sensor</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>The sensor sub-name takes up 8 holding registers starting at 0x001D (decimal 29).</p>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="afcdb095ada384b6ea486c1ed7d55bc95"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">String  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#afcdb095ada384b6ea486c1ed7d55bc95" class="m-doc-self">getInterfaceVersion</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Gets the interface firmware (IF) version as a String.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">String</span> The interface firmware (IF)version of the ANB pH sensor</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p><a href="https://www.anbsensors.com/newdocs/docs/Firmware/new-firmware">New firmware and firmware change logs are available here.</a> <a href="https://www.anbsensors.com/newdocs/docs/Firmware/firmware-archive">Older firmware is archived here</a></p><p>The interface firmware (IF) version takes up 8 holding registers starting at 0x0025 (decimal 37).</p>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a2af9ac353f154b519391e0a4bf14e20f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">String  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a2af9ac353f154b519391e0a4bf14e20f" class="m-doc-self">getDriverVersion</a>(</span><span class="m-doc-wrap"><span class="m-dim">void</span><span
+                    class="m-param"></span>)</span></span>
+            </h3>
+            <p>Gets the driver (DV) firmware version as a String.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><span class="m-dim">String</span> The driver (DV) firmware version of the ANB pH sensor</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p><a href="https://www.anbsensors.com/newdocs/docs/Firmware/new-firmware">New firmware and firmware change logs are available here.</a> <a href="https://www.anbsensors.com/newdocs/docs/Firmware/firmware-archive">Older firmware is archived here</a></p><p>The driver (DV) firmware version takes up 8 holding registers starting at 0x002D (decimal 45).</p>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a8f74abf5dff4519944f6bb08b55b8eea"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a8f74abf5dff4519944f6bb08b55b8eea" class="m-doc-self">getRTC</a>(</span><span class="m-doc-wrap"><span class="m-dim">uint16_t&amp;</span> <span
+                    class="m-param">seconds</span>,
+              <span class="m-dim">uint16_t&amp;</span> <span
+                    class="m-param">minutes</span>,
+              <span class="m-dim">uint16_t&amp;</span> <span
+                    class="m-param">hours</span>,
+              <span class="m-dim">uint16_t&amp;</span> <span
+                    class="m-param">day</span>,
+              <span class="m-dim">uint16_t&amp;</span> <span
+                    class="m-param">month</span>,
+              <span class="m-dim">uint16_t&amp;</span> <span
+                    class="m-param">year</span>)</span></span>
+            </h3>
+            <p>Gets the current RTC (Real-Time Clock) value on the sensor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="m-param"  style="width: 1%"><span class="m-param">seconds</span></td>
+                  <td>Reference to a variable where the seconds will be stored</td>
+                </tr>
+                <tr>
+                  <td class="m-param" ><span class="m-param">minutes</span></td>
+                  <td>Reference to a variable where the minutes will be stored</td>
+                </tr>
+                <tr>
+                  <td class="m-param" ><span class="m-param">hours</span></td>
+                  <td>Reference to a variable where the hours will be stored</td>
+                </tr>
+                <tr>
+                  <td class="m-param" ><span class="m-param">day</span></td>
+                  <td>Reference to a variable where the day will be stored</td>
+                </tr>
+                <tr>
+                  <td class="m-param" ><span class="m-param">month</span></td>
+                  <td>Reference to a variable where the month will be stored</td>
+                </tr>
+                <tr>
+                  <td class="m-param" ><span class="m-param">year</span></td>
+                  <td>Reference to a variable where the year will be stored</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><span class="m-dim">bool</span> True if the RTC value was successfully retrieved, false otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>The RTC value is stored in 6 holding registers starting at 0x003D (decimal 61).</p>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="adc34cfe98a243d2dc6492184075f1c9f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">bool  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#adc34cfe98a243d2dc6492184075f1c9f" class="m-doc-self">setRTC</a>(</span><span class="m-doc-wrap"><span class="m-dim">uint16_t</span> <span
+                    class="m-param">seconds</span>,
+              <span class="m-dim">uint16_t</span> <span
+                    class="m-param">minutes</span>,
+              <span class="m-dim">uint16_t</span> <span
+                    class="m-param">hours</span>,
+              <span class="m-dim">uint16_t</span> <span
+                    class="m-param">day</span>,
+              <span class="m-dim">uint16_t</span> <span
+                    class="m-param">month</span>,
+              <span class="m-dim">uint16_t</span> <span
+                    class="m-param">year</span>)</span></span>
+            </h3>
+            <p>Set a new RTC (Real-Time Clock) value on the sensor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="m-param"  style="width: 1%"><span class="m-param">seconds</span></td>
+                  <td>The seconds portion of the current time</td>
+                </tr>
+                <tr>
+                  <td class="m-param" ><span class="m-param">minutes</span></td>
+                  <td>The minutes portion of the current time</td>
+                </tr>
+                <tr>
+                  <td class="m-param" ><span class="m-param">hours</span></td>
+                  <td>The hours portion of the current time</td>
+                </tr>
+                <tr>
+                  <td class="m-param" ><span class="m-param">day</span></td>
+                  <td>The day portion of the current time</td>
+                </tr>
+                <tr>
+                  <td class="m-param" ><span class="m-param">month</span></td>
+                  <td>The month portion of the current time</td>
+                </tr>
+                <tr>
+                  <td class="m-param" ><span class="m-param">year</span></td>
+                  <td>The year portion of the current time</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><span class="m-dim">bool</span> True if the RTC value was successfully set, false otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+            <p>The RTC value is stored in 6 holding registers starting at 0x003D (decimal 61).</p>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="a1c68435d12d2c767183ed7eab83fb37a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">void  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#a1c68435d12d2c767183ed7eab83fb37a" class="m-doc-self">setDebugStream</a>(</span><span class="m-doc-wrap"><span class="m-dim">Stream*</span> <span
+                    class="m-param">stream</span>)</span></span>
+            </h3>
+            <p>Set a stream for debugging information to go to.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="m-param"  style="width: 1%"><span class="m-param">stream</span></td>
+                  <td>An Arduino stream object</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <hr>
+          </div>
+        </section>
+                      <section class="m-doc-details" id="abd5eaf3f723962d66e34c6602d17c1eb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><span class="m-dim">void  anbSensor::<wbr /></span></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a
+                    href="#abd5eaf3f723962d66e34c6602d17c1eb" class="m-doc-self">setDebugStream</a>(</span><span class="m-doc-wrap"><span class="m-dim">Stream&amp;</span> <span
+                    class="m-param">stream</span>)</span></span>
+            </h3>
+            <p>Set a stream for debugging information to go to.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="m-param"  style="width: 1%"><span class="m-param">stream</span></td>
+                  <td>An Arduino stream object</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <hr>
+          </div>
+        </section>
+        </section>
+        <hr>
+
+              </article>
+            </main>
+
+          </div> <!-- gp-content -->
+        </div> <!-- gp-left-column -->
+      </div> <!-- gp-inner-container -->
+    </div> <!-- gp-content-wrapper -->
+
+    <div id="footer-image">
+      <div class="gp-container">
+        <img
+          src="https://www.envirodiy.org/wp-content/uploads/2016/05/EnviroDIY_LogoMaster_Square_V5_TwoTree_Trans_notext-e1462820115833.png"
+          width="99"
+          height="22"
+          alt=""
+        />
+      </div>
+    </div>
+
+    <footer id="gp-footer">
+      <div id="gp-copyright">
+        <div class="gp-container">
+          <div id="gp-copyright-text">
+            <p>
+              <a href="https://stroudcenter.org/" target="_blank"
+                >EnviroDIY™ is a community for do-it-yourself ideas for environmental
+                science and monitoring. EnviroDIY is an initiative of
+                <a
+                  style="text-decoration: underline"
+                  href="https://stroudcenter.org/"
+                  target="_blank"
+                  >Stroud Water Research Center</a
+                >, which advances knowledge and stewardship of freshwater systems through
+                global research, education, and watershed restoration.
+              </a>
+            </p>
+            <p>
+              All content on EnviroDIY is licensed as Creative Commons
+              Attribution-ShareAlike 4.0 International (CC-BY-SA). Hardware designs on this
+              website are released under the CERN Open Hardware License 1.2.
+              <a style="text-decoration: underline" href="https://envirodiy.org/licenses/"
+                >See all licenses.</a
+              >
+              <a style="text-decoration: underline" href="https://envirodiy.org/terms/"
+                >Terms of Use</a
+              >
+              |
+              <a style="text-decoration: underline" href="https://envirodiy.org/privacy/"
+                >Privacy Policy</a
+              >
+              |
+              <a style="text-decoration: underline" href="https://envirodiy.org/cookies/"
+                >Cookie Policy</a
+              >
+              |
+              <a
+                style="text-decoration: underline"
+                href="https://envirodiy.org/shop-policies/"
+                >Shop Policies</a
+              >
+              |
+              <a style="text-decoration: underline" href="https://envirodiy.org/contact/"
+                >Contact</a
+              >
+            </p>
+            <p>
+              Created with <a href="https://doxygen.org/">Doxygen</a> 1.14.0 and <a href="https://mcss.mosra.cz/">m.css</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <div class="gp-clear"></div>
+
+    </div> <!-- gp-site-wrapper -->
+  </div> <!-- gp-site-wrapper -->
+
+</body>
+</html>

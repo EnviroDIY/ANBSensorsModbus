@@ -1,0 +1,68 @@
+{
+  "version": "1.14.0",
+  "compound": {
+    "kind": "page",
+    "id": "todo",
+    "name": "Todo List",
+    "url_base": "todo",
+    "url": "todo.html",
+    "include": null,
+    "has_template_details": false,
+    "templates": null,
+    "brief": "",
+    "description": "<dl class=\"m-doc\"><dt>Member <a href=\"classanb_sensor.html#aad0aba0d6bfff4ab7c0dc9a0d5e61bcb\" class=\"m-doc\">anbSensor::<wbr />forceModbus</a>  ()</dt><dd><a name=\"_todo000001\"></a>Figure out how long the reboot takes!</dd><dt>Member <a href=\"classanb_sensor.html#ab9212d883ab58a95cdd1297773b7f4f4\" class=\"m-doc\">anbSensor::<wbr />getValues</a>  (float&amp;pH, float&amp;temperature, float&amp;salinity, float&amp;specificConductance, float&amp;rawConductivity, <a href=\"_a_n_b_sensors_modbus_8h.html#ac075c53878b35483ebebc71e34e28cde\" class=\"m-doc\">ANBHealthCode</a>&amp;health, <a href=\"_a_n_b_sensors_modbus_8h.html#a979abff66caa549f49fe1b5b3fdad560\" class=\"m-doc\">ANBStatusCode</a>&amp;status, <a href=\"_a_n_b_sensors_modbus_8h.html#a5daa4dc2ee49b93517e437e7401c5eb2\" class=\"m-doc\">ANBDiagnosticCode</a>&amp;diagnostic)</dt><dd><a name=\"_todo000002\"></a>figure out what&#x27;s up with the raw conductivity register location</dd></dl>",
+    "sections": [],
+    "deprecated": null,
+    "since": null,
+    "example_navigation": null,
+    "footer_navigation": null,
+    "topics": [],
+    "dirs": [],
+    "files": [],
+    "namespaces": [],
+    "classes": [],
+    "base_classes": [],
+    "derived_classes": [],
+    "enums": [],
+    "typedefs": [],
+    "funcs": [],
+    "vars": [],
+    "defines": [],
+    "public_types": [],
+    "public_static_funcs": [],
+    "typeless_funcs": [],
+    "public_funcs": [],
+    "signals": [],
+    "public_slots": [],
+    "public_static_vars": [],
+    "public_vars": [],
+    "protected_types": [],
+    "protected_static_funcs": [],
+    "protected_funcs": [],
+    "protected_slots": [],
+    "protected_static_vars": [],
+    "protected_vars": [],
+    "private_funcs": [],
+    "private_slots": [],
+    "related": [],
+    "friend_funcs": [],
+    "groups": [],
+    "has_enum_details": false,
+    "has_typedef_details": false,
+    "has_func_details": false,
+    "has_var_details": false,
+    "has_define_details": false,
+    "breadcrumb": [
+      [
+        "Todo List",
+        "todo.html"
+      ]
+    ],
+    "breadcrumbGroup": [
+      [
+        "Todo List",
+        "todo.html"
+      ]
+    ]
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "version": "1.14.0",
+  "index": {
+    "symbols": [
+      {
+        "id": "classanb_sensor",
+        "kind": "class",
+        "name": "anbSensor",
+        "url": "classanb_sensor.html",
+        "brief": "The Main Class.",
+        "children": [],
+        "deprecated": null,
+        "since": null,
+        "has_nestable_children": false,
+        "is_final": false
+      }
+    ],
+    "files": [
+      {
+        "id": "dir_49e56c817e5e54854c35e136979f97ca",
+        "kind": "dir",
+        "name": "docs",
+        "url": "dir_49e56c817e5e54854c35e136979f97ca.html",
+        "brief": "Contains extra documentation and files to help build the documentation.",
+        "children": [],
+        "deprecated": null,
+        "since": null,
+        "has_nestable_children": false
+      },
+      {
+        "id": "dir_d28a4824dc47e487b107a5db32ef43c4",
+        "kind": "dir",
+        "name": "examples",
+        "url": "dir_d28a4824dc47e487b107a5db32ef43c4.html",
+        "brief": "Contains all of the example sketches.",
+        "children": [
+          {
+            "id": "dir_67ec081ba6b5a9137a8114a038b678e6",
+            "kind": "dir",
+            "name": "GetValues",
+            "url": "dir_67ec081ba6b5a9137a8114a038b678e6.html",
+            "brief": "Contains the GetValues example.",
+            "children": [],
+            "deprecated": null,
+            "since": null,
+            "has_nestable_children": false
+          }
+        ],
+        "deprecated": null,
+        "since": null,
+        "has_nestable_children": true
+      },
+      {
+        "id": "dir_68267d1309a1af8e8297ef4c3efbcdba",
+        "kind": "dir",
+        "name": "src",
+        "url": "dir_68267d1309a1af8e8297ef4c3efbcdba.html",
+        "brief": "Contains the source code for the ANBSensorsModbus library.",
+        "children": [
+          {
+            "id": "_a_n_b_sensors_modbus_8h",
+            "kind": "file",
+            "name": "ANBSensorsModbus.h",
+            "url": "_a_n_b_sensors_modbus_8h.html",
+            "brief": "Contains the ANBSensorsModbus class definitions.",
+            "children": [],
+            "deprecated": null,
+            "since": null,
+            "has_nestable_children": false
+          }
+        ],
+        "deprecated": null,
+        "since": null,
+        "has_nestable_children": false
+      }
+    ],
+    "pages": [
+      {
+        "id": "change_log",
+        "kind": "page",
+        "name": "ChangeLog",
+        "url": "change_log.html",
+        "brief": "",
+        "children": [],
+        "deprecated": null,
+        "since": null,
+        "has_nestable_children": false
+      },
+      {
+        "id": "page_the_examples",
+        "kind": "page",
+        "name": "Examples using the ANB Sensors Modbus Library",
+        "url": "page_the_examples.html",
+        "brief": "",
+        "children": [
+          {
+            "id": "example_get_values",
+            "kind": "page",
+            "name": "Getting Values",
+            "url": "example_get_values.html",
+            "brief": "",
+            "children": [],
+            "deprecated": null,
+            "since": null,
+            "has_nestable_children": false
+          }
+        ],
+        "deprecated": null,
+        "since": null,
+        "has_nestable_children": false
+      },
+      {
+        "id": "license",
+        "kind": "page",
+        "name": "Software License Agreement (BSD-3 License)",
+        "url": "license.html",
+        "brief": "",
+        "children": [],
+        "deprecated": null,
+        "since": null,
+        "has_nestable_children": false
+      },
+      {
+        "id": "todo",
+        "kind": "page",
+        "name": "Todo List",
+        "url": "todo.html",
+        "brief": "",
+        "children": [],
+        "deprecated": null,
+        "since": null,
+        "has_nestable_children": false
+      }
+    ],
+    "topics": []
+  }
+}

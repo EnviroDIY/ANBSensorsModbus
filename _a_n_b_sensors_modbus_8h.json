@@ -1,0 +1,517 @@
+{
+  "version": "1.14.0",
+  "compound": {
+    "kind": "file",
+    "id": "_a_n_b_sensors_modbus_8h",
+    "name": "ANBSensorsModbus.h",
+    "url_base": "_a_n_b_sensors_modbus_8h",
+    "url": "_a_n_b_sensors_modbus_8h.html",
+    "include": null,
+    "has_template_details": false,
+    "templates": null,
+    "brief": "Contains the ANBSensorsModbus class definitions.",
+    "description": "<p>Contains the ANBSensorsModbus class declarations.</p><p>Part of the EnviroDIY ANBSensorsModbus library for Arduino.</p><aside class=\"m-note m-default\"><h4>License</h4><p>This library is published under the BSD-3 license.</p></aside><aside class=\"m-note m-default\"><h4>Author</h4><p>Sara Geleskie Damiano <a href=\"mailto:sdamiano@stroudcenter.org\">sdamiano@stroudcenter.org</a></p></aside><p>Tested with AQ5</p>",
+    "sections": "",
+    "deprecated": null,
+    "since": null,
+    "example_navigation": null,
+    "footer_navigation": null,
+    "topics": [],
+    "dirs": [],
+    "files": [],
+    "namespaces": [],
+    "classes": [
+      {
+        "kind": "class",
+        "url": "classanb_sensor.html",
+        "name": "anbSensor",
+        "brief": "The Main Class.",
+        "deprecated": null,
+        "since": null,
+        "templates": null
+      }
+    ],
+    "base_classes": [],
+    "derived_classes": [],
+    "enums": [
+      {
+        "base_url": "_a_n_b_sensors_modbus_8h.html",
+        "id": "a3b1deb940808f73ba4844cae7c299397",
+        "include": null,
+        "has_details": true,
+        "type": "",
+        "name": "ANBSensorMode",
+        "brief": "Sensor control modes for ANB sensors.",
+        "description": "<p>CONTROLLED mode means the sensor is controlled by an external system. AUTONOMOUS mode means the sensor operates independently.</p><aside class=\"m-note m-info\"><h4>Note</h4><p>In controlled mode, the sensor remains continuously connected throughout deployment allowing you to control it directly at all times. In autonomous mode, the sensor is configured before deployment, and once deployed, operates independently.</p></aside><p><a href=\"https://www.anbsensors.com/newdocs/docs/Sensor%20Controls%20&amp;%20Functions/autonomous%20monitoring\">Details about the autonomous mode are available here.</a></p>",
+        "deprecated": null,
+        "since": null,
+        "is_protected": false,
+        "is_strong": true,
+        "values": [
+          {
+            "id": "a3b1deb940808f73ba4844cae7c299397af3747d996531ebba24995fc9347092f5",
+            "name": "CONTROLLED",
+            "initializer": "= 1",
+            "brief": "use controlled mode - measurement taken when demanded by an external controller",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "a3b1deb940808f73ba4844cae7c299397ade7d660fc991e08c2d3526fec8a46c4a",
+            "name": "AUTONOMOUS",
+            "initializer": "= 2",
+            "brief": "use autonomous mode - sensor operates independently following a pre-set routine",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "a3b1deb940808f73ba4844cae7c299397a696b031073e74bf2cb98e5ef201d4aa3",
+            "name": "UNKNOWN",
+            "initializer": "= 255",
+            "brief": "Unknown sensor mode; no response from the sensor.",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          }
+        ],
+        "has_value_details": true
+      },
+      {
+        "base_url": "_a_n_b_sensors_modbus_8h.html",
+        "id": "a950b508646da9d8018f7d7f3aaf3210b",
+        "include": null,
+        "has_details": true,
+        "type": "uint8_t",
+        "name": "ANBSalinityMode",
+        "brief": "Salinity modes for the ANB sensors.",
+        "description": "<p>These modes configure the sensor for different salinity ranges.</p>",
+        "deprecated": null,
+        "since": null,
+        "is_protected": false,
+        "is_strong": true,
+        "values": [
+          {
+            "id": "a950b508646da9d8018f7d7f3aaf3210ba53d709f9f30ec8f66ee61277b8b8c933",
+            "name": "LOW_SALINITY",
+            "initializer": "= 1",
+            "brief": "use low salinity mode - (0.05-2.5ppt)",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "a950b508646da9d8018f7d7f3aaf3210ba7e911e2cccc3930c652bbf25651155cc",
+            "name": "HIGH_SALINITY",
+            "initializer": "= 2",
+            "brief": "use high salinity mode - (2.5-40ppt)",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "a950b508646da9d8018f7d7f3aaf3210ba696b031073e74bf2cb98e5ef201d4aa3",
+            "name": "UNKNOWN",
+            "initializer": "= 255",
+            "brief": "Unknown salinity mode; no response from the sensor.",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          }
+        ],
+        "has_value_details": true
+      },
+      {
+        "base_url": "_a_n_b_sensors_modbus_8h.html",
+        "id": "a3479585d29aee3ef7695e222278e2858",
+        "include": null,
+        "has_details": true,
+        "type": "uint8_t",
+        "name": "ANBPowerStyle",
+        "brief": "Power styles for the ANB sensors.",
+        "description": "<p>This tells the sensor how it will be powered. It does NOT control the power state of the sensor; it only informs the sensor of the expected power management strategy.</p>",
+        "deprecated": null,
+        "since": null,
+        "is_protected": false,
+        "is_strong": true,
+        "values": [
+          {
+            "id": "a3479585d29aee3ef7695e222278e2858ae1a6ec4b6f5b0b61d29c5210f417253a",
+            "name": "ALWAYS_POWERED",
+            "initializer": "= 1",
+            "brief": "The sensor will be continuously powered.",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "a3479585d29aee3ef7695e222278e2858a28fbe6a459e9f9cf16ee3c846cc9d12b",
+            "name": "ON_MEASUREMENT",
+            "initializer": "=\n        2",
+            "brief": "The sensor will be powered only during measurements.",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "a3479585d29aee3ef7695e222278e2858a696b031073e74bf2cb98e5ef201d4aa3",
+            "name": "UNKNOWN",
+            "initializer": "= 255",
+            "brief": "Unknown power style; no response from the sensor.",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          }
+        ],
+        "has_value_details": true
+      },
+      {
+        "base_url": "_a_n_b_sensors_modbus_8h.html",
+        "id": "a54c07bbd116af3304b00ae4257583572",
+        "include": null,
+        "has_details": true,
+        "type": "uint8_t",
+        "name": "ANBSensorBaud",
+        "brief": "Baud rates for the ANB sensors.",
+        "description": "<p>These are the valid baud rates for communication with the sensor. The default baud rate is 57600. All data is sent in 8-N-1 format (8 data bits, no parity, 1 stop bit). The parity cannot be changed.</p><p><a href=\"https://www.anbsensors.com/newdocs/docs/modbus#sensor-communication\">Detailed communication settings are available here.</a></p>",
+        "deprecated": null,
+        "since": null,
+        "is_protected": false,
+        "is_strong": true,
+        "values": [
+          {
+            "id": "a54c07bbd116af3304b00ae4257583572a9be512a4edf5a33858c5b731d273ea44",
+            "name": "BAUD9600",
+            "initializer": "= 1",
+            "brief": "9600 baud",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "a54c07bbd116af3304b00ae4257583572aead3f790ebe20323a62103245c490122",
+            "name": "BAUD14400",
+            "initializer": "= 2",
+            "brief": "14400 baud",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "a54c07bbd116af3304b00ae4257583572abe046d6ceccce9d36a983ec2b9d6bcb0",
+            "name": "BAUD19200",
+            "initializer": "= 3",
+            "brief": "19200 baud",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "a54c07bbd116af3304b00ae4257583572af414813c50f4a98c562e508904762e42",
+            "name": "BAUD28800",
+            "initializer": "= 4",
+            "brief": "28800 baud",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "a54c07bbd116af3304b00ae4257583572a8494b6c137227734c4e771c9747e5eee",
+            "name": "BAUD38400",
+            "initializer": "= 5",
+            "brief": "38400 baud",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "a54c07bbd116af3304b00ae4257583572aadf5f23bee99185a444416d280b0189f",
+            "name": "BAUD56000",
+            "initializer": "= 6",
+            "brief": "56000 baud",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "a54c07bbd116af3304b00ae4257583572a64864b9332ddf712853b865c63ceed3e",
+            "name": "BAUD57600",
+            "initializer": "= 7",
+            "brief": "57600 baud",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "a54c07bbd116af3304b00ae4257583572a0f7639fdd1803af75abc0dfa9cfe97a8",
+            "name": "BAUD115200",
+            "initializer": "= 8",
+            "brief": "115200 baud",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "a54c07bbd116af3304b00ae4257583572a696b031073e74bf2cb98e5ef201d4aa3",
+            "name": "UNKNOWN",
+            "initializer": "= 255",
+            "brief": "Unknown baud rate; no response from the sensor.",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          }
+        ],
+        "has_value_details": true
+      },
+      {
+        "base_url": "_a_n_b_sensors_modbus_8h.html",
+        "id": "ac075c53878b35483ebebc71e34e28cde",
+        "include": null,
+        "has_details": true,
+        "type": "uint8_t",
+        "name": "ANBHealthCode",
+        "brief": "Health codes for the ANB sensors.",
+        "description": "<p>These codes indicate the health status of the sensor&#x27;s transducer.</p><table class=\"m-table m-fullwidth m-flat\"><thead><tr><th><a href=\"#ac075c53878b35483ebebc71e34e28cde\" class=\"m-doc\">ANBHealthCode</a></th><th>Value</th><th>Explanation</th><th>Action</th></tr></thead><tbody><tr><td>OK</td><td>0</td><td>Healthy Transducer</td><td>No action required</td></tr><tr><td>ABRADE_SOON</td><td>1</td><td>Transducer will need abrading soon</td><td>- Ensure salinity setting is correct<br />- Abrade the transducer based on scanning profile and access frequency;<br />if accessed daily, wait until the health number reaches 2 before abrading,<br />otherwise, abrade now for sensors not accessed for weeks/months</td></tr><tr><td>ABRADE_NOW</td><td>2</td><td>Transducer needs abrading now</td><td>- Ensure salinity setting is correct<br />- Abrade the transducer</td></tr><tr><td>REPLACE</td><td>3</td><td>Transducer needs replacing</td><td>- Ensure salinity setting is correct<br />- Replace the transducer (or transducer not immersed for sensors with serial numbers less than 300200)</td></tr><tr><td>NOT_IMMERSED</td><td>4</td><td>Transducer is not immersed</td><td>Immerse the sensor</td></tr><tr><td>NO_REFERENCE</td><td>5</td><td>No valid reference tracker measurement</td><td>Please wait for the next measurement</td></tr><tr><td>NO_PH</td><td>6</td><td>No valid pH measurement</td><td>Please wait for the next measurement</td></tr><tr><td>UNKNOWN</td><td>255</td><td>Unknown status</td><td>Reconnect with the sensor</td></tr></tbody></table><p><a href=\"https://www.anbsensors.com/newdocs/docs/sensor-output#transducer-health\">Transducer health details can be found here.</a></p><p><a href=\"https://www.anbsensors.com/newdocs/docs/transducer-maintenance/\">Detailed maintenance guidelines including how to abrade the sensor can be found here.</a></p>",
+        "deprecated": null,
+        "since": null,
+        "is_protected": false,
+        "is_strong": true,
+        "values": [
+          {
+            "id": "ac075c53878b35483ebebc71e34e28cdeae0aa021e21dddbd6d8cecec71e9cf564",
+            "name": "OK",
+            "initializer": "= 0",
+            "brief": "Healthy Transducer; No action required.",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "ac075c53878b35483ebebc71e34e28cdea979081778b7a1b244dc0a9e47dc6913c",
+            "name": "ABRADE_SOON",
+            "initializer": "= 1",
+            "brief": "Transducer will need abrading soon.",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "ac075c53878b35483ebebc71e34e28cdea2e9d3f9f985eba339232c335bccba3a9",
+            "name": "ABRADE_NOW",
+            "initializer": "= 2",
+            "brief": "Transducer needs abrading now.",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "ac075c53878b35483ebebc71e34e28cdea560a2dd6f6744646473b3b19e1fe96d7",
+            "name": "REPLACE",
+            "initializer": "= 3",
+            "brief": "Transducer needs replacing.",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "ac075c53878b35483ebebc71e34e28cdea7d0fb7ecd5d40f82d09674e6c9371991",
+            "name": "NOT_IMMERSED",
+            "initializer": "= 4",
+            "brief": "Transducer is not immersed.",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "ac075c53878b35483ebebc71e34e28cdea4168dd5863dc9700c6edbef5fb8e9415",
+            "name": "NO_REFERENCE",
+            "initializer": "= 5",
+            "brief": "No valid reference tracker measurement.",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "ac075c53878b35483ebebc71e34e28cdea9c432c1d756ceb01893168fd48adb87a",
+            "name": "NO_PH",
+            "initializer": "= 6",
+            "brief": "No valid pH measurement.",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "ac075c53878b35483ebebc71e34e28cdea696b031073e74bf2cb98e5ef201d4aa3",
+            "name": "UNKNOWN",
+            "initializer": "= 255",
+            "brief": "Unknown health status; no response from the sensor.",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          }
+        ],
+        "has_value_details": true
+      },
+      {
+        "base_url": "_a_n_b_sensors_modbus_8h.html",
+        "id": "a979abff66caa549f49fe1b5b3fdad560",
+        "include": null,
+        "has_details": true,
+        "type": "uint8_t",
+        "name": "ANBStatusCode",
+        "brief": "Status codes for the ANB sensors.",
+        "description": "<p>These codes indicate the current operational status of the sensor.</p><table class=\"m-table m-fullwidth m-flat\"><thead><tr><th><a href=\"#a979abff66caa549f49fe1b5b3fdad560\" class=\"m-doc\">ANBStatusCode</a></th><th>Value</th><th>Explanation</th></tr></thead><tbody><tr><td>SLEEPING</td><td>0</td><td>Sensor is idle and/or following its pre-set interval routine</td></tr><tr><td>INTERVAL_SCANNING</td><td>1</td><td>pH will be updated when measurement completes</td></tr><tr><td>CONTINUOUS_SCANNING</td><td>2</td><td>pH will be automatically updated as per our continuous sequence</td></tr><tr><td>UNKNOWN</td><td>255</td><td>Unknown status; no response from the sensor</td></tr></tbody></table><p><a href=\"https://www.anbsensors.com/newdocs/docs/modbus#sensor-diagnostics\">Sensor status code documentation is available here.</a></p>",
+        "deprecated": null,
+        "since": null,
+        "is_protected": false,
+        "is_strong": true,
+        "values": [
+          {
+            "id": "a979abff66caa549f49fe1b5b3fdad560a7850588c11fe6db41b8b2dd6c455f8f3",
+            "name": "SLEEPING",
+            "initializer": "= 0",
+            "brief": "Sleep.",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "a979abff66caa549f49fe1b5b3fdad560aab27c74d580327fd645af608db16fbe7",
+            "name": "INTERVAL_SCANNING",
+            "initializer": "= 1",
+            "brief": "Interval Scanning.",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "a979abff66caa549f49fe1b5b3fdad560a3cafaa6fc0b931e77aad495fb89a0e5c",
+            "name": "CONTINUOUS_SCANNING",
+            "initializer": "= 2",
+            "brief": "Continuous Scanning.",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "a979abff66caa549f49fe1b5b3fdad560a696b031073e74bf2cb98e5ef201d4aa3",
+            "name": "UNKNOWN",
+            "initializer": "= 255",
+            "brief": "Unknown status; no response from the sensor.",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          }
+        ],
+        "has_value_details": true
+      },
+      {
+        "base_url": "_a_n_b_sensors_modbus_8h.html",
+        "id": "a5daa4dc2ee49b93517e437e7401c5eb2",
+        "include": null,
+        "has_details": true,
+        "type": "uint8_t",
+        "name": "ANBDiagnosticCode",
+        "brief": "Diagnostics codes for the ANB sensors.",
+        "description": "<table class=\"m-table m-fullwidth m-flat\"><thead><tr><th><a href=\"#a5daa4dc2ee49b93517e437e7401c5eb2\" class=\"m-doc\">ANBDiagnosticCode</a></th><th>Value</th><th>Explanation</th><th>Action</th></tr></thead><tbody><tr><td>OK</td><td>0</td><td>Healthy Sensor</td><td>None</td></tr><tr><td>BATTERY_ERROR</td><td>1</td><td>Clock Battery Error</td><td>If there is no external power to the sensor the real time clock will not hold the programmed time<br />- If the sensor is powered, the time set and data streamed, this failure is not an issue<br />- If the sensor is in autonomous mode the clock will fail if disconnected from the power when it was programmed and placed on an external battery<br />-Users can record when the sensor was first switched on (where the sensor&#x27;s time will be set to 0) and calculate the times externally, or, if this is not viable, contact <a href=\"mailto:support@anbsensors.com\">support@anbsensors.com</a></td></tr><tr><td>SD_ERROR</td><td>2</td><td>SD Card Error</td><td>Either SD Card has been disabled or<br />A failing in the internal data save has occurred and no new data can be saved to the internal memory<br />- If the sensor is connected to an external communications system the sensor will continue to stream data, however no data will be saved in autonomous mode<br />- Please contact <a href=\"mailto:support@anbsensors.com\">support@anbsensors.com</a></td></tr><tr><td>SYSTEM_ERROR</td><td>3</td><td>System Error</td><td>Contact <a href=\"mailto:support@anbsensors.com\">support@anbsensors.com</a></td></tr><tr><td>UNKNOWN</td><td>255</td><td>Unknown status</td><td>Reconnect with the sensor</td></tr></tbody></table><p><a href=\"https://www.anbsensors.com/newdocs/docs/sensor-output#sensor-diagnostics\">Sensor diagnostic output details can be found here.</a></p>",
+        "deprecated": null,
+        "since": null,
+        "is_protected": false,
+        "is_strong": true,
+        "values": [
+          {
+            "id": "a5daa4dc2ee49b93517e437e7401c5eb2ae0aa021e21dddbd6d8cecec71e9cf564",
+            "name": "OK",
+            "initializer": "= 0",
+            "brief": "Healthy Sensor; No action required.",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "a5daa4dc2ee49b93517e437e7401c5eb2a81ed61fc7ab8eeacf8afe9263e15e522",
+            "name": "BATTERY_ERROR",
+            "initializer": "= 1",
+            "brief": "Clock Battery Error.",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "a5daa4dc2ee49b93517e437e7401c5eb2abe4bd99b330ae3fc5b830a44f1bdaa87",
+            "name": "SD_ERROR",
+            "initializer": "= 2",
+            "brief": "SD Card Error.",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "a5daa4dc2ee49b93517e437e7401c5eb2ae9b39c88f4cb30e93d788b910e090576",
+            "name": "SYSTEM_ERROR",
+            "initializer": "= 3",
+            "brief": "System Error.",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          },
+          {
+            "id": "a5daa4dc2ee49b93517e437e7401c5eb2a696b031073e74bf2cb98e5ef201d4aa3",
+            "name": "UNKNOWN",
+            "initializer": "= 255",
+            "brief": "Unknown diagnostic status; no response from the sensor.",
+            "description": "",
+            "deprecated": null,
+            "since": null
+          }
+        ],
+        "has_value_details": true
+      }
+    ],
+    "typedefs": [],
+    "funcs": [],
+    "vars": [],
+    "defines": [],
+    "public_types": [],
+    "public_static_funcs": [],
+    "typeless_funcs": [],
+    "public_funcs": [],
+    "signals": [],
+    "public_slots": [],
+    "public_static_vars": [],
+    "public_vars": [],
+    "protected_types": [],
+    "protected_static_funcs": [],
+    "protected_funcs": [],
+    "protected_slots": [],
+    "protected_static_vars": [],
+    "protected_vars": [],
+    "private_funcs": [],
+    "private_slots": [],
+    "related": [],
+    "friend_funcs": [],
+    "groups": [],
+    "has_enum_details": true,
+    "has_typedef_details": false,
+    "has_func_details": false,
+    "has_var_details": false,
+    "has_define_details": false,
+    "breadcrumb": [
+      [
+        "src",
+        "dir_68267d1309a1af8e8297ef4c3efbcdba.html"
+      ],
+      [
+        "ANBSensorsModbus.h",
+        "_a_n_b_sensors_modbus_8h.html"
+      ]
+    ],
+    "breadcrumbGroup": [
+      [
+        "ANBSensorsModbus.h",
+        "_a_n_b_sensors_modbus_8h.html"
+      ]
+    ]
+  }
+}
