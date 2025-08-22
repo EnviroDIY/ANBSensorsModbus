@@ -399,8 +399,6 @@ bool anbSensor::enableModbus() {
     return success;
 }
 void anbSensor::forceModbus() {
-    uint32_t currentTimeout =
-        _stream->getTimeout();  // save the current timeout
     _stream->setTimeout(750);  // set a longer timeout for the terminal commands
     // clear anything hanging in the buffer
     do { _stream->readString(); } while (_stream->available());
@@ -458,7 +456,7 @@ void anbSensor::forceModbus() {
     while (millis() - startTime < 10000L && _stream->available() < 10);
     do { _stream->readString(); } while (_stream->available());
     /// @todo Figure out how long the reboot takes!
-    _stream->setTimeout(currentTimeout);  // restore the original timeout
+    _stream->setTimeout(1000L);  // restore the original timeout
 }
 
 // The terminal enable command is in **holding** register 0x003B (decimal 59)
