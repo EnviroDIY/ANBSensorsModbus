@@ -108,6 +108,6 @@ Hardware designs shared are released, unless otherwise indicated, under the [CER
 
 [Sara Damiano](https://github.com/SRGDamia1) is the primary developer of the EnviroDIY ANBSensorsModbus library, with input from many [other contributors](https://github.com/EnviroDIY/ANBSensorsModbus/graphs/contributors).
 
-This project has benefited from the support from the following funders:
+This project has benefited from the support from the following funding sources:
 
 - Stroud Water Research Center endowment
