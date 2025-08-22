@@ -445,7 +445,9 @@ void loop() {
         Serial.println('\n');
         return;
     } else {
+#if defined(LED_BUILTIN)
         digitalWrite(LED_BUILTIN, HIGH);
+#endif
     }
 
     startTime = millis();
@@ -523,7 +525,11 @@ void loop() {
     bool scanStopped = sensor.stop();
     Serial.print(F(" ..."));
     Serial.println(scanStopped ? F("success") : F("failed"));
-    if (scanStopped) { digitalWrite(LED_BUILTIN, LOW); }
+    if (scanStopped) {
+#if defined(LED_BUILTIN)
+        digitalWrite(LED_BUILTIN, LOW);
+#endif
+    }
 
 // Wait for the next reading
 #if TEST_POWER
