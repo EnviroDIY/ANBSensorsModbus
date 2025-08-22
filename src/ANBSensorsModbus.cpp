@@ -40,18 +40,35 @@ bool anbSensor::begin(byte modbusSlaveID, Stream& stream, int enablePin) {
 // and look for any correctly formed modbus response.
 bool anbSensor::gotModbusResponse(void) {
     modbus.setCommandRetries(1);
-    getHealthCode();
+    getStatusCode();
     modbus.setCommandRetries(10);
     modbusErrorCode lastCode = modbus.getLastError();
-    return static_cast<int8_t>(lastCode) > 0 &&
-        static_cast<int8_t>(lastCode) < 0x0C;
+    return static_cast<int8_t>(lastCode) < 0x0C;
 }
 
 // To check if the sensor is ready, we will send the command to request
 // status and look for a modbus error code in response.
-// NOTE: We don't use the returned health code to tell if the measurement is
-// complete, just that the sensor responses and doesn't give an error code.
+// NOTE: `getHealthCode()` and most of the data fetching commands will
+// perpetually return an "ACKNOWLEDGE" error if the sensor is not measuring, so
+// we cannot use those to check if the sensor is ready.
+// `getStatusCode()` and metadata fetching commands (like `getSerialNumber()`)
+// will return a valid response once the sensor is ready to communicate and
+// begin measuring.
 bool anbSensor::isSensorReady(void) {
+    modbus.setCommandRetries(1);
+    getStatusCode();
+    modbus.setCommandRetries(10);
+    return modbus.getLastError() == NO_ERROR;
+}
+
+// To check if a measurement is ready, we will send the command to request the
+// health status and look for a modbus error code in response.
+// NOTE: We don't use the returned health code to tell if the measurement is
+// complete, just that the sensor responses and doesn't give any error code.
+// If the measurement is not ready, the sensor will return `< ADDRESS >< 83 ><
+// 06 >< CRC >` to indicate it's not ready or `< ADDRESS >< 83 >< 05 >< CRC >`
+// to show it's not measuring at all.
+bool anbSensor::isMeasurementComplete(void) {
     modbus.setCommandRetries(1);
     getHealthCode();
     modbus.setCommandRetries(10);
@@ -179,8 +196,11 @@ bool anbSensor::isImmersionSensorEnabled(void) {
 }
 bool anbSensor::enableImmersionSensor(bool enable) {
     byte dataToSend[2] = {0x00, static_cast<byte>(enable ? 1 : 2)};
+    modbus.setCommandTimeout(5000L);
     // Write to holding register 0x003C (decimal 60)
-    return modbus.setRegisters(0x003C, 1, dataToSend, false);
+    bool success = modbus.setRegisters(0x003C, 1, dataToSend, false);
+    modbus.setCommandTimeout(1000L);
+    return success;
 }
 
 
@@ -190,17 +210,26 @@ bool anbSensor::enableImmersionSensor(bool enable) {
 
 // The start scan command is set with **coil** 0x0100 (decimal 256)
 bool anbSensor::start(void) {
-    return modbus.setCoil(0x0100, true);
+    modbus.setCommandTimeout(5000L);
+    bool success = modbus.setCoil(0x0100, true);
+    modbus.setCommandTimeout(1000L);
+    return success;
 }
 
 // The abrade sensor command is set with **coil** 0x0180 (decimal 384)
 bool anbSensor::abradeSensor(void) {
-    return modbus.setCoil(0x0180, true);
+    modbus.setCommandTimeout(5000L);
+    bool success = modbus.setCoil(0x0180, true);
+    modbus.setCommandTimeout(1000L);
+    return success;
 }
 
 // The stop command is set with **coil** 0x0000
 bool anbSensor::stop(void) {
-    return modbus.setCoil(0x0000, true);
+    modbus.setCommandTimeout(5000L);
+    bool success = modbus.setCoil(0x0000, true);
+    modbus.setCommandTimeout(1000L);
+    return success;
 }
 
 // The reboot command is set by writing 0xFFFF to **holding** register 0x1000
@@ -211,10 +240,12 @@ bool anbSensor::stop(void) {
 bool anbSensor::reboot(void) {
     // set the number of command retries to 1 (don't retry)
     modbus.setCommandRetries(1);
+    modbus.setCommandTimeout(5000L);
     byte value[2] = {0xFF, 0xFF};
     modbus.setRegisters(0x1000, 1, value, false);
     // re-set the number of command retries to 10
     modbus.setCommandRetries(10);
+    modbus.setCommandTimeout(1000L);
     // wait for the reboot menu print
     uint32_t startTime = millis();
     while (millis() - startTime < 10000L && _stream->available() < 10);
@@ -361,8 +392,11 @@ bool anbSensor::getValues(float& pH, float& temperature, float& salinity,
 
 // The modbus enable command is in **holding** register 0x0140 (decimal 320)
 bool anbSensor::enableModbus() {
+    modbus.setCommandTimeout(5000L);
     uint16_t set_value = 0x010D;
-    return modbus.uint16ToRegister(0x0140, set_value, bigEndian, false);
+    bool success = modbus.uint16ToRegister(0x0140, set_value, bigEndian, false);
+    modbus.setCommandTimeout(1000L);
+    return success;
 }
 void anbSensor::forceModbus() {
     uint32_t currentTimeout =
@@ -429,8 +463,11 @@ void anbSensor::forceModbus() {
 
 // The terminal enable command is in **holding** register 0x003B (decimal 59)
 bool anbSensor::enableTerminal() {
+    modbus.setCommandTimeout(5000L);
     uint16_t set_value = 0x010D;
-    return modbus.uint16ToRegister(0x003B, set_value, bigEndian, false);
+    bool success = modbus.uint16ToRegister(0x003B, set_value, bigEndian, false);
+    modbus.setCommandTimeout(1000L);
+    return success;
 }
 void anbSensor::forceTerminal() {
     // clear anything hanging in the buffer

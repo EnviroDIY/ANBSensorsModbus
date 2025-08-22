@@ -232,6 +232,50 @@ class anbSensor {
      */
     bool isSensorReady(void);
 
+    /**
+     * @brief Check if a measurement is complete
+     *
+     * > **First Scan Command Delay**
+     * >
+     * > After sending the first scan command there is a 2-3 min delay before
+     * > the sensor will return a valid pH value. In this 90s the sensor will
+     * > output an Exception which is signified by setting the MSB in the
+     * > command byte and adding a payload byte that specifies the reason for
+     * > the exception.
+     * >
+     * > i.e. for the request:
+     * >
+     * > `< ADDRESS >< 03 >< 00 >< 00 >< 00 >< 02 >< CRC >`
+     * >
+     * > The exception reply when there is currently not a pH value to return
+     * > is:
+     *
+     * > `< ADDRESS >< 83 >< 05 >< CRC >`
+     *
+     * > Where 05 = ACKNOWLEDGE This exception signifies that the sensor has
+     * > received the Modbus communication but cannot currently perform the
+     * > requested function. For example, requesting the current pH value when
+     * > the sensor is not scanning.
+     * >
+     * > or
+     * >
+     * > `< ADDRESS >< 83 >< 06 >< CRC >`
+     * >
+     * > Where 06 = BUSY This exception is transmitted when the sensor needs
+     * > more time before it can perform the requested function. It will be
+     * > necessary to re-transmit the request again at a later time. For
+     * > example, requesting the current pH value, before the sensor has been
+     * > able to calculate the value.
+     *
+     * The error responses documented by ANB Sensors will be returned for
+     * requests for pH values or health codes, but **not** when requesting the
+     * status code.  The request for the status code will return a valid
+     * response even before the sensor is ready to start scanning.
+     *
+     * @return True if the measurement is complete, false if not.
+     */
+    bool isMeasurementComplete(void);
+
 
     /**
      * @anchor measurement_setting_fxns
@@ -603,6 +647,10 @@ class anbSensor {
      * The reboot command is set by writing 0xFFFF to ~~input~~ **holding**
      * register 0x1000
      *
+     * @warning Due to firmware errors, after sending this command, the sensor
+     * may revert to terminal mode, requiring a `forceModbus()` command to put
+     * it back into modbus mode.
+     *
      * @return True if the sensor was successfully rebooted and began responding
      * to Modbus commands again, false if not.
      */
@@ -820,6 +868,8 @@ class anbSensor {
      * Modbus is enabled immediately after the response
      *
      * @note The reverse of this command is enableTerminal()
+     *
+     * @warning This command does not seem to work properly!
      *
      * @return True if the operation was successful, false otherwise.
      */
