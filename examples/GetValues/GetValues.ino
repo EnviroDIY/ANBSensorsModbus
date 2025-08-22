@@ -156,7 +156,7 @@ void setup() {
         13;  // Receive pin for software serial (Rx on RS485 adapter)
     const int SSTxPin =
         14;  // Send pin for software serial (Tx on RS485 adapter)
-    modbusSerial.begin(modbusBaud, SSRxPin, SSTxPin, false);
+    modbusSerial.begin(modbusBaud, SWSERIAL_8N1, SSRxPin, SSTxPin, false);
 #else  // For Hardware Serial
     modbusSerial.begin(modbusBaud);
 #endif
