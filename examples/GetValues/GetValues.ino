@@ -61,7 +61,7 @@ const int DEREPin =
 // Hardware serial ports are preferred when available.
 // AltSoftSerial is the most stable alternative for modbus.
 //   Select over alternatives with the define below.
-#define BUILD_ALTSOFTSERIAL  // Comment-out if you prefer alternatives
+// #define BUILD_ALTSOFTSERIAL  // Comment-out if you prefer alternatives
 
 #if defined(BUILD_ALTSOFTSERIAL) && defined(__AVR__)
 #include <AltSoftSerial.h>
