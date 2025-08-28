@@ -20,13 +20,22 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ***
 
+## [0.1.1]
+
+### Changed
+
+- Bumped SensorModbusMaster dependency to 1.4.0
+
+***
+
 ## [0.1.0]
 
 Initial release
 
 ***
 
-[Unreleased]: https://github.com/EnviroDIY/ANBSensorsModbus/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/EnviroDIY/ANBSensorsModbus/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/EnviroDIY/ANBSensorsModbus/releases/tag/v0.1.1
 [0.1.0]: https://github.com/EnviroDIY/ANBSensorsModbus/releases/tag/v0.1.0
 
 <!--! @tableofcontents{HTML:1} -->

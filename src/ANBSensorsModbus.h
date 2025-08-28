@@ -647,9 +647,10 @@ class anbSensor {
      * The reboot command is set by writing 0xFFFF to ~~input~~ **holding**
      * register 0x1000
      *
-     * @warning Due to firmware errors, after sending this command, the sensor
-     * may revert to terminal mode, requiring a `forceModbus()` command to put
-     * it back into modbus mode.
+     * @warning Due to errors in firmware 10.10, after sending this command, the
+     * sensor may revert to terminal mode, requiring a `forceModbus()` command
+     * to put it back into modbus mode.  This is expected to be fixed in the
+     * next pH sensor firmware release.
      *
      * @return True if the sensor was successfully rebooted and began responding
      * to Modbus commands again, false if not.
