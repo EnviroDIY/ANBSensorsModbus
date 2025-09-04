@@ -26,6 +26,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Bumped SensorModbusMaster dependency to 1.4.0
 
+### Added
+
+- Added overload constructors
+
 ***
 
 ## [0.1.0]
