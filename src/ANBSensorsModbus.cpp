@@ -22,57 +22,57 @@ void anbSensor::setDefaultTimeouts() {
 }
 
 anbSensor::anbSensor()
-    : modbus(static_cast<byte>(ANB_DEFAULT_MODBUS_ADDRESS), nullptr, -1),
-      _slaveID(ANB_DEFAULT_MODBUS_ADDRESS),
-      _stream(nullptr) {
+    : _slaveID(ANB_DEFAULT_MODBUS_ADDRESS),
+      _stream(nullptr),
+      modbus(static_cast<byte>(ANB_DEFAULT_MODBUS_ADDRESS), nullptr, -1) {
     setDefaultTimeouts();
 }
 anbSensor::anbSensor(byte modbusSlaveID, Stream* stream)
-    : modbus(modbusSlaveID, stream),
-      _slaveID(modbusSlaveID),
-      _stream(stream) {
+    : _slaveID(modbusSlaveID),
+      _stream(stream),
+      modbus(modbusSlaveID, stream) {
     setDefaultTimeouts();
 }
 anbSensor::anbSensor(byte modbusSlaveID, Stream& stream)
-    : modbus(modbusSlaveID, stream),
-      _slaveID(modbusSlaveID),
-      _stream(&stream) {
+    : _slaveID(modbusSlaveID),
+      _stream(&stream),
+      modbus(modbusSlaveID, stream) {
     setDefaultTimeouts();
 }
 anbSensor::anbSensor(byte modbusSlaveID, Stream* stream, int8_t enablePin)
-    : modbus(modbusSlaveID, stream, enablePin),
-      _slaveID(modbusSlaveID),
-      _stream(stream) {
+    : _slaveID(modbusSlaveID),
+      _stream(stream),
+      modbus(modbusSlaveID, stream, enablePin) {
     setDefaultTimeouts();
 }
 anbSensor::anbSensor(byte modbusSlaveID, Stream& stream, int8_t enablePin)
-    : modbus(modbusSlaveID, stream, enablePin),
-      _slaveID(modbusSlaveID),
-      _stream(&stream) {
+    : _slaveID(modbusSlaveID),
+      _stream(&stream),
+      modbus(modbusSlaveID, stream, enablePin) {
     setDefaultTimeouts();
 }
 anbSensor::anbSensor(Stream* stream)
-    : modbus(static_cast<byte>(ANB_DEFAULT_MODBUS_ADDRESS), stream),
-      _slaveID(ANB_DEFAULT_MODBUS_ADDRESS),
-      _stream(stream) {
+    : _slaveID(ANB_DEFAULT_MODBUS_ADDRESS),
+      _stream(stream),
+      modbus(static_cast<byte>(ANB_DEFAULT_MODBUS_ADDRESS), stream) {
     setDefaultTimeouts();
 }
 anbSensor::anbSensor(Stream& stream)
-    : modbus(static_cast<byte>(ANB_DEFAULT_MODBUS_ADDRESS), stream),
-      _slaveID(ANB_DEFAULT_MODBUS_ADDRESS),
-      _stream(&stream) {
+    : _slaveID(ANB_DEFAULT_MODBUS_ADDRESS),
+      _stream(&stream),
+      modbus(static_cast<byte>(ANB_DEFAULT_MODBUS_ADDRESS), stream) {
     setDefaultTimeouts();
 }
 anbSensor::anbSensor(Stream* stream, int8_t enablePin)
-    : modbus(static_cast<byte>(ANB_DEFAULT_MODBUS_ADDRESS), stream, enablePin),
-      _slaveID(ANB_DEFAULT_MODBUS_ADDRESS),
-      _stream(stream) {
+    : _slaveID(ANB_DEFAULT_MODBUS_ADDRESS),
+      _stream(stream),
+      modbus(static_cast<byte>(ANB_DEFAULT_MODBUS_ADDRESS), stream, enablePin) {
     setDefaultTimeouts();
 }
 anbSensor::anbSensor(Stream& stream, int8_t enablePin)
-    : modbus(static_cast<byte>(ANB_DEFAULT_MODBUS_ADDRESS), stream, enablePin),
-      _slaveID(ANB_DEFAULT_MODBUS_ADDRESS),
-      _stream(&stream) {
+    : _slaveID(ANB_DEFAULT_MODBUS_ADDRESS),
+      _stream(&stream),
+      modbus(static_cast<byte>(ANB_DEFAULT_MODBUS_ADDRESS), stream, enablePin) {
     setDefaultTimeouts();
 }
 
@@ -97,6 +97,7 @@ bool anbSensor::begin(byte modbusSlaveID, modbusMaster& modbus) {
     this->modbus.setSlaveID(modbusSlaveID);
     _slaveID = modbusSlaveID;
     setDefaultTimeouts();
+    return true;
 }
 
 // To check for a response, we will send the command to request status

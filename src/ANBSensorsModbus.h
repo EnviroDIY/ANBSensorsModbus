@@ -1217,7 +1217,6 @@ class anbSensor {
     /**@}*/
 
  private:
-    int  _model;    ///< the sensor model
     byte _slaveID;  ///< the sensor slave id
     /**
      * @brief The stream instance (serial port) for communication with the
