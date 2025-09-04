@@ -15,6 +15,67 @@
 //  Basic Communication Setup
 //----------------------------------------------------------------------------
 
+void anbSensor::setDefaultTimeouts() {
+    modbus.setCommandTimeout(1000L);
+    modbus.setFrameTimeout(10L);
+    modbus.setCommandRetries(10);
+}
+
+anbSensor::anbSensor()
+    : modbus(static_cast<byte>(ANB_DEFAULT_MODBUS_ADDRESS), nullptr, -1),
+      _slaveID(ANB_DEFAULT_MODBUS_ADDRESS),
+      _stream(nullptr) {
+    setDefaultTimeouts();
+}
+anbSensor::anbSensor(byte modbusSlaveID, Stream* stream)
+    : modbus(modbusSlaveID, stream),
+      _slaveID(modbusSlaveID),
+      _stream(stream) {
+    setDefaultTimeouts();
+}
+anbSensor::anbSensor(byte modbusSlaveID, Stream& stream)
+    : modbus(modbusSlaveID, stream),
+      _slaveID(modbusSlaveID),
+      _stream(&stream) {
+    setDefaultTimeouts();
+}
+anbSensor::anbSensor(byte modbusSlaveID, Stream* stream, int8_t enablePin)
+    : modbus(modbusSlaveID, stream, enablePin),
+      _slaveID(modbusSlaveID),
+      _stream(stream) {
+    setDefaultTimeouts();
+}
+anbSensor::anbSensor(byte modbusSlaveID, Stream& stream, int8_t enablePin)
+    : modbus(modbusSlaveID, stream, enablePin),
+      _slaveID(modbusSlaveID),
+      _stream(&stream) {
+    setDefaultTimeouts();
+}
+anbSensor::anbSensor(Stream* stream)
+    : modbus(static_cast<byte>(ANB_DEFAULT_MODBUS_ADDRESS), stream),
+      _slaveID(ANB_DEFAULT_MODBUS_ADDRESS),
+      _stream(stream) {
+    setDefaultTimeouts();
+}
+anbSensor::anbSensor(Stream& stream)
+    : modbus(static_cast<byte>(ANB_DEFAULT_MODBUS_ADDRESS), stream),
+      _slaveID(ANB_DEFAULT_MODBUS_ADDRESS),
+      _stream(&stream) {
+    setDefaultTimeouts();
+}
+anbSensor::anbSensor(Stream* stream, int8_t enablePin)
+    : modbus(static_cast<byte>(ANB_DEFAULT_MODBUS_ADDRESS), stream, enablePin),
+      _slaveID(ANB_DEFAULT_MODBUS_ADDRESS),
+      _stream(stream) {
+    setDefaultTimeouts();
+}
+anbSensor::anbSensor(Stream& stream, int8_t enablePin)
+    : modbus(static_cast<byte>(ANB_DEFAULT_MODBUS_ADDRESS), stream, enablePin),
+      _slaveID(ANB_DEFAULT_MODBUS_ADDRESS),
+      _stream(&stream) {
+    setDefaultTimeouts();
+}
+
 // This function sets up the communication
 // It should be run during the arduino "setup" function.
 // The "stream" device must be initialized and begun prior to running this.
@@ -24,16 +85,18 @@ bool anbSensor::begin(byte modbusSlaveID, Stream* stream, int enablePin) {
     _stream  = stream;
     // Start up the modbus instance
     bool success = modbus.begin(modbusSlaveID, stream, enablePin);
-    // Set the command timeout
-    modbus.setCommandTimeout(1000L);
-    // Set the frame timeout
-    modbus.setFrameTimeout(10L);
-    // Set the number of command retries
-    modbus.setCommandRetries(10);
+    setDefaultTimeouts();
     return success;
 }
 bool anbSensor::begin(byte modbusSlaveID, Stream& stream, int enablePin) {
     return begin(modbusSlaveID, &stream, enablePin);
+}
+bool anbSensor::begin(byte modbusSlaveID, modbusMaster& modbus) {
+    this->modbus  = modbus;
+    this->_stream = this->modbus.getStream();
+    this->modbus.setSlaveID(modbusSlaveID);
+    _slaveID = modbusSlaveID;
+    setDefaultTimeouts();
 }
 
 // To check for a response, we will send the command to request status

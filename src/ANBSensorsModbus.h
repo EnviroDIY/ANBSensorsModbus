@@ -16,6 +16,13 @@
 #include <SensorModbusMaster.h>
 
 /**
+ * @brief Default Modbus address for ANB sensors.
+ *
+ * This is the default address used for Modbus communication with ANB sensors.
+ */
+#define ANB_DEFAULT_MODBUS_ADDRESS 0x55
+
+/**
  * @brief Sensor control modes for ANB sensors.
  *
  * CONTROLLED mode means the sensor is controlled by an external system.
@@ -171,36 +178,99 @@ enum class ANBDiagnosticCode:uint8_t {
 class anbSensor {
 
  public:
+
     /**
-     * @brief This function sets up the communication.
+     * @anchor ctor_and_begin
+     * @name Constructors and Begins
      *
-     * It should be run during the arduino "setup" function.
-     * The "stream" device must be initialized prior to running this.
+     * Functions to create the anbSensor object and set up the communication
+     * with the Arduino stream connected to the modbus device.
+     */
+    /**@{*/
+    /**
+     * @brief Default constructor
+     */
+    anbSensor();
+    /**
+     * @brief Construct a new anbSensor object
      *
-     * @note The default Modbus address is 0x55 (decimal 85), but it can be any
-     * value between 0x01 and 0xFE *except 0x23*.
+     * @see setAddress(byte)
      *
-     * @warning The address 0x23 cannot be used!
+     * @param modbusSlaveID The byte identifier of the modbus slave device.
+     * @param stream A pointer to the Arduino stream object to communicate with.
+     */
+    anbSensor(byte modbusSlaveID, Stream* stream);
+    /**
+     * @brief Construct a new anbSensor object
+     *
+     * @see setAddress(byte)
+     *
+     * @param modbusSlaveID The byte identifier of the modbus slave device.
+     * @param stream A reference to the Arduino stream object to communicate
+     * with.
+     */
+    anbSensor(byte modbusSlaveID, Stream& stream);
+    /**
+     * @copydoc anbSensor(byte modbusSlaveID, Stream* stream)
+     * @param enablePin A pin on the Arduino processor to use to send an enable
+     * signal to an RS485 to TTL adapter. Use a negative number if this does not
+     * apply.
+     */
+    anbSensor(byte modbusSlaveID, Stream* stream, int8_t enablePin);
+    /**
+     * @copydoc anbSensor(byte modbusSlaveID, Stream& stream)
+     * @param enablePin A pin on the Arduino processor to use to send an enable
+     * signal to an RS485 to TTL adapter. Use a negative number if this does not
+     * apply.
+     */
+    anbSensor(byte modbusSlaveID, Stream& stream, int8_t enablePin);
+    /**
+     * @brief Construct a new anbSensor object
+     *
+     * @param stream A pointer to the Arduino stream object to communicate with.
+     */
+    anbSensor(Stream* stream);
+    /**
+     * @brief Construct a new anbSensor object
+     *
+     * @param stream A reference to the Arduino stream object to communicate
+     * with.
+     */
+    anbSensor(Stream& stream);
+    /**
+     * @copydoc anbSensor(Stream* stream)
+     * @param enablePin A pin on the Arduino processor to use to send an enable
+     * signal to an RS485 to TTL adapter. Use a negative number if this does not
+     * apply.
+     */
+    anbSensor(Stream* stream, int8_t enablePin);
+    /**
+     * @copydoc anbSensor(Stream& stream)
+     * @param enablePin A pin on the Arduino processor to use to send an enable
+     * signal to an RS485 to TTL adapter. Use a negative number if this does not
+     * apply.
+     */
+    anbSensor(Stream& stream, int8_t enablePin);
+
+    /**
+     * @brief Equivalent to a constructor - used to assign members of the
+     * anbSensor object
+     *
+     * @see setAddress(byte)
      *
      * @param modbusSlaveID The byte identifier of the modbus slave device.
      * @param stream A pointer to the Arduino stream object to communicate with.
      * @param enablePin A pin on the Arduino processor to use to send an enable
      * signal to an RS485 to TTL adapter. Use a negative number if this does not
      * apply. Optional with a default value of -1.
-     * @return True if the starting communication was successful, false
-     * if not.
+     * @return Always returns true
      */
     bool begin(byte modbusSlaveID, Stream* stream, int enablePin = -1);
     /**
-     * @brief This function sets up the communication.
+     * @brief Equivalent to a constructor - used to assign members of the
+     * anbSensor object
      *
-     * It should be run during the arduino "setup" function.
-     * The "stream" device must be initialized prior to running this.
-     *
-     * @note The default Modbus address is 0x55, but it can be any number
-     * between 0x01 and 0xFE *except 0x23*.
-     *
-     * @warning The address 0x23 cannot be used!
+     * @see setAddress(byte)
      *
      * @param modbusSlaveID The byte identifier of the modbus slave device.
      * @param stream A reference to the Arduino stream object to communicate
@@ -208,11 +278,40 @@ class anbSensor {
      * @param enablePin A pin on the Arduino processor to use to send an enable
      * signal to an RS485 to TTL adapter. Use a negative number if this does not
      * apply. Optional with a default value of -1.
-     * @return True if the starting communication was successful, false
-     * if not.
+     * @return Always returns true
      */
     bool begin(byte modbusSlaveID, Stream& stream, int enablePin = -1);
+    /**
+     * @brief Equivalent to a constructor - used to assign members of the
+     * anbSensor object
+     *
+     * @param modbusSlaveID The byte identifier of the modbus slave device.
+     * @param modbus A reference to the modbusMaster object to communicate
+     * with.
+     * @return Always returns true
+     */
+    bool begin(byte modbusSlaveID, modbusMaster& modbus);
+    /**@}*/
 
+    /**
+     * @anchor setters_and_getters
+     * @name Object setters and getters
+     *
+     * Functions to set and get properties of the anbSensor object.
+     */
+    /**@{*/
+    /**@}*/
+
+
+    /**
+     * @anchor comm_timing_fxns
+     * @name Functions to verify communication and check for sensor readiness
+     *
+     * These functions allow you to check if the sensor is ready, if a
+     * measurement is complete, and if the sensor has responded to the last
+     * Modbus command.
+     */
+    /**@{*/
     /**
      * @brief Check if the sensor has responded to the last Modbus command.
      *
@@ -275,6 +374,7 @@ class anbSensor {
      * @return True if the measurement is complete, false if not.
      */
     bool isMeasurementComplete(void);
+    /**@}*/
 
 
     /**
@@ -957,8 +1057,10 @@ class anbSensor {
      *
      * The address change will take effect on the next boot.
      *
-     * @note The default Modbus address is 0x55, but it can be any number
-     * between 1 and 247 **except** 0x23 (decimal 35).
+     * @note The default Modbus address is 0x55 (decimal 85), but it can be any
+     * number between 1 and 247 **except** 0x23 (decimal 35).  The address 0x23
+     * is unusable because 0x23 is equivalent to the '#' character which is used
+     * as the start of the return-to-terminal command.
      *
      * @warning The address 0x23 cannot be used!
      *
@@ -1134,6 +1236,8 @@ class anbSensor {
      */
     modbusMaster
         modbus;  ///< an internal reference to the modbus communication object.
+
+    void setDefaultTimeouts();
 };
 
 #endif
