@@ -12,11 +12,29 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Changed
 
+- **BREAKING** The bulk getValues function no longer has the status code as an argument
+  - The bulk call does not return the status code, so I removed it.
+
 ### Added
 
 ### Removed
 
 ### Fixed
+
+- Corrected order of bytes in the getValues function.
+
+***
+
+## [0.2.0]
+
+### Changed
+
+- **BREAKING** The bulk getValues function no longer has the status code as an argument
+  - The bulk call does not return the status code, so I removed it.
+
+### Fixed
+
+- Corrected order of bytes in the getValues function.
 
 ***
 
@@ -38,7 +56,8 @@ Initial release
 
 ***
 
-[Unreleased]: https://github.com/EnviroDIY/ANBSensorsModbus/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/EnviroDIY/ANBSensorsModbus/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/EnviroDIY/ANBSensorsModbus/releases/tag/v0.2.0
 [0.1.1]: https://github.com/EnviroDIY/ANBSensorsModbus/releases/tag/v0.1.1
 [0.1.0]: https://github.com/EnviroDIY/ANBSensorsModbus/releases/tag/v0.1.0
 
