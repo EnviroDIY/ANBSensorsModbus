@@ -135,7 +135,7 @@ enum class ANBHealthCode:uint8_t {
  * | SLEEPING            | 0     | Sensor is idle and/or following its pre-set interval routine    |
  * | INTERVAL_SCANNING   | 1     | pH will be updated when measurement completes                   |
  * | CONTINUOUS_SCANNING | 2     | pH will be automatically updated as per our continuous sequence |
- * | UNKNOWN             | 255   | Unknown status; no response from the sensor                     |
+ * | UNKNOWN             | 255   | Unknown; no response from the sensor                     |
  *
  * [Sensor status code documentation is available here.](https://www.anbsensors.com/newdocs/docs/modbus#sensor-diagnostics)
  */
@@ -143,7 +143,7 @@ enum class ANBStatusCode:uint8_t {
     SLEEPING            = 0,   ///< Sleep
     INTERVAL_SCANNING   = 1,   ///< Interval Scanning
     CONTINUOUS_SCANNING = 2,   ///< Continuous Scanning
-    UNKNOWN             = 255  ///< Unknown status; no response from the sensor
+    UNKNOWN             = 255  ///< Unknown; no response from the sensor
 };
 // clang-format on
 
@@ -166,7 +166,7 @@ enum class ANBDiagnosticCode:uint8_t {
     BATTERY_ERROR = 1,  ///< Clock Battery Error
     SD_ERROR      = 2,  ///< SD Card Error
     SYSTEM_ERROR  = 3,  ///< System Error
-    UNKNOWN = 255  ///< Unknown diagnostic status; no response from the sensor
+    UNKNOWN = 255  ///< Unknown; no response from the sensor
 };
 // clang-format on
 
@@ -300,6 +300,9 @@ class anbSensor {
      * Functions to set and get properties of the anbSensor object.
      */
     /**@{*/
+    modbusErrorCode getLastError() {
+        return modbus.getLastError();
+    }
     /**@}*/
 
 
@@ -910,14 +913,8 @@ class anbSensor {
     /**
      * @brief Gets bulk values from all parameters
      *
-     * All parameters can be read from 11 (0x0B) holding registers starting at
-     * 0x0000.
-     *
-     * BUT -- the documentation also says that pH, temp, salinity, conductivity,
-     * and actual conductivity can all be read from those registers.. which
-     * would require 12 registers when you account for the codes.
-     *
-     * @todo figure out what's up with the raw conductivity register location
+     * All parameters *except the status code* can be read from 11 (0x0B)
+     * holding registers starting at 0x0000.
      *
      * If the values could not be read, the function will return false and the
      * float output parameters (pH, temperature, salinity, specificConductance,
@@ -930,15 +927,13 @@ class anbSensor {
      * @param specificConductance The specific conductance value
      * @param rawConductivity The "actual" (raw) conductivity value
      * @param health The transducer health code
-     * @param status The transducer status code
      * @param diagnostic The diagnostics code
      * @return True if the measurements were successfully obtained, false
      * if not.
      */
     bool getValues(float& pH, float& temperature, float& salinity,
                    float& specificConductance, float& rawConductivity,
-                   ANBHealthCode& health, ANBStatusCode& status,
-                   ANBDiagnosticCode& diagnostic);
+                   ANBHealthCode& health, ANBDiagnosticCode& diagnostic);
     /**@}*/
 
 

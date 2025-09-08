@@ -400,7 +400,7 @@ ANBDiagnosticCode anbSensor::getDiagnosticCode(void) {
 // TODO: figure out what's up with the raw conductivity register location
 bool anbSensor::getValues(float& pH, float& temperature, float& salinity,
                           float& specificConductance, float& rawConductivity,
-                          ANBHealthCode& health, ANBStatusCode& status,
+                          ANBHealthCode&     health,
                           ANBDiagnosticCode& diagnostic) {
     if (!modbus.getRegisters(0x03, 0, 11)) { return false; }
 
@@ -425,7 +425,7 @@ bool anbSensor::getValues(float& pH, float& temperature, float& salinity,
     // - 0x0002: temperature (two registers)
     // - 0x0004: salinity (two registers)
     // - 0x0006: specific conductance (two registers)
-    // - 0x0008: health + status + diagnostic (all in one register)
+    // - 0x0008: health + diagnostic (both in one register - no status code!)
     // - 0x0009: raw conductivity (two registers)
 
     // Parse the registers into the respective variables
@@ -436,14 +436,13 @@ bool anbSensor::getValues(float& pH, float& temperature, float& salinity,
     specificConductance = modbus.float32FromFrame(bigEndian,
                                                   15);  // next 4 bytes (15-18)
 
-    // The next two bytes (19-20) contain health, status, and diagnostic codes
-    // Byte 19: health
-    // Byte 20: status + diagnostic
-    health              = static_cast<ANBHealthCode>(modbus.byteFromFrame(19));
-    uint8_t status_diag = modbus.byteFromFrame(20);
-    // bitwise and, then shift to get the first digit
-    status     = static_cast<ANBStatusCode>((status_diag & 0xF0) >> 4);
-    diagnostic = static_cast<ANBDiagnosticCode>(status_diag & 0x0F);
+    // The next two bytes (19-20) contain health and diagnostic codes
+    // NOTE: The status code is not included in this bulk read!
+    // Byte 19: sensor diagnostics
+    // Byte 20: transducer health
+    uint8_t status_diag = modbus.byteFromFrame(19);
+    diagnostic = static_cast<ANBDiagnosticCode>(modbus.byteFromFrame(19));
+    health     = static_cast<ANBHealthCode>(modbus.byteFromFrame(20));
 
     rawConductivity = modbus.float32FromFrame(bigEndian, 21);
 

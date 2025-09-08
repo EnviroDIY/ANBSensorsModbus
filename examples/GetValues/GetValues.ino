@@ -35,7 +35,7 @@ int32_t modbusBaud = 57600;  // 57600 is ANB default baud rate.
 
 #define MEASUREMENT_TIME 300000  // milliseconds to complete a measurement.
 
-#define TEST_POWER false
+// #define TEST_POWER
 
 // ==========================================================================
 //  Data Logger Options
@@ -358,7 +358,7 @@ void setup() {
     Serial.println(salinitySet ? F("success") : F("failed"));
 
 // Set Sensor Power Style
-#if TEST_POWER
+#if defined(TEST_POWER)
     Serial.print(F("Set sensor power style to on measurement... "));
     bool powerStyleSet = sensor.setPowerStyle(ANBPowerStyle::ON_MEASUREMENT);
 #else
@@ -390,7 +390,7 @@ void setup() {
     sensor.forceModbus();
 #endif
 
-#if TEST_POWER
+#if defined(TEST_POWER)
     Serial.println(F("\n\n\nHolding with power off for 15 seconds..."));
     setSensorPower(false);
     for (size_t i = 0; i < 15; i++) {
@@ -405,7 +405,7 @@ void setup() {
 //  Arduino Loop Function
 // ==========================================================================
 void loop() {
-#if TEST_POWER
+#if defined(TEST_POWER)
     // Turn on power pins
     Serial.println(F("Powering on"));
     setSensorPower(true);
@@ -473,10 +473,9 @@ void loop() {
     Serial.println(F("\n\nGetting results in bulk..."));
     float             pH2, temperature2, salinity2, spcond2, raw_cond2;
     ANBHealthCode     health2;
-    ANBStatusCode     status2;
     ANBDiagnosticCode diagStatus2;
     sensor.getValues(pH2, temperature2, salinity2, spcond2, raw_cond2, health2,
-                     status2, diagStatus2);
+                     diagStatus2);
     Serial.print(F("  pH: "));
     Serial.println(pH2);
     Serial.print(F("  Temperature: "));
@@ -489,35 +488,33 @@ void loop() {
     Serial.println(raw_cond2);
     Serial.print(F("  Health: "));
     Serial.println(static_cast<uint16_t>(health2));
-    Serial.print(F("  Status: "));
-    Serial.println(static_cast<uint16_t>(status2));
-    Serial.print(F("  Diagnostic Status: "));
+    Serial.print(F("  Diagnostic: "));
     Serial.println(static_cast<uint16_t>(diagStatus2));
 
     Serial.println(F("\n\nGetting results individually..."));
-    float             pH          = sensor.getpH();
-    float             temperature = sensor.getTemperature();
-    float             salinity    = sensor.getSalinity();
-    float             spcond      = sensor.getSpecificConductance();
-    float             raw_cond    = sensor.getRawConductivity();
-    ANBHealthCode     health      = sensor.getHealthCode();
-    ANBStatusCode     status      = sensor.getStatusCode();
-    ANBDiagnosticCode diagStatus  = sensor.getDiagnosticCode();
+    float pH = sensor.getpH();
     Serial.print(F("  pH: "));
     Serial.println(pH);
+    float temperature = sensor.getTemperature();
     Serial.print(F("  Temperature: "));
     Serial.println(temperature);
+    float salinity = sensor.getSalinity();
     Serial.print(F("  Salinity: "));
     Serial.println(salinity);
+    float spcond = sensor.getSpecificConductance();
     Serial.print(F("  Specific Conductance: "));
     Serial.println(spcond);
+    float raw_cond = sensor.getRawConductivity();
     Serial.print(F("  Raw Conductivity: "));
     Serial.println(raw_cond);
+    ANBHealthCode health = sensor.getHealthCode();
     Serial.print(F("  Health: "));
     Serial.println(static_cast<uint16_t>(health));
+    ANBStatusCode status = sensor.getStatusCode();
     Serial.print(F("  Status: "));
     Serial.println(static_cast<uint16_t>(status));
-    Serial.print(F("  Diagnostic Status: "));
+    ANBDiagnosticCode diagStatus = sensor.getDiagnosticCode();
+    Serial.print(F("  Diagnostic: "));
     Serial.println(static_cast<uint16_t>(diagStatus));
 
 
@@ -532,7 +529,7 @@ void loop() {
     }
 
 // Wait for the next reading
-#if TEST_POWER
+#if defined(TEST_POWER)
     Serial.println(F("\n\nHolding with power off before the next reading..."));
     setSensorPower(false);
 #else
