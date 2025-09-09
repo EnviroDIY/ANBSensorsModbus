@@ -36,6 +36,7 @@ int32_t modbusBaud = 57600;  // 57600 is ANB default baud rate.
 #define MEASUREMENT_TIME 300000  // milliseconds to complete a measurement.
 
 // #define TEST_POWER
+// #define TEST_AUTONOMOUS
 
 // ==========================================================================
 //  Data Logger Options
@@ -345,20 +346,8 @@ void setup() {
     // Configure sensor
     Serial.print(F("\n\nConfigure sensor...\n"));
 
-    // Set Sensor Control Mode
-    Serial.print(F("Set sensor control mode to controlled... "));
-    bool modeSet = sensor.setControlMode(ANBSensorMode::CONTROLLED);
-    Serial.print(F(" ..."));
-    Serial.println(modeSet ? F("success") : F("failed"));
-
-    // Set Sensor Salinity Mode
-    Serial.print(F("Set sensor salinity mode to low salinity... "));
-    bool salinitySet = sensor.setSalinityMode(ANBSalinityMode::LOW_SALINITY);
-    Serial.print(F(" ..."));
-    Serial.println(salinitySet ? F("success") : F("failed"));
-
 // Set Sensor Power Style
-#if defined(TEST_POWER)
+#if defined(TEST_POWER) && !defined(TEST_AUTONOMOUS)
     Serial.print(F("Set sensor power style to on measurement... "));
     bool powerStyleSet = sensor.setPowerStyle(ANBPowerStyle::ON_MEASUREMENT);
 #else
@@ -368,17 +357,54 @@ void setup() {
     Serial.print(F(" ..."));
     Serial.println(powerStyleSet ? F("success") : F("failed"));
 
+    // Set Sensor Control Mode
+#if defined(TEST_AUTONOMOUS)
+    Serial.print(F("Set sensor control mode to autonomous... "));
+    bool modeSet = sensor.setControlMode(ANBSensorMode::AUTONOMOUS);
+#else
+    Serial.print(F("Set sensor control mode to controlled... "));
+    bool modeSet = sensor.setControlMode(ANBSensorMode::CONTROLLED);
+#endif
+    Serial.print(F(" ..."));
+    Serial.println(modeSet ? F("success") : F("failed"));
+
     // Set Sampling Interval Time
+#if defined(TEST_AUTONOMOUS)
+    Serial.print(F("Set sensor sampling interval to 10 minutes... "));
+    bool intervalSet = sensor.setIntervalTime(10);
+#else
     Serial.print(F("Set sensor sampling interval to 0 (continuous)... "));
     bool intervalSet = sensor.setIntervalTime(0);
+#endif
     Serial.print(F(" ..."));
     Serial.println(intervalSet ? F("success") : F("failed"));
+
+    // Set Sensor Salinity Mode
+    Serial.print(F("Set sensor salinity mode to low salinity... "));
+    bool salinitySet = sensor.setSalinityMode(ANBSalinityMode::LOW_SALINITY);
+    Serial.print(F(" ..."));
+    Serial.println(salinitySet ? F("success") : F("failed"));
 
     // Set Immersion Rule
     Serial.print(F("Set sensor immersion rule to enabled... "));
     bool immersionSet = sensor.enableImmersionSensor();
     Serial.print(F(" ..."));
     Serial.println(immersionSet ? F("success") : F("failed"));
+
+#if 0
+    // Set Bulk Configuration
+    // NOTE: This only works if there's a power cycle or reboot after writing
+    // the configuration!
+    Serial.print(F("Set sensor bulk configuration... "));
+    bool bulkSet = sensor.writeConfiguration(
+        ANBSensorMode::CONTROLLED, ANBPowerStyle::ALWAYS_POWERED,
+        ANBSalinityMode::LOW_SALINITY, 0, 0, 0, 0, false, true);
+    Serial.print(F(" ..."));
+    Serial.println(bulkSet ? F("success") : F("failed"));
+    setSensorPower(false);
+    delay(500L);
+    setSensorPower(true);
+#endif
 
 #if 0
     // Reboot the sensor after configuration to save and apply settings
@@ -431,6 +457,7 @@ void loop() {
         Serial.println(F(" ms"));
     }
 
+#if !defined(TEST_AUTONOMOUS)
     Serial.println(F("\n\nStarting a scan... "));
     bool scanStarted = sensor.start();
     Serial.print(F(" ..."));
@@ -449,6 +476,7 @@ void loop() {
         digitalWrite(LED_BUILTIN, HIGH);
 #endif
     }
+#endif
 
     startTime = millis();
     Serial.println(F("\n\nWaiting for measurement to be ready... "));
@@ -517,7 +545,7 @@ void loop() {
     Serial.print(F("  Diagnostic: "));
     Serial.println(static_cast<uint16_t>(diagStatus));
 
-
+#if !defined(TEST_AUTONOMOUS)
     Serial.println(F("\n\nStopping scan... "));
     bool scanStopped = sensor.stop();
     Serial.print(F(" ..."));
@@ -527,12 +555,13 @@ void loop() {
         digitalWrite(LED_BUILTIN, LOW);
 #endif
     }
+#endif
 
 // Wait for the next reading
-#if defined(TEST_POWER)
+#if defined(TEST_POWER) && !defined(TEST_AUTONOMOUS)
     Serial.println(F("\n\nHolding with power off before the next reading..."));
     setSensorPower(false);
-#else
+#elif !defined(TEST_AUTONOMOUS)
     Serial.println(F("\n\nWaiting with power on for the next reading..."));
 #endif
     for (size_t i = 0; i < 15; i++) {

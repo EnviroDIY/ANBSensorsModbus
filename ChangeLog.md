@@ -12,16 +12,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Changed
 
-- **BREAKING** The bulk getValues function no longer has the status code as an argument
-  - The bulk call does not return the status code, so I removed it.
-
 ### Added
+
+- Add command for writing bulk configuration
 
 ### Removed
 
 ### Fixed
-
-- Corrected order of bytes in the getValues function.
 
 ***
 

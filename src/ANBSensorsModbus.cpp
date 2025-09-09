@@ -268,6 +268,44 @@ bool anbSensor::enableImmersionSensor(bool enable) {
 }
 
 
+bool anbSensor::writeConfiguration(ANBSensorMode mode, ANBPowerStyle power,
+                                   ANBSalinityMode salinity,
+                                   uint16_t delayHours, uint16_t delayMinutes,
+                                   uint16_t intervalHours,
+                                   uint16_t intervalMinutes,
+                                   bool profilingEnabled, bool modbusEnabled) {
+    byte utilCmdFrame[16];
+    byte controlCode;
+    switch (mode) {
+        case ANBSensorMode::CONTROLLED: controlCode = 1; break;
+        case ANBSensorMode::AUTONOMOUS: controlCode = 2; break;
+        default: return false;  // Invalid mode
+    }
+    byte styleCode;
+    switch (power) {
+        case ANBPowerStyle::ALWAYS_POWERED: styleCode = 1; break;
+        case ANBPowerStyle::ON_MEASUREMENT: styleCode = 2; break;
+        default: return false;  // Invalid style
+    }
+    byte salinityCode;
+    switch (salinity) {
+        case ANBSalinityMode::LOW_SALINITY: salinityCode = 1; break;
+        case ANBSalinityMode::HIGH_SALINITY: salinityCode = 2; break;
+        default: return false;  // Invalid mode
+    }
+    modbus.uint16ToFrame(controlCode, bigEndian, utilCmdFrame, 0);
+    modbus.uint16ToFrame(styleCode, bigEndian, utilCmdFrame, 2);
+    modbus.uint16ToFrame(salinityCode, bigEndian, utilCmdFrame, 4);
+    modbus.uint16ToFrame(delayHours, bigEndian, utilCmdFrame, 6);
+    modbus.uint16ToFrame(delayMinutes, bigEndian, utilCmdFrame, 8);
+    modbus.uint16ToFrame(intervalHours, bigEndian, utilCmdFrame, 10);
+    modbus.uint16ToFrame(intervalMinutes, bigEndian, utilCmdFrame, 12);
+    modbus.uint16ToFrame(profilingEnabled ? 1 : 0, bigEndian, utilCmdFrame, 14);
+    modbus.uint16ToFrame(modbusEnabled ? 1 : 0, bigEndian, utilCmdFrame, 16);
+    return modbus.setRegisters(0x0400, 0x08, utilCmdFrame, false);
+}
+
+
 //----------------------------------------------------------------------------
 //  Command functions
 //----------------------------------------------------------------------------
@@ -440,7 +478,6 @@ bool anbSensor::getValues(float& pH, float& temperature, float& salinity,
     // NOTE: The status code is not included in this bulk read!
     // Byte 19: sensor diagnostics
     // Byte 20: transducer health
-    uint8_t status_diag = modbus.byteFromFrame(19);
     diagnostic = static_cast<ANBDiagnosticCode>(modbus.byteFromFrame(19));
     health     = static_cast<ANBHealthCode>(modbus.byteFromFrame(20));
 

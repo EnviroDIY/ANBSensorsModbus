@@ -657,6 +657,34 @@ class anbSensor {
      */
     bool enableSDCard(bool enable = true)
         __attribute__((error("Command not available!")));
+
+    /**
+     * @brief Write a bulk configuration to the sensor
+     *
+     * @see The $UTIL string in the [documentation for configuring multiple
+     * sensors](https://www.anbsensors.com/newdocs/docs/Sensor%20Controls%20&%20Functions/configuring%20multiple%20sensors)
+     *
+     * @param mode The sensor control mode
+     * @param power The power style
+     * @param salinity The salinity mode
+     * @param delayHours The hour portion of the delay before the first sample
+     * @param delayMinutes The minute portion of the delay before the first
+     * sample
+     * @param intervalHours The hour portion of the interval between samples
+     * @param intervalMinutes The minute portion of the interval between samples
+     * @param profilingEnabled True to enable fast profiling, false to disable
+     * @param modbusEnabled True to enable Modbus, false to disable
+     * @return True if the configuration was successfully written, false if not.
+     *
+     * @warning You must reboot or power cycle the sensor after sending this
+     * command!  No other commands will be accepted until the sensor is rebooted
+     * or power cycled.
+     */
+    bool writeConfiguration(ANBSensorMode mode, ANBPowerStyle power,
+                            ANBSalinityMode salinity, uint16_t delayHours,
+                            uint16_t delayMinutes, uint16_t intervalHours,
+                            uint16_t intervalMinutes, bool profilingEnabled,
+                            bool modbusEnabled);
     /**@}*/
 
 
