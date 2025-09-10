@@ -1175,6 +1175,9 @@ class anbSensor {
      * @return True if the RTC value was successfully retrieved, false
      * otherwise.
      *
+     * @note The year is returned as the offset from 2000. So, for 2025, the
+     * year will be 25.
+     *
      * @param seconds Reference to a variable where the seconds will be stored
      * @param minutes Reference to a variable where the minutes will be stored
      * @param hours Reference to a variable where the hours will be stored
@@ -1189,6 +1192,9 @@ class anbSensor {
      *
      * The RTC value is stored in 6 holding registers starting at 0x003D
      * (decimal 61).
+     *
+     * @note The year is set as the offset from 2000. So, for 2025, the year
+     * must be set to 25.
      *
      * @param seconds The seconds portion of the current time
      * @param minutes The minutes portion of the current time
