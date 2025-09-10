@@ -1,6 +1,6 @@
 {
   "name": "ANBSensorsModbus",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A library for communicating with pH sensors manufactured by ANB Sensors using Modbus.",
   "keywords": "EnviroDIY, ANBSensors, Modbus, pH",
   "platforms": "*",
@@ -38,7 +38,7 @@
       "owner": "envirodiy",
       "library id": "1824",
       "url": "https://github.com/EnviroDIY/SensorModbusMaster",
-      "version": "~1.6.0",
+      "version": "~1.6.1",
       "note": "EnviroDIY SensorModbusMaster - Arduino library for communicating via modbus with the Arduino acting as the modbus master.",
       "authors": ["Sara Damiano"],
       "frameworks": "arduino",
