@@ -43,6 +43,16 @@
       "authors": ["Sara Damiano"],
       "frameworks": "arduino",
       "platforms": "atmelavr, atmelsam"
+    },
+    {
+      "name": "fast_math",
+      "owner": "robtillaart",
+      "url": "https://github.com/RobTillaart/fast_math",
+      "version": "~0.2.4",
+      "note": "Arduino library for fast math algorithms.",
+      "authors": ["Rob Tillaart"],
+      "frameworks": "*",
+      "platforms": "*"
     }
   ]
 }
