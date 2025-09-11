@@ -14,6 +14,7 @@
 
 #include <Arduino.h>
 #include <SensorModbusMaster.h>
+#include <fast_math.h>  // For BCD conversions
 
 /**
  * @brief Default Modbus address for ANB sensors.
@@ -1169,14 +1170,11 @@ class anbSensor {
     /**
      * @brief Gets the current RTC (Real-Time Clock) value on the sensor
      *
-     * The RTC value is stored in 6 holding registers starting at 0x003D
-     * (decimal 61).
+     * The RTC value is stored in BCD (Binary Coded Decimal)in 6 holding
+     * registers starting at 0x003D (decimal 61).
      *
      * @return True if the RTC value was successfully retrieved, false
      * otherwise.
-     *
-     * @note The year is returned as the offset from 2000. So, for 2025, the
-     * year will be 25.
      *
      * @param seconds Reference to a variable where the seconds will be stored
      * @param minutes Reference to a variable where the minutes will be stored
@@ -1185,16 +1183,13 @@ class anbSensor {
      * @param month Reference to a variable where the month will be stored
      * @param year Reference to a variable where the year will be stored
      */
-    bool getRTC(uint16_t& seconds, uint16_t& minutes, uint16_t& hours,
-                uint16_t& day, uint16_t& month, uint16_t& year);
+    bool getRTC(int8_t& seconds, int8_t& minutes, int8_t& hours, int8_t& day,
+                int8_t& month, int16_t& year);
     /**
      * @brief Set a new RTC (Real-Time Clock) value on the sensor.
      *
-     * The RTC value is stored in 6 holding registers starting at 0x003D
-     * (decimal 61).
-     *
-     * @note The year is set as the offset from 2000. So, for 2025, the year
-     * must be set to 25.
+     * The RTC value is stored in BCD (Binary Coded Decimal) in 6 holding
+     * registers starting at 0x003D (decimal 61).
      *
      * @param seconds The seconds portion of the current time
      * @param minutes The minutes portion of the current time
@@ -1204,8 +1199,8 @@ class anbSensor {
      * @param year The year portion of the current time
      * @return True if the RTC value was successfully set, false otherwise.
      */
-    bool setRTC(uint16_t seconds, uint16_t minutes, uint16_t hours,
-                uint16_t day, uint16_t month, uint16_t year);
+    bool setRTC(int8_t seconds, int8_t minutes, int8_t hours, int8_t day,
+                int8_t month, int16_t year);
     /**@}*/
 
     /**

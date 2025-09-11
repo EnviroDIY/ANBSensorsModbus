@@ -680,31 +680,35 @@ String anbSensor::getDriverVersion(void) {
     return modbus.StringFromRegister(3, 0x002D, 16);
 }
 
-// The RTC value is stored in 6 holding registers starting at 0x003D (decimal
-// 61)
-bool anbSensor::getRTC(uint16_t& seconds, uint16_t& minutes, uint16_t& hours,
-                       uint16_t& day, uint16_t& month, uint16_t& year) {
+// The RTC value is stored in BCD (Binary Coded Decimal) in 6 holding registers
+// starting at 0x003D (decimal 61)
+// NOTE: The values are stored as packed BCD, so each byte contains two digits
+// and only the lower byte of each register is used.
+// NOTE: The year is stored as an offset from 2000
+bool anbSensor::getRTC(int8_t& seconds, int8_t& minutes, int8_t& hours,
+                       int8_t& day, int8_t& month, int16_t& year) {
     if (!modbus.getRegisters(0x03, 0x003D, 6)) { return false; }
-    seconds = modbus.uint16FromFrame(bigEndian, 3);
-    minutes = modbus.uint16FromFrame(bigEndian, 5);
-    hours   = modbus.uint16FromFrame(bigEndian, 7);
-    day     = modbus.uint16FromFrame(bigEndian, 9);
-    month   = modbus.uint16FromFrame(bigEndian, 11);
-    year    = modbus.uint16FromFrame(bigEndian, 13);
+    seconds = bcd2dec(modbus.byteFromFrame(4));
+    minutes = bcd2dec(modbus.byteFromFrame(6));
+    hours   = bcd2dec(modbus.byteFromFrame(8));
+    day     = bcd2dec(modbus.byteFromFrame(10));
+    month   = bcd2dec(modbus.byteFromFrame(12));
+    year    = bcd2dec(modbus.byteFromFrame(14)) + 2000;
     return true;
 }
-bool anbSensor::setRTC(uint16_t seconds, uint16_t minutes, uint16_t hours,
-                       uint16_t day, uint16_t month, uint16_t year) {
+bool anbSensor::setRTC(int8_t seconds, int8_t minutes, int8_t hours, int8_t day,
+                       int8_t month, int16_t year) {
     // Write the RTC values to the holding registers starting at 0x003D
-    byte rtc_values[12];
-    modbus.uint16ToFrame(seconds, bigEndian, rtc_values, 0);
-    modbus.uint16ToFrame(minutes, bigEndian, rtc_values, 2);
-    modbus.uint16ToFrame(hours, bigEndian, rtc_values, 4);
-    modbus.uint16ToFrame(day, bigEndian, rtc_values, 6);
-    modbus.uint16ToFrame(month, bigEndian, rtc_values, 8);
-    modbus.uint16ToFrame(year, bigEndian, rtc_values, 10);
+    byte time_bytes[12];
+    memset(time_bytes, 0, 12);
+    time_bytes[1]  = dec2bcdRTC(seconds);
+    time_bytes[3]  = dec2bcdRTC(minutes);
+    time_bytes[5]  = dec2bcdRTC(hours);
+    time_bytes[7]  = dec2bcdRTC(day);
+    time_bytes[9]  = dec2bcdRTC(month);
+    time_bytes[11] = dec2bcd(year - 2000);
     modbus.setCommandTimeout(5000L);
-    bool success = modbus.setRegisters(0x003D, 6, rtc_values);
+    bool success = modbus.setRegisters(0x003D, 6, time_bytes);
     modbus.setCommandTimeout(1000L);
     return success;
 }
