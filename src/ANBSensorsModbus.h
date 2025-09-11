@@ -893,6 +893,18 @@ class anbSensor {
     ANBHealthCode getHealthCode(void);
 
     /**
+     * @brief Get the transducer health code as a human readable string
+     *
+     * @return The health code as a string; "UNKNOWN" if the sensor could not be
+     * read.
+     */
+    String getHealthString(ANBHealthCode code);
+    /**
+     * @brief Print the transducer health code to the serial monitor
+     */
+    void printHealthCode(ANBHealthCode code);
+
+    /**
      * @brief Gets the current raw (non-temperature compensated) conductivity in
      * millisiemens per centimeter (mS/cm) from the sensor.
      *
@@ -925,6 +937,17 @@ class anbSensor {
      * @see ANBStatusCode
      */
     ANBStatusCode getStatusCode(void);
+    /**
+     * @brief Get the transducer status code as a human readable string
+     *
+     * @return The status code as a string; "UNKNOWN" if the sensor could not be
+     * read.
+     */
+    String getStatusString(ANBStatusCode code);
+    /**
+     * @brief Print the transducer status code to the serial monitor
+     */
+    void printStatusCode(ANBStatusCode code);
 
     /**
      * @brief Gets the current diagnostics code from the sensor.
@@ -938,6 +961,17 @@ class anbSensor {
      * @see ANBDiagnosticCode
      */
     ANBDiagnosticCode getDiagnosticCode(void);
+    /**
+     * @brief Get the transducer diagnostic code as a human readable string
+     *
+     * @return The diagnostic code as a string; "UNKNOWN" if the sensor could
+     * not be read.
+     */
+    String getDiagnosticString(ANBDiagnosticCode code);
+    /**
+     * @brief Print the transducer diagnostic code to the serial monitor
+     */
+    void printDiagnosticCode(ANBDiagnosticCode code);
 
     /**
      * @brief Gets bulk values from all parameters

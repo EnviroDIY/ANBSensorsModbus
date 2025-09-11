@@ -395,6 +395,22 @@ ANBHealthCode anbSensor::getHealthCode(void) {
         default: return ANBHealthCode::UNKNOWN;
     }
 }
+String anbSensor::getHealthString(ANBHealthCode code) {
+    switch (code) {
+        case ANBHealthCode::OK: return "OK";
+        case ANBHealthCode::ABRADE_SOON: return "Abrade Soon";
+        case ANBHealthCode::ABRADE_NOW: return "Abrade Now";
+        case ANBHealthCode::REPLACE: return "Replace";
+        case ANBHealthCode::NOT_IMMERSED: return "Not Immersed";
+        case ANBHealthCode::NO_REFERENCE: return "No Reference";
+        case ANBHealthCode::NO_PH: return "No pH";
+        default: return "Unknown";
+    }
+}
+void anbSensor::printHealthCode(ANBHealthCode code) {
+    _stream->print("Health Code: ");
+    _stream->println(getHealthString(code));
+}
 
 // The raw conductivity value is stored in holding register 0x0043 (decimal 67)
 float anbSensor::getRawConductivity(void) {
@@ -414,6 +430,18 @@ ANBStatusCode anbSensor::getStatusCode(void) {
         default: return ANBStatusCode::UNKNOWN;
     }
 }
+String anbSensor::getStatusString(ANBStatusCode code) {
+    switch (code) {
+        case ANBStatusCode::SLEEPING: return "Sleeping";
+        case ANBStatusCode::INTERVAL_SCANNING: return "Interval Scanning";
+        case ANBStatusCode::CONTINUOUS_SCANNING: return "Continuous Scanning";
+        default: return "Unknown";
+    }
+}
+void anbSensor::printStatusCode(ANBStatusCode code) {
+    _stream->print("Status Code: ");
+    _stream->println(getStatusString(code));
+}
 
 // The diagnostic code is stored as the second digit of the two digit value
 // stored in the lower byte of holding register 0x0009 (decimal 9).
@@ -428,6 +456,19 @@ ANBDiagnosticCode anbSensor::getDiagnosticCode(void) {
         case 3: return ANBDiagnosticCode::SYSTEM_ERROR;
         default: return ANBDiagnosticCode::UNKNOWN;
     }
+}
+String anbSensor::getDiagnosticString(ANBDiagnosticCode code) {
+    switch (code) {
+        case ANBDiagnosticCode::OK: return "OK";
+        case ANBDiagnosticCode::BATTERY_ERROR: return "Battery Error";
+        case ANBDiagnosticCode::SD_ERROR: return "SD Card Error";
+        case ANBDiagnosticCode::SYSTEM_ERROR: return "System Error";
+        default: return "Unknown";
+    }
+}
+void anbSensor::printDiagnosticCode(ANBDiagnosticCode code) {
+    _stream->print("Diagnostic Code: ");
+    _stream->println(getDiagnosticString(code));
 }
 
 // All parameters can be read from 11 (0x0B) holding registers starting at
