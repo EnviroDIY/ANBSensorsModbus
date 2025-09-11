@@ -276,12 +276,12 @@ void setup() {
 
     // Get the sensor RTC
     Serial.println(F("Getting sensor RTC."));
-    uint16_t seconds = -1;
-    uint16_t minutes = -1;
-    uint16_t hours   = -1;
-    uint16_t day     = -1;
-    uint16_t month   = -1;
-    uint16_t year    = -1;
+    int8_t  seconds = -1;
+    int8_t  minutes = -1;
+    int8_t  hours   = -1;
+    int8_t  day     = -1;
+    int8_t  month   = -1;
+    int16_t year    = -1;
     sensor.getRTC(seconds, minutes, hours, day, month, year);
     Serial.print(F("    RTC: "));
     Serial.print(month);
