@@ -24,7 +24,8 @@
 byte modbusAddress = 0x55;  // HEX 0x55 is the ANB default modbus address.
 
 // The Modbus baud rate the sensor uses
-int32_t modbusBaud = 57600;  // 57600 is ANB default baud rate.
+int32_t       modbusBaud = 57600;  // 57600 is ANB default baud rate.
+ANBSensorBaud targetBaud = ANBSensorBaud::BAUD57600;
 
 // Sensor Timing
 // Edit these to explore
@@ -61,9 +62,8 @@ const int DEREPin =
 // ==========================================================================
 // Hardware serial ports are preferred when available.
 // AltSoftSerial is the most stable alternative for modbus.
-//   Select over alternatives with the define below.
-// #define BUILD_ALTSOFTSERIAL  // Comment-out if you prefer alternatives
-
+// Select over alternatives with the define below.
+// #define BUILD_ALTSOFTSERIAL
 #if defined(BUILD_ALTSOFTSERIAL) && defined(__AVR__)
 #include <AltSoftSerial.h>
 AltSoftSerial modbusSerial;
@@ -212,6 +212,25 @@ void setup() {
         Serial.print(F("Timed out waiting for ready after "));
         Serial.print(millis() - startTime);
         Serial.println(F(" ms"));
+    }
+
+    if (!isReady) {
+        Serial.println(F("Did not find the sensor - attempting to find it at a "
+                         "different baud rate."));
+        ANBSensorBaud foundBaud = sensor.findBaud(modbusSerial);
+        if (foundBaud != ANBSensorBaud::UNKNOWN) {
+            Serial.print(F("Found a sensor response at "));
+            Serial.print(static_cast<uint32_t>(foundBaud));
+            Serial.println(F(" baud."));
+            isReady = true;
+            if (foundBaud != targetBaud) {
+                isReady = sensor.setBaud(targetBaud);
+                modbusSerial.begin(static_cast<uint32_t>(targetBaud));
+            }
+        } else {
+            Serial.println(F("Did not find a sensor response at any common "
+                             "baud rate."));
+        }
     }
 
     // // Enable modbus
