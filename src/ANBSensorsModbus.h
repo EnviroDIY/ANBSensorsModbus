@@ -894,7 +894,7 @@ class anbSensor {
 
     /**
      * @brief Get the transducer health code as a human readable string
-     *
+     * @param code The health code as an ANBHealthCode
      * @return The health code as a string; "UNKNOWN" if the sensor could not be
      * read.
      */
@@ -942,7 +942,7 @@ class anbSensor {
     ANBStatusCode getStatusCode(void);
     /**
      * @brief Get the transducer status code as a human readable string
-     *
+     * @param code The status code as an ANBStatusCode
      * @return The status code as a string; "UNKNOWN" if the sensor could not be
      * read.
      */
@@ -969,7 +969,7 @@ class anbSensor {
     ANBDiagnosticCode getDiagnosticCode(void);
     /**
      * @brief Get the transducer diagnostic code as a human readable string
-     *
+     * @param code The diagnostic code as an ANBDiagnosticCode
      * @return The diagnostic code as a string; "UNKNOWN" if the sensor could
      * not be read.
      */
@@ -1116,6 +1116,8 @@ class anbSensor {
      * @tparam T A serial class (e.g., HardwareSerial, SoftwareSerial, etc.)
      * @param modbusSerial A reference to the serial object to use for
      * communication
+     * @return The detected baud rate, or ANBSensorBaud::UNKNOWN if the baud
+     * rate could not be determined.
      */
     template <class T>
     ANBSensorBaud findBaud(T& modbusSerial) {
@@ -1139,6 +1141,7 @@ class anbSensor {
                         default: return ANBSensorBaud::UNKNOWN;
                     }
                 }
+                delay(100);
             }
         }
         modbusSerial.begin(rates[0]);
