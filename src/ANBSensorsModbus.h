@@ -301,6 +301,11 @@ class anbSensor {
      * Functions to set and get properties of the anbSensor object.
      */
     /**@{*/
+
+    /**
+     * @brief Get the Last Error object
+     * @return The last Modbus error code.
+     */
     modbusErrorCode getLastError() {
         return modbus.getLastError();
     }
