@@ -228,8 +228,11 @@ void setup() {
                 modbusSerial.begin(static_cast<uint32_t>(targetBaud));
             }
         } else {
-            Serial.println(F("Did not find a sensor response at any common "
-                             "baud rate."));
+            Serial.println(F(
+                "Did not find a sensor response at any supported baud rate."));
+            Serial.println(F("Use ANB Sensors Utility to confirm the sensor is "
+                             "in Modbus mode."));
+            Serial.println(F("Check wiring and modbus address and try again."));
         }
     }
 

@@ -1110,6 +1110,9 @@ class anbSensor {
     /**
      * @brief Attempt to automatically determine the baud rate of the sensor
      *
+     * @note This will only work if the sensor is in Modbus mode with the
+     * expected Modbus address, but at a different baud rate.
+     *
      * @tparam T A serial class (e.g., HardwareSerial, SoftwareSerial, etc.)
      * @param modbusSerial A reference to the serial object to use for
      * communication
