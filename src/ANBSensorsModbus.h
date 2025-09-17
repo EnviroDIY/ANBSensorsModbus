@@ -900,9 +900,12 @@ class anbSensor {
      */
     String getHealthString(ANBHealthCode code);
     /**
-     * @brief Print the transducer health code to the serial monitor
+     * @brief Print a human-friendly translation of the transducer health code
+     * to the serial monitor
+     * @param code The health code to print
+     * @param out The output stream to use (default is Serial)
      */
-    void printHealthCode(ANBHealthCode code);
+    void printHealthCode(ANBHealthCode code, Stream& out = Serial);
 
     /**
      * @brief Gets the current raw (non-temperature compensated) conductivity in
@@ -945,9 +948,12 @@ class anbSensor {
      */
     String getStatusString(ANBStatusCode code);
     /**
-     * @brief Print the transducer status code to the serial monitor
+     * @brief Print a human-friendly translation of the transducer status code
+     * to the serial monitor
+     * @param code The status code to print
+     * @param out The output stream to use (default is Serial)
      */
-    void printStatusCode(ANBStatusCode code);
+    void printStatusCode(ANBStatusCode code, Stream& out = Serial);
 
     /**
      * @brief Gets the current diagnostics code from the sensor.
@@ -969,9 +975,12 @@ class anbSensor {
      */
     String getDiagnosticString(ANBDiagnosticCode code);
     /**
-     * @brief Print the transducer diagnostic code to the serial monitor
+     * @brief Print a human-friendly translation of the transducer diagnostic
+     * code to the serial monitor
+     * @param code The diagnostic code to print
+     * @param out The output stream to use (default is Serial)
      */
-    void printDiagnosticCode(ANBDiagnosticCode code);
+    void printDiagnosticCode(ANBDiagnosticCode code, Stream& out = Serial);
 
     /**
      * @brief Gets bulk values from all parameters
@@ -1097,6 +1106,41 @@ class anbSensor {
      * @return True if the baud rate was successfully set, false if not.
      */
     bool setBaud(ANBSensorBaud newSensorBaud);
+
+    /**
+     * @brief Attempt to automatically determine the baud rate of the sensor
+     *
+     * @tparam T A serial class (e.g., HardwareSerial, SoftwareSerial, etc.)
+     * @param modbusSerial A reference to the serial object to use for
+     * communication
+     */
+    template <class T>
+    ANBSensorBaud findBaud(T& modbusSerial) {
+        static uint32_t rates[] = {57600, 9600,  115200, 38400,
+                                   19200, 56000, 14400,  28800};
+        for (uint8_t i = 0; i < sizeof(rates) / sizeof(rates[0]); i++) {
+            uint32_t rate = rates[i];
+            modbusSerial.begin(rate);
+            delay(10);
+            for (int j = 0; j < 10; j++) {
+                if (gotModbusResponse()) {
+                    switch (rate) {
+                        case 57600: return ANBSensorBaud::BAUD57600;
+                        case 9600: return ANBSensorBaud::BAUD9600;
+                        case 115200: return ANBSensorBaud::BAUD115200;
+                        case 38400: return ANBSensorBaud::BAUD38400;
+                        case 19200: return ANBSensorBaud::BAUD19200;
+                        case 56000: return ANBSensorBaud::BAUD56000;
+                        case 14400: return ANBSensorBaud::BAUD14400;
+                        case 28800: return ANBSensorBaud::BAUD28800;
+                        default: return ANBSensorBaud::UNKNOWN;
+                    }
+                }
+            }
+        }
+        modbusSerial.begin(rates[0]);
+        return ANBSensorBaud::UNKNOWN;
+    }
 
     /**
      * @brief Gets the modbus sensor (slave) address.

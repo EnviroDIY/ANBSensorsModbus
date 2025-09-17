@@ -407,9 +407,9 @@ String anbSensor::getHealthString(ANBHealthCode code) {
         default: return "Unknown";
     }
 }
-void anbSensor::printHealthCode(ANBHealthCode code) {
-    _stream->print("Health Code: ");
-    _stream->println(getHealthString(code));
+void anbSensor::printHealthCode(ANBHealthCode code, Stream& out) {
+    out.print("Health Code: ");
+    out.println(getHealthString(code));
 }
 
 // The raw conductivity value is stored in holding register 0x0043 (decimal 67)
@@ -438,9 +438,9 @@ String anbSensor::getStatusString(ANBStatusCode code) {
         default: return "Unknown";
     }
 }
-void anbSensor::printStatusCode(ANBStatusCode code) {
-    _stream->print("Status Code: ");
-    _stream->println(getStatusString(code));
+void anbSensor::printStatusCode(ANBStatusCode code, Stream& out) {
+    out.print("Status Code: ");
+    out.println(getStatusString(code));
 }
 
 // The diagnostic code is stored as the second digit of the two digit value
@@ -466,9 +466,9 @@ String anbSensor::getDiagnosticString(ANBDiagnosticCode code) {
         default: return "Unknown";
     }
 }
-void anbSensor::printDiagnosticCode(ANBDiagnosticCode code) {
-    _stream->print("Diagnostic Code: ");
-    _stream->println(getDiagnosticString(code));
+void anbSensor::printDiagnosticCode(ANBDiagnosticCode code, Stream& out) {
+    out.print("Diagnostic Code: ");
+    out.println(getDiagnosticString(code));
 }
 
 // All parameters can be read from 11 (0x0B) holding registers starting at
