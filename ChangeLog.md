@@ -20,6 +20,17 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ***
 
+## [0.2.5]
+
+### Added
+
+- Added a function to attempt to automatically find the baud rate of a sensor, though it's only partially functional.
+
+### Changed
+
+- Require a stream as input to print out human-readable output.
+
+
 ## [0.2.4]
 
 ### Changed
@@ -87,7 +98,8 @@ Initial release
 
 ***
 
-[Unreleased]: https://github.com/EnviroDIY/ANBSensorsModbus/compare/v0.2.4...HEAD
+[Unreleased]: https://github.com/EnviroDIY/ANBSensorsModbus/compare/v0.2.5...HEAD
+[0.2.5]: https://github.com/EnviroDIY/ANBSensorsModbus/releases/tag/v0.2.5
 [0.2.4]: https://github.com/EnviroDIY/ANBSensorsModbus/releases/tag/v0.2.4
 [0.2.3]: https://github.com/EnviroDIY/ANBSensorsModbus/releases/tag/v0.2.3
 [0.2.2]: https://github.com/EnviroDIY/ANBSensorsModbus/releases/tag/v0.2.2
