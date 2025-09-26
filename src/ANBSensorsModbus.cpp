@@ -340,6 +340,7 @@ bool anbSensor::stop(void) {
 // end, which will throw off the modbus response parsing.  Because of the junk
 // byte, we turn off the retries for this command.
 bool anbSensor::reboot(void) {
+    if (_stream == nullptr) { return false; }
     // set the number of command retries to 1 (don't retry)
     modbus.setCommandRetries(1);
     modbus.setCommandTimeout(5000L);
@@ -540,6 +541,7 @@ bool anbSensor::enableModbus() {
     return success;
 }
 void anbSensor::forceModbus() {
+    if (_stream == nullptr) { return; }
     _stream->setTimeout(750);  // set a longer timeout for the terminal commands
     // clear anything hanging in the buffer
     do { _stream->readString(); } while (_stream->available());
@@ -609,6 +611,7 @@ bool anbSensor::enableTerminal() {
     return success;
 }
 void anbSensor::forceTerminal() {
+    if (_stream == nullptr) { return; }
     // clear anything hanging in the buffer
     while (_stream->available()) { _stream->readString(); }
     delay(15);             // short delay before the command
