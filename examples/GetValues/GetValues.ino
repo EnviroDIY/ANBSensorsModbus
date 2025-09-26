@@ -543,10 +543,14 @@ void loop() {
     Serial.println(spcond2);
     Serial.print(F("  Raw Conductivity: "));
     Serial.println(raw_cond2);
-    Serial.print(F("  Health: "));
-    Serial.println(static_cast<uint16_t>(health2));
-    Serial.print(F("  Diagnostic: "));
-    Serial.println(static_cast<uint16_t>(diagStatus2));
+    Serial.print(F("  Health Code: "));
+    Serial.print(static_cast<uint16_t>(health2));
+    Serial.print(F(" - "));
+    Serial.println(sensor.getHealthString(health2));
+    Serial.print(F("  Diagnostic Code: "));
+    Serial.print(static_cast<uint16_t>(diagStatus2));
+    Serial.print(F(" - "));
+    Serial.println(sensor.getDiagnosticString(diagStatus2));
 
     Serial.println(F("\n\nGetting results individually..."));
     float pH = sensor.getpH();
@@ -565,14 +569,20 @@ void loop() {
     Serial.print(F("  Raw Conductivity: "));
     Serial.println(raw_cond);
     ANBHealthCode health = sensor.getHealthCode();
-    Serial.print(F("  Health: "));
-    Serial.println(static_cast<uint16_t>(health));
+    Serial.print(F("  Health Code: "));
+    Serial.print(static_cast<uint16_t>(health));
+    Serial.print(F(" - "));
+    Serial.println(sensor.getHealthString(health));
     ANBStatusCode status = sensor.getStatusCode();
-    Serial.print(F("  Status: "));
-    Serial.println(static_cast<uint16_t>(status));
+    Serial.print(F("  Status Code: "));
+    Serial.print(static_cast<uint16_t>(status));
+    Serial.print(F(" - "));
+    Serial.println(sensor.getStatusString(status));
     ANBDiagnosticCode diagStatus = sensor.getDiagnosticCode();
-    Serial.print(F("  Diagnostic: "));
-    Serial.println(static_cast<uint16_t>(diagStatus));
+    Serial.print(F("  Diagnostic Code: "));
+    Serial.print(static_cast<uint16_t>(diagStatus));
+    Serial.print(F(" - "));
+    Serial.println(sensor.getDiagnosticString(diagStatus));
 
 #if !defined(TEST_AUTONOMOUS)
     Serial.println(F("\n\nStopping scan... "));
