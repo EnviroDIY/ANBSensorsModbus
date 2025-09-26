@@ -1113,47 +1113,6 @@ class anbSensor {
     bool setBaud(ANBSensorBaud newSensorBaud);
 
     /**
-     * @brief Attempt to automatically determine the baud rate of the sensor
-     *
-     * @note This will only work if the sensor is in Modbus mode with the
-     * expected Modbus address, but at a different baud rate.
-     *
-     * @tparam T A serial class (e.g., HardwareSerial, SoftwareSerial, etc.)
-     * @param modbusSerial A reference to the serial object to use for
-     * communication
-     * @return The detected baud rate, or ANBSensorBaud::UNKNOWN if the baud
-     * rate could not be determined.
-     */
-    template <class T>
-    ANBSensorBaud findBaud(T& modbusSerial) {
-        static uint32_t rates[] = {57600, 9600,  115200, 38400,
-                                   19200, 56000, 14400,  28800};
-        for (uint8_t i = 0; i < sizeof(rates) / sizeof(rates[0]); i++) {
-            uint32_t rate = rates[i];
-            modbusSerial.begin(rate);
-            delay(10);
-            for (int j = 0; j < 10; j++) {
-                if (gotModbusResponse()) {
-                    switch (rate) {
-                        case 57600: return ANBSensorBaud::BAUD57600;
-                        case 9600: return ANBSensorBaud::BAUD9600;
-                        case 115200: return ANBSensorBaud::BAUD115200;
-                        case 38400: return ANBSensorBaud::BAUD38400;
-                        case 19200: return ANBSensorBaud::BAUD19200;
-                        case 56000: return ANBSensorBaud::BAUD56000;
-                        case 14400: return ANBSensorBaud::BAUD14400;
-                        case 28800: return ANBSensorBaud::BAUD28800;
-                        default: return ANBSensorBaud::UNKNOWN;
-                    }
-                }
-                delay(100);
-            }
-        }
-        modbusSerial.begin(rates[0]);
-        return ANBSensorBaud::UNKNOWN;
-    }
-
-    /**
      * @brief Gets the modbus sensor (slave) address.
      *
      * The address is in the lower byte of ~~input~~ **holding** register 0x0039

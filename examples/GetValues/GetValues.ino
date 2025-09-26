@@ -214,25 +214,11 @@ void setup() {
     }
 
     if (!isReady) {
-        Serial.println(F("Did not find the sensor - attempting to find it at a "
-                         "different baud rate."));
-        ANBSensorBaud foundBaud = sensor.findBaud(modbusSerial);
-        if (foundBaud != ANBSensorBaud::UNKNOWN) {
-            Serial.print(F("Found a sensor response at "));
-            Serial.print(static_cast<uint32_t>(foundBaud));
-            Serial.println(F(" baud."));
-            isReady = true;
-            if (foundBaud != targetBaud) {
-                isReady = sensor.setBaud(targetBaud);
-                modbusSerial.begin(static_cast<uint32_t>(targetBaud));
-            }
-        } else {
-            Serial.println(F(
-                "Did not find a sensor response at any supported baud rate."));
-            Serial.println(F("Use ANB Sensors Utility to confirm the sensor is "
-                             "in Modbus mode."));
-            Serial.println(F("Check wiring and modbus address and try again."));
-        }
+        Serial.println(F("Did not find the sensor."));
+        Serial.println(F("Use ANB Sensors Utility to confirm the sensor is in "
+                         "Modbus mode."));
+        Serial.println(F("Check wiring and modbus address and try again."));
+        while (1);  // Stay here forevermore
     }
 
     // // Enable modbus
