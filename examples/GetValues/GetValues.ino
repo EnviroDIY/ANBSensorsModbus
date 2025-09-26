@@ -38,6 +38,7 @@ ANBSensorBaud targetBaud = ANBSensorBaud::BAUD57600;
 
 // #define TEST_POWER
 // #define TEST_AUTONOMOUS
+// #define ABRADE_SENSOR
 
 // ==========================================================================
 //  Data Logger Options
@@ -130,12 +131,10 @@ void setSensorPower(bool power) {
 // ==========================================================================
 void setup() {
 // Wait for USB connection to be established by PC
-// NOTE:  Only use this when debugging - if not connected to a PC, this
-// could prevent the script from starting
+// NOTE:  Only use this when debugging - if not connected to a PC, this adds an
+// unnecessary startup delay
 #if defined(SERIAL_PORT_USBVIRTUAL)
-    while (!SERIAL_PORT_USBVIRTUAL && (millis() < 10000)) {
-        // wait
-    }
+    while (!SERIAL_PORT_USBVIRTUAL && (millis() < 10000L)) { delay(100); }
 #endif
 
     // Turn on the "main" serial port for debugging via USB Serial Monitor
@@ -446,6 +445,14 @@ void setup() {
         Serial.print(F("."));
     }
     Serial.println();
+#endif
+
+#if defined(ABRADE_SENSOR)
+    // Mark sensor as abraded
+    Serial.print(F("Mark sensor as abraded... "));
+    bool abradeSuccess = sensor.abradeSensor();
+    Serial.print(F(" ..."));
+    Serial.println(abradeSuccess ? F("success") : F("failed"));
 #endif
 }
 
