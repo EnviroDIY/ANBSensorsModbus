@@ -20,6 +20,22 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ***
 
+## [0.2.6]
+
+### Fixed
+
+- Always check that a stream is not null before using it.
+
+### Changed
+
+- Bumped dependencies
+
+### Removed
+
+- Removed non-functional findBaud function.
+
+***
+
 ## [0.2.5]
 
 ### Added
