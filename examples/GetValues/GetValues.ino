@@ -106,6 +106,7 @@ HardwareSerial& modbusSerial = Serial;
 // Construct the anbSensor instance
 anbSensor sensor;
 bool      success;
+uint32_t  startTime;
 
 // ==========================================================================
 // Working Functions
@@ -126,6 +127,41 @@ void setSensorPower(bool power) {
     }
 }
 
+bool powerCycleSensor() {
+    Serial.print(F("Holding with power off for 5s"));
+    setSensorPower(false);
+    for (size_t i = 0; i < 5; i++) {
+        delay(1000L);
+        Serial.print('.');
+    }
+    Serial.println();
+
+    // Turn on power pins
+    Serial.println(F("Powering on"));
+    setSensorPower(true);
+
+    // Allow the sensor and converter to warm up
+    Serial.print(F("Waiting up to "));
+    Serial.print(WARM_UP_TIME);
+    Serial.println(F(" ms for the sensor to be ready... "));
+    bool     isReady   = false;
+    uint32_t startTime = millis();
+    do {
+        delay(250);
+        isReady = sensor.isSensorReady();
+    } while (!isReady && millis() - startTime <= WARM_UP_TIME);
+    if (isReady) {
+        Serial.print(F(" ...Sensor ready after "));
+        Serial.print(millis() - startTime);
+        Serial.println(F(" ms"));
+    } else {
+        Serial.print(F("Timed out waiting for ready after "));
+        Serial.print(millis() - startTime);
+        Serial.println(F(" ms"));
+    }
+    return isReady;
+}
+
 // ==========================================================================
 //  Arduino Setup Function
 // ==========================================================================
@@ -134,6 +170,7 @@ void setup() {
 // NOTE:  Only use this when debugging - if not connected to a PC, this adds an
 // unnecessary startup delay
 #if defined(SERIAL_PORT_USBVIRTUAL)
+SERIAL_PORT_USBVIRTUAL.begin(0);  // baud rate ignored
     while (!SERIAL_PORT_USBVIRTUAL && (millis() < 10000L)) { delay(100); }
 #endif
 
@@ -181,37 +218,7 @@ void setup() {
     Serial.println(prettyprintAddressHex(modbusAddress));
     Serial.println();
 
-    Serial.println(F("Holding with power off for 15s"));
-    setSensorPower(false);
-    for (size_t i = 0; i < 15; i++) {
-        delay(1000L);
-        Serial.print(F("."));
-    }
-    Serial.println();
-
-    // Turn on power pins
-    Serial.println(F("Powering on"));
-    setSensorPower(true);
-
-    // Allow the sensor and converter to warm up
-    Serial.print(F("Waiting up to "));
-    Serial.print(WARM_UP_TIME);
-    Serial.print(F(" ms for the sensor to be ready... "));
-    bool     isReady   = false;
-    uint32_t startTime = millis();
-    do {
-        delay(250);
-        isReady = sensor.isSensorReady();
-    } while (!isReady && millis() - startTime <= WARM_UP_TIME);
-    if (isReady) {
-        Serial.print(F("Sensor ready after "));
-        Serial.print(millis() - startTime);
-        Serial.println(F(" ms"));
-    } else {
-        Serial.print(F("Timed out waiting for ready after "));
-        Serial.print(millis() - startTime);
-        Serial.println(F(" ms"));
-    }
+    bool isReady = powerCycleSensor();
 
     if (!isReady) {
         Serial.println(F("Did not find the sensor."));
@@ -375,17 +382,6 @@ void setup() {
     Serial.print(F(" ..."));
     Serial.println(modeSet ? F("success") : F("failed"));
 
-    // Set Sampling Interval Time
-#if defined(TEST_AUTONOMOUS)
-    Serial.print(F("Set sensor sampling interval to 10 minutes... "));
-    bool intervalSet = sensor.setIntervalTime(10);
-#else
-    Serial.print(F("Set sensor sampling interval to 0 (continuous)... "));
-    bool intervalSet = sensor.setIntervalTime(0);
-#endif
-    Serial.print(F(" ..."));
-    Serial.println(intervalSet ? F("success") : F("failed"));
-
     // Set Sensor Salinity Mode
     Serial.print(F("Set sensor salinity mode to low salinity... "));
     bool salinitySet = sensor.setSalinityMode(ANBSalinityMode::LOW_SALINITY);
@@ -398,47 +394,55 @@ void setup() {
     Serial.print(F(" ..."));
     Serial.println(immersionSet ? F("success") : F("failed"));
 
-#if 0
+// Set Sampling Interval Time
+#if defined(TEST_AUTONOMOUS)
+    Serial.print(F("Set sensor sampling interval to 10 minutes... "));
+    bool intervalSet = sensor.setIntervalTime(10);
+    startTime        = millis();
+#else
+    Serial.print(F("Set sensor sampling interval to 0 (continuous)... "));
+    bool intervalSet = sensor.setIntervalTime(0);
+#endif
+    Serial.print(F(" ..."));
+    Serial.println(intervalSet ? F("success") : F("failed"));
+
+#if 1
     // Set Bulk Configuration
     // NOTE: This only works if there's a power cycle or reboot after writing
     // the configuration!
     Serial.print(F("Set sensor bulk configuration... "));
+// writeConfiguration(ANBSensorMode mode, ANBPowerStyle power,
+    //                     ANBSalinityMode salinity, uint16_t delayHours,
+    //                     uint16_t delayMinutes, uint16_t intervalHours,
+    //                     uint16_t intervalMinutes, bool profilingEnabled,
+    //                     bool modbusEnabled)
     bool bulkSet = sensor.writeConfiguration(
         ANBSensorMode::CONTROLLED, ANBPowerStyle::ALWAYS_POWERED,
         ANBSalinityMode::LOW_SALINITY, 0, 0, 0, 0, false, true);
     Serial.print(F(" ..."));
     Serial.println(bulkSet ? F("success") : F("failed"));
-    setSensorPower(false);
-    delay(500L);
-    setSensorPower(true);
+        delay(1000);
+    Serial.println(F("Power cycling after setting bulk configuration..."));
+    powerCycleSensor();
 #endif
 
 #if 0
     // Reboot the sensor after configuration to save and apply settings
+// WARNING: The reboot function does not work with firmware versions prior to 10.10 and earlier!
     Serial.print(F("\n\nRebooting sensor... "));
     bool rebooted = sensor.reboot();
     Serial.println(rebooted ? F("success") : F("failed"));
-
-    Serial.println(F("\n\nForcing modbus after reboot... "));
-    sensor.forceModbus();
-#endif
-
-#if defined(TEST_POWER)
-    Serial.println(F("\n\n\nHolding with power off for 15 seconds..."));
-    setSensorPower(false);
-    for (size_t i = 0; i < 15; i++) {
-        delay(1000L);
-        Serial.print(F("."));
-    }
-    Serial.println();
 #endif
 
 #if defined(ABRADE_SENSOR)
     // Mark sensor as abraded
-    Serial.print(F("Mark sensor as abraded... "));
+    Serial.print(F("\n\nMarking sensor as abraded... "));
     bool abradeSuccess = sensor.abradeSensor();
     Serial.print(F(" ..."));
     Serial.println(abradeSuccess ? F("success") : F("failed"));
+delay(1000);
+    Serial.println(F("Power cycling after abrading..."));
+    powerCycleSensor();
 #endif
 }
 
@@ -446,23 +450,11 @@ void setup() {
 //  Arduino Loop Function
 // ==========================================================================
 void loop() {
-#if defined(TEST_POWER)
-    // Turn on power pins
-    Serial.println(F("Powering on"));
-    setSensorPower(true);
-#endif
-
-    // Allow the sensor and converter to warm up
-    Serial.print(F("Waiting up to "));
-    Serial.print(WARM_UP_TIME);
-    Serial.print(F(" ms for the sensor to be ready... "));
-    bool     isReady   = false;
-    uint32_t startTime = millis();
-    do {
-        delay(250);
-        isReady = sensor.isSensorReady();
-    } while (!isReady && millis() - startTime <= WARM_UP_TIME);
-    if (isReady) {
+#if defined(TEST_POWER) && !defined(TEST_AUTONOMOUS)
+    bool isReady = powerCycleSensor();
+    #else
+    bool isReady = sensor.isSensorReady();
+        if (isReady) {
         Serial.print(F("Sensor ready after "));
         Serial.print(millis() - startTime);
         Serial.println(F(" ms"));
@@ -471,6 +463,7 @@ void loop() {
         Serial.print(millis() - startTime);
         Serial.println(F(" ms"));
     }
+#endif
 
 #if !defined(TEST_AUTONOMOUS)
     Serial.println(F("\n\nStarting a scan... "));
@@ -482,11 +475,12 @@ void loop() {
         Serial.println(F("Waiting before the next attempt..."));
         for (size_t i = 0; i < 20; i++) {
             delay(1000L);
-            Serial.print(F("."));
+            Serial.print('.');
         }
         Serial.println('\n');
         return;
     } else {
+startTime = millis();
 #if defined(LED_BUILTIN)
         digitalWrite(LED_BUILTIN, HIGH);
 #endif
@@ -494,39 +488,49 @@ void loop() {
         Serial.println(F("Waiting at least 15s for the first measurement..."));
         for (size_t i = 0; i < 15; i++) {
             delay(1000L);
-            Serial.print(F("."));
+            Serial.print('.');
         }
         Serial.println('\n');
     }
 #endif
 
-    for (size_t readingNum = 0; readingNum < 10; readingNum++) {
-        startTime = millis();
+    for (size_t readingNum = 0; readingNum < 30; readingNum++) {
+        if (readingNum == 0) {
+            // The first measurement after power up takes a **long** time - at
+            // least 129 seconds in high salinity mode and 184 seconds in low
+            // salinity mode. The sensor will report that it is not ready during
+            // the measurement.  The first reading after an abrasion takes even
+            // longer.
+
+            // After the first measurement, the sensor will always report that a
+            // measurement is ready, but a new value will not be available for
+            // at least 10.5 (high salinity) or 14 (low salinity) seconds.
         while (!sensor.isMeasurementComplete() &&
                millis() - startTime <= MEASUREMENT_TIME) {
             if (millis() - startTime > MEASUREMENT_TIME) {
-                Serial.print(F("Measurement "));
-                Serial.print(readingNum);
-                Serial.print(F(" timed out after "));
+                Serial.print(F("The first measurement timed out after "));
                 Serial.print(MEASUREMENT_TIME / 60000);
                 Serial.println(F(" minutes."));
                 return;
             }
-            Serial.print(F("\n\nStill waiting for measurement "));
-            Serial.print(readingNum);
-            Serial.println(F(" to be ready... "));
+            Serial.print(F("It's been "));
+            Serial.print((millis() - startTime) / 1000);
+            Serial.print(F(" s. Still waiting for the first measurement to "
+                               "be ready... "));
             for (size_t i = 0; i < (readingNum == 0 ? 15 : 3); i++) {
                 delay(1000L);
-                Serial.print(F("."));
-            }
-        }
-        Serial.print(F("Measurement "));
-        Serial.print(readingNum);
-        Serial.print(F(" took "));
-        Serial.print(millis() - startTime);
-        Serial.println(F(" milliseconds."));
+                Serial.print('.');
+                    }
+        Serial.println();
+}
+        Serial.print(F("\n\nThe first measurement took "));
+        Serial.print((millis() - startTime) / 1000);
+        Serial.println(F(" seconds."));
+}
 
-        Serial.println(F("\n\nGetting results in bulk..."));
+        Serial.print(F("Getting results of reading "));
+        Serial.print(String(readingNum + 1));
+        Serial.println(F(" in bulk..."));
         float             pH2, temperature2, salinity2, spcond2, raw_cond2;
         ANBHealthCode     health2;
         ANBDiagnosticCode diagStatus2;
@@ -551,7 +555,10 @@ void loop() {
         Serial.print(F(" - "));
         Serial.println(sensor.getDiagnosticString(diagStatus2));
 
-        Serial.println(F("\n\nGetting results individually..."));
+
+        Serial.print(F("Getting results of reading "));
+        Serial.print(String(readingNum + 1));
+        Serial.println(F(" individually..."));
         float pH = sensor.getpH();
         Serial.print(F("  pH: "));
         Serial.println(pH);
@@ -588,12 +595,12 @@ void loop() {
                 F("\n\nWait 15s for new values before next reading... "));
             for (size_t i = 0; i < 15; i++) {
                 delay(1000L);
-                Serial.print(F("."));
+                Serial.print('.');
             }
         }
     }
 
-#if !defined(TEST_AUTONOMOUS)
+#if !defined(TEST_AUTONOMOUS) && defined(TEST_POWER)
     Serial.println(F("\n\nStopping scan... "));
     bool scanStopped = sensor.stop();
     Serial.print(F(" ..."));
@@ -606,17 +613,15 @@ void loop() {
 #endif
 
 // Wait for the next reading
-#if defined(TEST_POWER) && !defined(TEST_AUTONOMOUS)
-    Serial.println(F("\n\nHolding with power off before the next reading..."));
-    setSensorPower(false);
-#elif !defined(TEST_AUTONOMOUS)
-    Serial.println(F("\n\nWaiting with power on for the next reading..."));
-#endif
+#if !defined(TEST_POWER) && !defined(TEST_AUTONOMOUS)
+    Serial.println(
+F("\n\nWaiting with power on for the next scanning cycle..."));
     for (size_t i = 0; i < 15; i++) {
         delay(1000L);
-        Serial.print(F("."));
+        Serial.print('.');
     }
     Serial.println(F("\n\n"));
+#endif
 }
 
 // cspell: ignore DEREPin SWSERIAL spcond
