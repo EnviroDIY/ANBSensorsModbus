@@ -605,7 +605,7 @@ void anbSensor::forceModbus() {
 // The terminal enable command is in **holding** register 0x003B (decimal 59)
 bool anbSensor::enableTerminal() {
     modbus.setCommandTimeout(5000L);
-    uint16_t set_value = 0x010D;
+    uint16_t set_value = 0x0001;
     bool success = modbus.uint16ToRegister(0x003B, set_value, bigEndian, false);
     modbus.setCommandTimeout(1000L);
     return success;
