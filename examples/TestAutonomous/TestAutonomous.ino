@@ -72,7 +72,7 @@ bool modbusEnabled    = true;   // true to enable modbus
 // Hardware serial ports are preferred when available.
 // AltSoftSerial is the most stable alternative for modbus.
 // Select over alternatives with the define below.
-#define BUILD_ALTSOFTSERIAL
+// #define BUILD_ALTSOFTSERIAL
 #if defined(BUILD_ALTSOFTSERIAL) && defined(__AVR__)
 #include <AltSoftSerial.h>
 AltSoftSerial modbusSerial;
