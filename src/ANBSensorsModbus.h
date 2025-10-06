@@ -795,6 +795,14 @@ class anbSensor {
     bool reboot(void);
 
     /**
+     * @brief Force the sensor to reboot using terminal mode commands
+     *
+     * @return True if the sensor was successfully rebooted and began responding
+     * to Modbus commands again, false if not.
+     */
+    bool forceReboot(bool alreadyInTerminal = false);
+
+    /**
      * @brief Tells the sensors to save the current results and turn off the
      * sensor.
      *
@@ -1272,12 +1280,14 @@ class anbSensor {
      */
     void setDebugStream(Stream* stream) {
         modbus.setDebugStream(stream);
+        _debugStream = stream;
     }
     /**
      * @copydoc anbSensor::setDebugStream(Stream* stream)
      */
     void setDebugStream(Stream& stream) {
         modbus.setDebugStream(stream);
+        _debugStream = &stream;
     }
     /**
      * @brief Un-set the stream for debugging information to go to; stop
@@ -1285,6 +1295,7 @@ class anbSensor {
      */
     void stopDebugging(void) {
         modbus.stopDebugging();
+        _debugStream = nullptr;
     }
     /**@}*/
 
@@ -1309,6 +1320,38 @@ class anbSensor {
         modbus;  ///< an internal reference to the modbus communication object.
 
     void setDefaultTimeouts();
+
+    /**
+     * @brief The stream instance (serial port) for debugging
+     */
+    Stream* _debugStream;
+
+    // Utility templates for writing to the debugging stream
+    template <typename T>
+    inline void debugPrint(T last) {
+        if (_debugStream != nullptr) {
+            _debugStream->print(last);
+            _debugStream->flush();
+        }
+    }
+    template <typename T, typename... Args>
+    inline void debugPrint(T head, Args... tail) {
+        if (_debugStream != nullptr) {
+            _debugStream->print(head);
+            this->debugPrint(tail...);
+        }
+    }
+    void dumpToDebugStream(uint32_t wait = 1000L) {
+        uint32_t startTime = millis();
+        while (millis() - startTime < wait && _stream->available() < 10);
+        do {
+            if (_debugStream != nullptr) {
+                _debugStream->println(_stream->readStringUntil('\n'));
+            } else {
+                _stream->readStringUntil('\n');
+            }
+        } while (_stream->available());
+    }
 };
 
 #endif
