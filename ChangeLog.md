@@ -14,6 +14,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Added
 
+- Added a `forceReboot()` function that reboots via terminal mode to get around limitations of current firmware.
+- Added debug printing of serial terminal interactions.
+- Added 3 new examples:
+  - AbradeSensor - Informs the sensor that it has been abraded and it should reset its internal references.
+  - DownloadData - uses the terminal prompt to transfer data from the serial card built into the pH sensor to an SD card on the Arduino
+  - TestAutonomous - Puts the sensor into autonomous mode and relays live printouts of scans.
+
 ### Removed
 
 ### Fixed

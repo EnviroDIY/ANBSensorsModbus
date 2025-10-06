@@ -1,5 +1,5 @@
 /** =========================================================================
- * @example{lineno} GetValues.ino
+ * @example{lineno} TestAutonomous.ino
  * @author Sara Geleskie Damiano <sdamiano@stroudcenter.org>
  * @license This example is published under the BSD-3 license.
  *
@@ -16,6 +16,12 @@
 #include <Arduino.h>
 #include <ANBSensorsModbus.h>
 
+#include <SparkFun_RV8803.h>  //Get the library here:http://librarymanager/All#SparkFun_RV-8803
+// To run in autonomous mode, the sensor's internal RTC should be set. This
+// example uses a RV-8803 RTC to set the sensor clock. The time on the RV-8803
+// should be set independently.
+RV8803 rtc;
+
 // ==========================================================================
 //  Sensor Settings
 // ==========================================================================
@@ -24,7 +30,7 @@
 byte modbusAddress = 0x55;  // HEX 0x55 is the ANB default modbus address.
 
 // The Modbus baud rate the sensor uses
-int32_t modbusBaud = 57600;  // 57600 is ANB default baud rate.
+int32_t modbusBaud = 115200;  // 57600 is ANB default baud rate.
 
 // Sensor Timing
 // Edit these to explore
@@ -32,7 +38,6 @@ int32_t modbusBaud = 57600;  // 57600 is ANB default baud rate.
 #define STABILIZATION_TIME 100   // milliseconds for readings to stabilize.
 #define MEASUREMENT_TIME 300000  // milliseconds to complete a measurement.
 
-// #define TEST_POWER
 
 // ==========================================================================
 //  Data Logger Options
@@ -40,17 +45,26 @@ int32_t modbusBaud = 57600;  // 57600 is ANB default baud rate.
 const int32_t serialBaud = 115200;  // Baud rate for serial monitor
 
 // Define pin number variables
-const int sensorPwrPin  = 22;  // The pin sending power to the sensor
-const int adapterPwrPin = 22;  // The pin sending power to the RS485 adapter
+const int sensorPwrPin  = 56;  // The pin sending power to the sensor
+const int adapterPwrPin = -1;  // The pin sending power to the RS485 adapter
 const int DEREPin =
     -1;  // The pin controlling Receive Enable and Driver Enable
          // on the RS485 adapter, if applicable (else, -1)
          // Setting HIGH enables the driver (arduino) to send text
          // Setting LOW enables the receiver (sensor) to send text
 
+ANBSalinityMode salinity   = ANBSalinityMode::LOW_SALINITY;
+uint16_t        delayHours = 0;  // hours to wait before starting measurements
+uint16_t delayMinutes      = 0;  // minutes to wait before starting measurements
+uint16_t intervalHours     = 0;  // hours between measurements
+uint16_t intervalMinutes   = 0;  // minutes between measurements
+// set both hours and minute to 0 for continuous measurements
+bool profilingEnabled = false;  // true to enable fast profiling
+bool modbusEnabled    = true;   // true to enable modbus
+
 // Turn on debugging outputs (i.e. raw Modbus requests & responses)
 // by uncommenting next line (i.e. `#define DEBUG`)
-// #define DEBUG
+#define DEBUG
 
 // ==========================================================================
 // Create and Assign a Serial Port for Modbus
@@ -58,7 +72,7 @@ const int DEREPin =
 // Hardware serial ports are preferred when available.
 // AltSoftSerial is the most stable alternative for modbus.
 // Select over alternatives with the define below.
-// #define BUILD_ALTSOFTSERIAL
+#define BUILD_ALTSOFTSERIAL
 #if defined(BUILD_ALTSOFTSERIAL) && defined(__AVR__)
 #include <AltSoftSerial.h>
 AltSoftSerial modbusSerial;
@@ -88,7 +102,7 @@ HardwareSerial& modbusSerial = Serial1;
 // This is just a assigning another name to the same port, for convenience
 // Unless it is unavailable, always prefer hardware serial.
 #pragma message("Using HardwareSerial / Serial1")
-HardwareSerial& modbusSerial = Serial1;
+HardwareSerial& modbusSerial = Serial2;
 
 #else
 // This is just a assigning another name to the same port, for convenience
@@ -101,6 +115,7 @@ HardwareSerial& modbusSerial = Serial;
 anbSensor sensor;
 bool      success;
 uint32_t  startTime;
+uint32_t  readingNum = 0;
 
 // ==========================================================================
 // Working Functions
@@ -164,8 +179,7 @@ void setup() {
 // NOTE:  Only use this when debugging - if not connected to a PC, this adds an
 // unnecessary startup delay
 #if defined(SERIAL_PORT_USBVIRTUAL)
-SERIAL_PORT_USBVIRTUAL.begin(0);  // baud rate ignored
-    while (!SERIAL_PORT_USBVIRTUAL && (millis() < 10000L)) { delay(100); }
+    do { delay(100); } while (!SERIAL_PORT_USBVIRTUAL && (millis() < 10000L));
 #endif
 
     // Turn on the "main" serial port for debugging via USB Serial Monitor
@@ -282,6 +296,14 @@ SERIAL_PORT_USBVIRTUAL.begin(0);  // baud rate ignored
     Serial.print(F("    Driver Version: "));
     Serial.println(driverVersion);
 
+    // Set the sensor RTC
+    Wire.begin();
+    rtc.begin();
+    rtc.updateTime();
+    Serial.println(F("Setting sensor RTC."));
+    sensor.setRTC(rtc.getSeconds(), rtc.getMinutes(), rtc.getHours(),
+                  rtc.getDate(), rtc.getMonth(), rtc.getYear());
+
     // Get the sensor RTC
     Serial.println(F("Getting sensor RTC."));
     int8_t  seconds = -1;
@@ -305,302 +327,75 @@ SERIAL_PORT_USBVIRTUAL.begin(0);  // baud rate ignored
     Serial.print(seconds);
     Serial.println();
 
-    // Get Readable Sensor Configuration
-    Serial.print(F("\n\nGet sensor configuration...\n"));
-
-#if 0
-    // Get Sensor Modbus Baud
-    Serial.println(F("Get sensor modbus baud setting."));
-    ANBSensorBaud sensorBaud = sensor.getBaud();
-    Serial.print(F("  Baud: "));
-    Serial.println(static_cast<uint16_t>(sensorBaud));
-    Serial.println();
-
-    // Get Sensor Control Mode
-    Serial.println(F("Get sensor control mode."));
-    ANBSensorMode controlMode = sensor.getControlMode();
-    Serial.print(F("  Control Mode: "));
-    Serial.println(static_cast<uint16_t>(controlMode));
-    Serial.println();
-
-    // Get Sensor Salinity Mode
-    Serial.println(F("Get sensor salinity mode."));
-    ANBSalinityMode salinityMode = sensor.getSalinityMode();
-    Serial.print(F("  Salinity Mode: "));
-    Serial.println(static_cast<uint16_t>(salinityMode));
-    Serial.println();
-
-    // Get Sensor Power Style
-    Serial.println(F("Get sensor power style."));
-    ANBPowerStyle powerStyle = sensor.getPowerStyle();
-    Serial.print(F("  Power Style: "));
-    Serial.println(static_cast<uint16_t>(powerStyle));
-    Serial.println();
-#endif
-
-    // Get Sensor Sampling Interval
-    Serial.println(F("Get sensor sampling interval."));
-    uint8_t samplingInterval = sensor.getIntervalTime();
-    Serial.print(F("  Sampling Interval: "));
-    Serial.println(samplingInterval);
-    Serial.println();
-
-    // Get current immersion rule settings
-    Serial.println(F("Get current immersion rule settings."));
-    bool immersionRule = sensor.isImmersionSensorEnabled();
-    Serial.print(F("  Immersion sensor is "));
-    Serial.println(immersionRule ? "enabled" : "disabled");
-
-    // Configure sensor
-    Serial.print(F("\n\nConfigure sensor...\n"));
-
-// Set Sensor Power Style
-#if defined(TEST_POWER)
-    Serial.print(F("Set sensor power style to on measurement... "));
-    bool powerStyleSet = sensor.setPowerStyle(ANBPowerStyle::ON_MEASUREMENT);
-#else
-    Serial.print(F("Set sensor power style to always powered... "));
-    bool powerStyleSet = sensor.setPowerStyle(ANBPowerStyle::ALWAYS_POWERED);
-#endif
-    Serial.print(F(" ..."));
-    Serial.println(powerStyleSet ? F("success") : F("failed"));
-
-    // Set Sensor Control Mode
-    Serial.print(F("Set sensor control mode to controlled... "));
-    bool modeSet = sensor.setControlMode(ANBSensorMode::CONTROLLED);
-    Serial.print(F(" ..."));
-    Serial.println(modeSet ? F("success") : F("failed"));
-
-    // Set Sensor Salinity Mode
-    Serial.print(F("Set sensor salinity mode to low salinity... "));
-    bool salinitySet = sensor.setSalinityMode(ANBSalinityMode::LOW_SALINITY);
-    Serial.print(F(" ..."));
-    Serial.println(salinitySet ? F("success") : F("failed"));
-
-    // Set Immersion Rule
-    Serial.print(F("Set sensor immersion rule to enabled... "));
-    bool immersionSet = sensor.enableImmersionSensor();
-    Serial.print(F(" ..."));
-    Serial.println(immersionSet ? F("success") : F("failed"));
-
-// Set Sampling Interval Time
-    Serial.print(F("Set sensor sampling interval to 0 (continuous)... "));
-    bool intervalSet = sensor.setIntervalTime(0);
-    Serial.print(F(" ..."));
-    Serial.println(intervalSet ? F("success") : F("failed"));
-
-#if 0
     // Set Bulk Configuration
     // NOTE: This only works if there's a power cycle or reboot after writing
     // the configuration!
     Serial.print(F("Set sensor bulk configuration... "));
-// writeConfiguration(ANBSensorMode mode, ANBPowerStyle power,
+    // writeConfiguration(ANBSensorMode mode, ANBPowerStyle power,
     //                     ANBSalinityMode salinity, uint16_t delayHours,
     //                     uint16_t delayMinutes, uint16_t intervalHours,
     //                     uint16_t intervalMinutes, bool profilingEnabled,
     //                     bool modbusEnabled)
-#if defined(TEST_POWER)
     bool bulkSet = sensor.writeConfiguration(
-        ANBSensorMode::CONTROLLED, ANBPowerStyle::ON_MEASUREMENT,
-        ANBSalinityMode::LOW_SALINITY, 0, 0, 0, 0, false, true);
-#else
-    bool bulkSet = sensor.writeConfiguration(
-        ANBSensorMode::CONTROLLED, ANBPowerStyle::ALWAYS_POWERED,
-        ANBSalinityMode::LOW_SALINITY, 0, 0, 0, 0, false, true);
-#endif
+        ANBSensorMode::AUTONOMOUS, ANBPowerStyle::ALWAYS_POWERED, salinity,
+        delayHours, delayMinutes, intervalHours, intervalMinutes,
+        profilingEnabled, modbusEnabled);
     Serial.print(F(" ..."));
     Serial.println(bulkSet ? F("success") : F("failed"));
-        delay(1000);
-    Serial.println(F("Power cycling after setting bulk configuration..."));
-    powerCycleSensor();
-#endif
 
-#if 0
-    // Reboot the sensor after configuration to save and apply settings
-// WARNING: The reboot function does not work with firmware versions prior to 10.10 and earlier!
-    Serial.print(F("\n\nRebooting sensor... "));
-    bool rebooted = sensor.reboot();
-    Serial.println(rebooted ? F("success") : F("failed"));
-#else
-    Serial.print(F("\n\nPower cycling sensor... "));
-    powerCycleSensor();
-#endif
+    // Now force the terminal interface to reboot the sensor
+    modbusSerial.setTimeout(
+        750);  // set a longer timeout for the terminal commands
+    // clear anything hanging in the buffer
+    do {
+        Serial.println(modbusSerial.readString());
+    } while (modbusSerial.available());
+    sensor.forceTerminal();
+
+    // enter the main menu of the terminal
+    delay(15);  // short delay before the command
+    modbusSerial.print("menu\r");
+    modbusSerial.flush();
+    Serial.println("menu");
+    Serial.flush();
+    // dump the response - we're not trying to parse the menu!
+    uint32_t startTime = millis();
+    while (millis() - startTime < 5000L && modbusSerial.available() < 10);
+    do {
+        Serial.println(modbusSerial.readString());
+    } while (modbusSerial.available());
+    // reboot the sensor for the setting to take
+    delay(15);  // short delay before the command
+    modbusSerial.print("reboot\r");
+    modbusSerial.flush();
+    Serial.println("reboot");
+    Serial.flush();
+    // dump the response
+    startTime = millis();
+    while (millis() - startTime < 10000L && modbusSerial.available() < 100);
+    do {
+        Serial.println(modbusSerial.readString());
+    } while (modbusSerial.available());
+    modbusSerial.setTimeout(1000L);  // restore the original timeout
 }
 
 // ==========================================================================
 //  Arduino Loop Function
 // ==========================================================================
 void loop() {
-#if defined(TEST_POWER)
-    bool isReady = powerCycleSensor();
-    #else
-    bool isReady = sensor.isSensorReady();
-        if (isReady) {
-        Serial.print(F("Sensor ready after "));
-        Serial.print(millis() - startTime);
-        Serial.println(F(" ms"));
-    } else {
-        Serial.print(F("Timed out waiting for ready after "));
-        Serial.print(millis() - startTime);
-        Serial.println(F(" ms"));
+    // listen to readings for forever
+    // NOTE: Now that we're in autonomous mode, the sensor will only
+    // take readings at the interval specified in the configuration and
+    // will not respond to individual read requests.
+    // When it does take readings, it will store them in its internal memory and
+    // print them to the serial port.
+    if (modbusSerial.available()) { Serial.println(modbusSerial.readString()); }
+    if (millis() % 5000 == 0) {
+        rtc.updateTime();
+        Serial.println(rtc.stringTime8601());
+        Serial.println(millis() / 1000);
+        delay(1);
     }
-#endif
-
-    Serial.println(F("\n\nStarting a scan... "));
-    bool scanStarted = sensor.start();
-    Serial.print(F(" ..."));
-    Serial.println(scanStarted ? F("success") : F("failed"));
-    if (!scanStarted) {
-        // Wait before the next attempt
-        Serial.println(F("Waiting before the next attempt..."));
-        for (size_t i = 0; i < 20; i++) {
-            delay(1000L);
-            Serial.print('.');
-        }
-        Serial.println('\n');
-        return;
-    } else {
-startTime = millis();
-#if defined(LED_BUILTIN)
-        digitalWrite(LED_BUILTIN, HIGH);
-#endif
-        // Wait before the first attempt to read
-        Serial.println(F("Waiting at least 15s for the first measurement..."));
-        for (size_t i = 0; i < 15; i++) {
-            delay(1000L);
-            Serial.print('.');
-        }
-        Serial.println('\n');
-    }
-
-    size_t readingsToGet = 30;
-    for (size_t readingNum = 0; readingNum < readingsToGet; readingNum++) {
-        if (readingNum == 0) {
-            // The first measurement after power up takes a **long** time -
-            // at least 129 seconds in high salinity mode and 184 seconds in
-            // low salinity mode. The sensor will report that it is not
-            // ready during the measurement.  The first reading after an
-            // abrasion takes even longer.
-
-            // After the first measurement, the sensor will always report
-            // that a measurement is ready, but a new value will not be
-            // available for at least 10.5 (high salinity) or 14 (low
-            // salinity) seconds.
-        while (!sensor.isMeasurementComplete() &&
-               millis() - startTime <= MEASUREMENT_TIME) {
-            if (millis() - startTime > MEASUREMENT_TIME) {
-                Serial.print(F("The first measurement timed out after "));
-                Serial.print(MEASUREMENT_TIME / 60000);
-                Serial.println(F(" minutes."));
-                return;
-            }
-            Serial.print(F("It's been "));
-            Serial.print((millis() - startTime) / 1000);
-            Serial.print(F(" s. Still waiting for the first measurement to "
-                               "be ready... "));
-            for (size_t i = 0; i < (readingNum == 0 ? 15 : 3); i++) {
-                delay(1000L);
-                Serial.print('.');
-                    }
-        Serial.println();
-}
-        Serial.print(F("\n\nThe first measurement took "));
-        Serial.print((millis() - startTime) / 1000);
-        Serial.println(F(" seconds."));
-}
-
-        Serial.print(F("Getting results of reading "));
-        Serial.print(String(readingNum + 1));
-        Serial.println(F(" in bulk..."));
-        float             pH2, temperature2, salinity2, spcond2, raw_cond2;
-        ANBHealthCode     health2;
-        ANBDiagnosticCode diagStatus2;
-        sensor.getValues(pH2, temperature2, salinity2, spcond2, raw_cond2,
-                         health2, diagStatus2);
-        Serial.print(F("  pH: "));
-        Serial.println(pH2);
-        Serial.print(F("  Temperature: "));
-        Serial.println(temperature2);
-        Serial.print(F("  Salinity: "));
-        Serial.println(salinity2);
-        Serial.print(F("  Specific Conductance: "));
-        Serial.println(spcond2);
-        Serial.print(F("  Raw Conductivity: "));
-        Serial.println(raw_cond2);
-        Serial.print(F("  Health Code: "));
-        Serial.print(static_cast<uint16_t>(health2));
-        Serial.print(F(" - "));
-        Serial.println(sensor.getHealthString(health2));
-        Serial.print(F("  Diagnostic Code: "));
-        Serial.print(static_cast<uint16_t>(diagStatus2));
-        Serial.print(F(" - "));
-        Serial.println(sensor.getDiagnosticString(diagStatus2));
-
-
-        Serial.print(F("Getting results of reading "));
-        Serial.print(String(readingNum + 1));
-        Serial.println(F(" individually..."));
-        float pH = sensor.getpH();
-        Serial.print(F("  pH: "));
-        Serial.println(pH);
-        float temperature = sensor.getTemperature();
-        Serial.print(F("  Temperature: "));
-        Serial.println(temperature);
-        float salinity = sensor.getSalinity();
-        Serial.print(F("  Salinity: "));
-        Serial.println(salinity);
-        float spcond = sensor.getSpecificConductance();
-        Serial.print(F("  Specific Conductance: "));
-        Serial.println(spcond);
-        float raw_cond = sensor.getRawConductivity();
-        Serial.print(F("  Raw Conductivity: "));
-        Serial.println(raw_cond);
-        ANBHealthCode health = sensor.getHealthCode();
-        Serial.print(F("  Health Code: "));
-        Serial.print(static_cast<uint16_t>(health));
-        Serial.print(F(" - "));
-        Serial.println(sensor.getHealthString(health));
-        ANBStatusCode status = sensor.getStatusCode();
-        Serial.print(F("  Status Code: "));
-        Serial.print(static_cast<uint16_t>(status));
-        Serial.print(F(" - "));
-        Serial.println(sensor.getStatusString(status));
-        ANBDiagnosticCode diagStatus = sensor.getDiagnosticCode();
-        Serial.print(F("  Diagnostic Code: "));
-        Serial.print(static_cast<uint16_t>(diagStatus));
-        Serial.print(F(" - "));
-        Serial.println(sensor.getDiagnosticString(diagStatus));
-
-        if (readingNum < readingsToGet) {
-            Serial.print(
-                F("\n\nWait 15s for new values before next reading... "));
-            for (size_t i = 0; i < 15; i++) {
-                delay(1000L);
-                Serial.print('.');
-            }
-            Serial.println();
-        }
-    }
-
-#if defined(TEST_POWER)
-    Serial.println(F("\n\nStopping scan... "));
-    bool scanStopped = sensor.stop();
-    Serial.print(F(" ..."));
-    Serial.println(scanStopped ? F("success") : F("failed"));
-    if (scanStopped) {
-#if defined(LED_BUILTIN)
-        digitalWrite(LED_BUILTIN, LOW);
-#endif
-    }
-#else
-    Serial.println(
-F("\n\nWaiting with power on for the next scanning cycle..."));
-    for (size_t i = 0; i < 15; i++) {
-        delay(1000L);
-        Serial.print('.');
-    }
-    Serial.println(F("\n\n"));
-#endif
 }
 
 // cspell: ignore DEREPin SWSERIAL spcond

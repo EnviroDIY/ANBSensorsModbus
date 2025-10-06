@@ -8,6 +8,24 @@
     {
       "name": "AltSoftSerial",
       "version": "https://github.com/PaulStoffregen/AltSoftSerial.git"
+    },
+    {
+      "name": "SparkFun Qwiic RTC RV8803 Arduino Library",
+      "owner": "sparkfun",
+      "url": "https://github.com/sparkfun/SparkFun_RV-8803_Arduino_Library",
+      "version": "~1.2.10",
+      "note": "For the RV-8803 RTC",
+      "frameworks": "arduino"
+    },
+    {
+      "name": "SdFat",
+      "owner": "greiman",
+      "library id": "322",
+      "url": "https://github.com/greiman/SdFat",
+      "version": "=2.3.0",
+      "note": "SdFat - FAT16/FAT32 file system for SD cards.",
+      "authors": ["Bill Greiman"],
+      "frameworks": "arduino"
     }
   ]
 }
