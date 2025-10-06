@@ -13,6 +13,6 @@ jobs:
     if: ${{ ! contains(github.event.head_commit.message, 'ci skip') }}
     uses: EnviroDIY/workflows/.github/workflows/build_examples.yaml@main
     with:
-      boards_to_build: "mayfly,envirodiy_stonefly_m4,uno,megaatmega2560,zeroUSB"
+      boards_to_build: "mayfly,envirodiy_stonefly_m4,megaatmega2560,zeroUSB"
       examples_to_build: "examples/GetValues,examples/TestAutonomous,examples/AbradeSensor,examples/DownloadData"
     secrets: inherit
