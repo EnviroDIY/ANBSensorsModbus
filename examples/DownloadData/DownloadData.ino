@@ -32,6 +32,8 @@ int8_t sdCardSSPin = 12;  // The slave select pin for the SD card
 int8_t sdCardSSPin = 29;  // The slave select pin for the SD card
 #elif defined(SDCARD_SS_PIN)
 const int8_t sdCardSSPin = SDCARD_SS_PIN;
+#else
+const int8_t sdCardSSPin = 10;  // The slave select pin for the
 #endif
 // ==========================================================================
 //  Sensor Settings
@@ -74,7 +76,7 @@ const int DEREPin =
 // Hardware serial ports are preferred when available.
 // AltSoftSerial is the most stable alternative for modbus.
 // Select over alternatives with the define below.
-#define BUILD_ALTSOFTSERIAL
+// #define BUILD_ALTSOFTSERIAL
 #if defined(BUILD_ALTSOFTSERIAL) && defined(__AVR__)
 #include <AltSoftSerial.h>
 AltSoftSerial modbusSerial;
@@ -104,7 +106,7 @@ HardwareSerial& modbusSerial = Serial1;
 // This is just a assigning another name to the same port, for convenience
 // Unless it is unavailable, always prefer hardware serial.
 #pragma message("Using HardwareSerial / Serial1")
-HardwareSerial& modbusSerial = Serial2;
+HardwareSerial& modbusSerial = Serial1;
 
 #else
 // This is just a assigning another name to the same port, for convenience
