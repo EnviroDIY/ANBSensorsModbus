@@ -102,7 +102,7 @@ HardwareSerial& modbusSerial = Serial1;
 // This is just a assigning another name to the same port, for convenience
 // Unless it is unavailable, always prefer hardware serial.
 #pragma message("Using HardwareSerial / Serial1")
-HardwareSerial& modbusSerial = Serial2;
+HardwareSerial& modbusSerial = Serial1;
 
 #else
 // This is just a assigning another name to the same port, for convenience
