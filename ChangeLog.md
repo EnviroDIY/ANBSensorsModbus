@@ -14,14 +14,22 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Added
 
+### Removed
+
+### Fixed
+
+***
+
+## [0.3.0]
+
+### Added
+
 - Added a `forceReboot()` function that reboots via terminal mode to get around limitations of current firmware.
 - Added debug printing of serial terminal interactions.
 - Added 3 new examples:
   - AbradeSensor - Informs the sensor that it has been abraded and it should reset its internal references.
   - DownloadData - uses the terminal prompt to transfer data from the serial card built into the pH sensor to an SD card on the Arduino
   - TestAutonomous - Puts the sensor into autonomous mode and relays live printouts of scans.
-
-### Removed
 
 ### Fixed
 
@@ -123,7 +131,9 @@ Initial release
 
 ***
 
-[Unreleased]: https://github.com/EnviroDIY/ANBSensorsModbus/compare/v0.2.5...HEAD
+[Unreleased]: https://github.com/EnviroDIY/ANBSensorsModbus/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/EnviroDIY/ANBSensorsModbus/releases/tag/v0.3.0
+[0.2.6]: https://github.com/EnviroDIY/ANBSensorsModbus/releases/tag/v0.2.6
 [0.2.5]: https://github.com/EnviroDIY/ANBSensorsModbus/releases/tag/v0.2.5
 [0.2.4]: https://github.com/EnviroDIY/ANBSensorsModbus/releases/tag/v0.2.4
 [0.2.3]: https://github.com/EnviroDIY/ANBSensorsModbus/releases/tag/v0.2.3
