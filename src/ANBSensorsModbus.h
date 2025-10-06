@@ -796,7 +796,9 @@ class anbSensor {
 
     /**
      * @brief Force the sensor to reboot using terminal mode commands
-     *
+     * @param alreadyInTerminal If true, the sensor is already in terminal mode;
+     * if false (default) the sensor will be sent the command to enter terminal
+     * mode first.
      * @return True if the sensor was successfully rebooted and began responding
      * to Modbus commands again, false if not.
      */
