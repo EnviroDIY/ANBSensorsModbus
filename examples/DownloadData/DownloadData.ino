@@ -166,25 +166,7 @@ bool initializeSDCard(void) {
         return false;
     }
 
-#if (defined(ARDUINO_ARCH_SAMD)) && !defined(__SAMD51__)
-    // Despite the 48MHz clock speed, the max SPI speed of a SAMD21 is 12 MHz
-    // see https://github.com/arduino/ArduinoCore-samd/pull/292
-    // The Adafruit SAMD core does NOT automatically manage the SPI speed, so
-    // this needs to be set.
-    SdSpiConfig customSdConfig(static_cast<SdCsPin_t>(sdCardSSPin),
-                               (uint8_t)(DEDICATED_SPI), SD_SCK_MHZ(12),
-                               &SDCARD_SPI);
-#else
-    // The SAMD51 is fast enough to handle SPI_FULL_SPEED=SD_SCK_MHZ(50).
-    // The SPI library of the Adafruit/Arduino AVR core will automatically
-    // adjust the full speed of the SPI clock down to whatever the board can
-    // handle.
-    SdSpiConfig customSdConfig(static_cast<SdCsPin_t>(sdCardSSPin),
-                               (uint8_t)(DEDICATED_SPI), SPI_FULL_SPEED,
-                               &SDCARD_SPI);
-#endif
-
-    if (!sd.begin(customSdConfig)) {
+    if (!sd.begin(sdCardSSPin)) {
         Serial.println(F("Error: SD card failed to initialize or is missing."));
         Serial.println(F("Data will not be saved!"));
         return false;
