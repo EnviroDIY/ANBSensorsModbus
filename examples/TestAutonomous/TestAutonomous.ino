@@ -58,7 +58,8 @@ uint16_t        delayHours = 0;  // hours to wait before starting measurements
 uint16_t delayMinutes      = 0;  // minutes to wait before starting measurements
 uint16_t intervalHours     = 0;  // hours between measurements
 uint16_t intervalMinutes   = 0;  // minutes between measurements
-// set both hours and minute to 0 for continuous measurements
+// Set both hours and minute to 0 for continuous measurements.
+// The minimum sampling interval is 10 minutes!
 bool profilingEnabled = false;  // true to enable fast profiling
 bool modbusEnabled    = true;   // true to enable modbus
 
@@ -70,10 +71,14 @@ bool modbusEnabled    = true;   // true to enable modbus
 // Create and Assign a Serial Port for Modbus
 // ==========================================================================
 // Hardware serial ports are preferred when available.
-// AltSoftSerial is the most stable alternative for modbus.
-// Select over alternatives with the define below.
+#if defined(ANB_EXAMPLE_SERIAL_PORT)
+#pragma message("Using user-defined serial port")
+HardwareSerial& modbusSerial = ANB_EXAMPLE_SERIAL_PORT;
+
+// AltSoftSerial is the most stable software (bit-banging) hardware serial
+// alternative on AVR boards. Select over alternatives with the define below.
 // #define BUILD_ALTSOFTSERIAL
-#if defined(BUILD_ALTSOFTSERIAL) && defined(__AVR__)
+#elif defined(BUILD_ALTSOFTSERIAL) && defined(__AVR__)
 #include <AltSoftSerial.h>
 AltSoftSerial modbusSerial;
 

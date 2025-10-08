@@ -56,10 +56,14 @@ const int DEREPin =
 // Create and Assign a Serial Port for Modbus
 // ==========================================================================
 // Hardware serial ports are preferred when available.
-// AltSoftSerial is the most stable alternative for modbus.
-// Select over alternatives with the define below.
+#if defined(ANB_EXAMPLE_SERIAL_PORT)
+#pragma message("Using user-defined serial port")
+HardwareSerial& modbusSerial = ANB_EXAMPLE_SERIAL_PORT;
+
+// AltSoftSerial is the most stable software (bit-banging) hardware serial
+// alternative on AVR boards. Select over alternatives with the define below.
 // #define BUILD_ALTSOFTSERIAL
-#if defined(BUILD_ALTSOFTSERIAL) && defined(__AVR__)
+#elif defined(BUILD_ALTSOFTSERIAL) && defined(__AVR__)
 #include <AltSoftSerial.h>
 AltSoftSerial modbusSerial;
 
