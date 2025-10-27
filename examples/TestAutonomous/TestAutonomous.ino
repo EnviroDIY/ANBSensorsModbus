@@ -233,14 +233,6 @@ void setup() {
 
     bool isReady = powerCycleSensor();
 
-    if (!isReady) {
-        Serial.println(F("Did not find the sensor."));
-        Serial.println(F("Use ANB Sensors Utility to confirm the sensor is in "
-                         "Modbus mode."));
-        Serial.println(F("Check wiring and modbus address and try again."));
-        while (1);  // Stay here forevermore
-    }
-
     // // Enable modbus
     // Serial.println(F("Enabling Modbus... "));
     // bool isEnabled = sensor.enableModbus();
@@ -260,6 +252,14 @@ void setup() {
             Serial.print(F(" ..."));
             Serial.println(gotModbusResponse ? F("success") : F("failed"));
         }
+    }
+
+    if (!isReady) {
+        Serial.println(F("Did not find the sensor."));
+        Serial.println(F("Use ANB Sensors Utility to confirm the sensor is in "
+                         "Modbus mode."));
+        Serial.println(F("Check wiring and modbus address and try again."));
+        while (1);  // Stay here forevermore
     }
 
     // Get Sensor Information
