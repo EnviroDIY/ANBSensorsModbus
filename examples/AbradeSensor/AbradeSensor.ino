@@ -32,10 +32,6 @@ int32_t modbusBaud = 9600;  // 57600 is ANB default baud rate.
 #define STABILIZATION_TIME 100   // milliseconds for readings to stabilize.
 #define MEASUREMENT_TIME 300000  // milliseconds to complete a measurement.
 
-// #define TEST_POWER
-// #define TEST_AUTONOMOUS
-#define ABRADE_SENSOR
-
 // ==========================================================================
 //  Data Logger Options
 // ==========================================================================
