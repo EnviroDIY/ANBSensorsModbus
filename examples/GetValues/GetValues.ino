@@ -168,7 +168,7 @@ void setup() {
 // NOTE:  Only use this when debugging - if not connected to a PC, this adds an
 // unnecessary startup delay
 #if defined(SERIAL_PORT_USBVIRTUAL)
-SERIAL_PORT_USBVIRTUAL.begin(0);  // baud rate ignored
+    SERIAL_PORT_USBVIRTUAL.begin(0);  // baud rate ignored
     while (!SERIAL_PORT_USBVIRTUAL && (millis() < 10000L)) { delay(100); }
 #endif
 
@@ -387,7 +387,7 @@ SERIAL_PORT_USBVIRTUAL.begin(0);  // baud rate ignored
     Serial.print(F(" ..."));
     Serial.println(immersionSet ? F("success") : F("failed"));
 
-// Set Sampling Interval Time
+    // Set Sampling Interval Time
     Serial.print(F("Set sensor sampling interval to 0 (continuous)... "));
     bool intervalSet = sensor.setIntervalTime(0);
     Serial.print(F(" ..."));
@@ -399,10 +399,10 @@ SERIAL_PORT_USBVIRTUAL.begin(0);  // baud rate ignored
     // the configuration!
     Serial.print(F("Set sensor bulk configuration... "));
 // writeConfiguration(ANBSensorMode mode, ANBPowerStyle power,
-    //                     ANBSalinityMode salinity, uint16_t delayHours,
-    //                     uint16_t delayMinutes, uint16_t intervalHours,
-    //                     uint16_t intervalMinutes, bool profilingEnabled,
-    //                     bool modbusEnabled)
+//                     ANBSalinityMode salinity, uint16_t delayHours,
+//                     uint16_t delayMinutes, uint16_t intervalHours,
+//                     uint16_t intervalMinutes, bool profilingEnabled,
+//                     bool modbusEnabled)
 #if defined(TEST_POWER)
     bool bulkSet = sensor.writeConfiguration(
         ANBSensorMode::CONTROLLED, ANBPowerStyle::ON_MEASUREMENT,
@@ -414,14 +414,14 @@ SERIAL_PORT_USBVIRTUAL.begin(0);  // baud rate ignored
 #endif
     Serial.print(F(" ..."));
     Serial.println(bulkSet ? F("success") : F("failed"));
-        delay(1000);
+    delay(1000);
     Serial.println(F("Power cycling after setting bulk configuration..."));
     powerCycleSensor();
 #endif
 
 #if 0
     // Reboot the sensor after configuration to save and apply settings
-// WARNING: The reboot function does not work with firmware versions prior to 10.10 and earlier!
+    // WARNING: The reboot function does not work with firmware versions prior to 10.10 and earlier!
     Serial.print(F("\n\nRebooting sensor... "));
     bool rebooted = sensor.reboot();
     Serial.println(rebooted ? F("success") : F("failed"));
@@ -437,9 +437,9 @@ SERIAL_PORT_USBVIRTUAL.begin(0);  // baud rate ignored
 void loop() {
 #if defined(TEST_POWER)
     bool isReady = powerCycleSensor();
-    #else
+#else
     bool isReady = sensor.isSensorReady();
-        if (isReady) {
+    if (isReady) {
         Serial.print(F("Sensor ready after "));
         Serial.print(millis() - startTime);
         Serial.println(F(" ms"));
@@ -464,7 +464,7 @@ void loop() {
         Serial.println('\n');
         return;
     } else {
-startTime = millis();
+        startTime = millis();
 #if defined(LED_BUILTIN)
         digitalWrite(LED_BUILTIN, HIGH);
 #endif
@@ -490,28 +490,28 @@ startTime = millis();
             // that a measurement is ready, but a new value will not be
             // available for at least 10.5 (high salinity) or 14 (low
             // salinity) seconds.
-        while (!sensor.isMeasurementComplete() &&
-               millis() - startTime <= MEASUREMENT_TIME) {
-            if (millis() - startTime > MEASUREMENT_TIME) {
-                Serial.print(F("The first measurement timed out after "));
-                Serial.print(MEASUREMENT_TIME / 60000);
-                Serial.println(F(" minutes."));
-                return;
-            }
-            Serial.print(F("It's been "));
-            Serial.print((millis() - startTime) / 1000);
-            Serial.print(F(" s. Still waiting for the first measurement to "
+            while (!sensor.isMeasurementComplete() &&
+                   millis() - startTime <= MEASUREMENT_TIME) {
+                if (millis() - startTime > MEASUREMENT_TIME) {
+                    Serial.print(F("The first measurement timed out after "));
+                    Serial.print(MEASUREMENT_TIME / 60000);
+                    Serial.println(F(" minutes."));
+                    return;
+                }
+                Serial.print(F("It's been "));
+                Serial.print((millis() - startTime) / 1000);
+                Serial.print(F(" s. Still waiting for the first measurement to "
                                "be ready... "));
-            for (size_t i = 0; i < (readingNum == 0 ? 15 : 3); i++) {
-                delay(1000L);
-                Serial.print('.');
-                    }
-        Serial.println();
-}
-        Serial.print(F("\n\nThe first measurement took "));
-        Serial.print((millis() - startTime) / 1000);
-        Serial.println(F(" seconds."));
-}
+                for (size_t i = 0; i < (readingNum == 0 ? 15 : 3); i++) {
+                    delay(1000L);
+                    Serial.print('.');
+                }
+                Serial.println();
+            }
+            Serial.print(F("\n\nThe first measurement took "));
+            Serial.print((millis() - startTime) / 1000);
+            Serial.println(F(" seconds."));
+        }
 
         Serial.print(F("Getting results of reading "));
         Serial.print(String(readingNum + 1));
@@ -598,7 +598,7 @@ startTime = millis();
     }
 #else
     Serial.println(
-F("\n\nWaiting with power on for the next scanning cycle..."));
+        F("\n\nWaiting with power on for the next scanning cycle..."));
     for (size_t i = 0; i < 15; i++) {
         delay(1000L);
         Serial.print('.');

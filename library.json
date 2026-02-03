@@ -1,6 +1,6 @@
 {
   "name": "ANBSensorsModbus",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A library for communicating with pH sensors manufactured by ANB Sensors using Modbus.",
   "keywords": "EnviroDIY, ANBSensors, Modbus, pH",
   "platforms": "*",
@@ -48,7 +48,7 @@
       "name": "fast_math",
       "owner": "robtillaart",
       "url": "https://github.com/RobTillaart/fast_math",
-      "version": "~0.2.4",
+      "version": "~0.2.5",
       "note": "Arduino library for fast math algorithms.",
       "authors": ["Rob Tillaart"],
       "frameworks": "*",

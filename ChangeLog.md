@@ -20,6 +20,18 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ***
 
+## [0.4.0]
+
+### Added
+
+- Added new commands supported by firmware IB 10.11.11/STM 10.11.73D
+  - setStartDelay(uint16_t delayHours, uint16_t delayMinutes)
+  - enableFastProfiling(bool enable = true)
+  - startReadOnly()
+  - shutdown()
+
+***
+
 ## [0.3.0]
 
 ### Added
