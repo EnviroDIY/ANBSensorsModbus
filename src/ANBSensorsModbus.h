@@ -544,13 +544,17 @@ class anbSensor {
      * @note The start delay only applies if the sensor is in autonomous mode
      * and always powered.
      *
-     * @warning NOT YET SUPPORTED BY MODBUS COMMANDS
+     * The start delay is in ~~input~~ **holding** registers 0x0042-0x0043
+     * (decimal 66-67).
+     *
+     * @warning NOT YET SUPPORTED BY MODBUS COMMANDS. The start delay is **write
+     * only** from within the modbus interface.
      *
      * @return True if the start delay was successfully retrieved, false if not.
-     * @param hours Reference to a uint8_t where the hours part of the start
+     * @param hours Reference to a uint16_t where the hours part of the start
      * delay will be stored.
-     * @param minutes Reference to a uint8_t where the minutes part of the start
-     * delay will be stored.
+     * @param minutes Reference to a uint16_t where the minutes part of the
+     * start delay will be stored.
      */
     bool getStartDelay(uint16_t& hours, uint16_t& minutes)
         __attribute__((error("Command not available!")));
@@ -564,14 +568,14 @@ class anbSensor {
      * @note The start delay only applies if the sensor is in autonomous mode
      * and always powered.
      *
-     * @warning NOT YET SUPPORTED BY MODBUS COMMANDS
+     * The start delay is in ~~input~~ **holding** registers 0x0042-0x0043
+     * (decimal 66-67).
      *
      * @param hours The hours part of the new start delay (0-24)
      * @param minutes The minutes part of the new start delay (0-59)
      * @return True if the start delay was successfully set, false if not.
      */
-    bool setStartDelay(uint16_t hours, uint16_t minutes)
-        __attribute__((error("Command not available!")));
+    bool setStartDelay(uint16_t delayHours, uint16_t delayMinutes);
 
     /**
      * @brief Check if the immersion sensor is enabled
@@ -619,21 +623,21 @@ class anbSensor {
      * taking continuous measurements - which also requires that the sensor be
      * in autonomous mode and always powered.
      *
-     * @warning NOT YET SUPPORTED BY MODBUS COMMANDS
+     * The profiling mode is in ~~input~~ **holding** register 0x0041 (decimal
+     * 65).
+     *
+     * @warning NOT YET SUPPORTED BY MODBUS COMMANDS. The profiling mode is
+     * **write only** from within the modbus interface.
      */
     bool isFastProfilingEnabled(void)
         __attribute__((error("Command not available!")));
     /**
      * @brief Enables or disables the fast profiling mode
      *
-     * @warning NOT YET SUPPORTED BY MODBUS COMMANDS. Use ABN utils or the
-     * serial terminal prompt to enable or disable this feature.
-     *
      * @param enable True to enable fast profiling mode, false to disable
      * @return True if the command was successfully sent, false if not.
      */
-    bool enableFastProfiling(bool enable = true)
-        __attribute__((error("Command not available!")));
+    bool enableFastProfiling(bool enable = true);
 
     /**
      * @brief Check if SD card is enabled
@@ -647,7 +651,11 @@ class anbSensor {
      * @note Data can only be downloaded the you computer of uploaded to the ANB
      * cloud using the serial terminal interface or ANB utils.
      *
-     * @warning NOT YET SUPPORTED BY MODBUS COMMANDS
+     * The SD card status is in ~~input~~ **holding** register 0x0040 (decimal
+     * 64).
+     *
+     * @warning NOT YET SUPPORTED BY MODBUS COMMANDS. The SD card status is
+     * **write only** from within the modbus interface.
      */
     bool isSDCardEnabled(void) __attribute__((error("Command not available!")));
     /**
@@ -655,14 +663,10 @@ class anbSensor {
      *
      * @note Disabling the SD card will reduce power consumption by the sensor.
      *
-     * @warning NOT YET SUPPORTED BY MODBUS COMMANDS. Use ABN utils or the
-     * serial terminal prompt to enable or disable this feature.
-     *
      * @param enable True to enable SD card, false to disable
      * @return True if the command was successfully sent, false if not.
      */
-    bool enableSDCard(bool enable = true)
-        __attribute__((error("Command not available!")));
+    bool enableSDCard(bool enable = true);
 
     /**
      * @brief Write a bulk configuration to the sensor
@@ -702,6 +706,24 @@ class anbSensor {
      * here.](https://www.anbsensors.com/newdocs/docs/modbus/#command-functions)
      */
     /**@{*/
+
+    /**
+     * @brief Tells a read-only sensor to begin a scan (taking measurements)
+     *
+     * A scan is starting by sending the command {ADDR 03 00 AA 00 0B CRCL CRCH}
+     * after which the sensor will respond with {ADDR 03 04 00 00 00 00 CRCL
+     * CRCH} if successful.
+     *
+     * @warning This function is only for use with read-only sensors.  This
+     * command is **not** a valid modbus command/response pattern!  The command
+     * 0x03 should be used to read from a holding register and the response
+     * should include the number of registers requested. In this command we are
+     * requesting 0x000B (11) registers but the response indicates 0x04 (4)
+     * bytes, which only corresponds to 2 registers.
+     *
+     * @return True if the scan was successfully started, false if not.
+     */
+    bool startReadOnly(void);
 
     /**
      * @brief Tells the sensor to begin a scan (taking measurements)
@@ -811,11 +833,15 @@ class anbSensor {
      * This saves the current results and closes the pH results file leaving the
      * sensor ready to power down.
      *
-     * @warning NOT YET SUPPORTED BY MODBUS COMMANDS
+     * The reboot command is set by writing 0x0000 to ~~input~~ **holding**
+     * register 0x0200 (decimal 512).
+     *
+     * @warning After sending a shutdown command, the sensor **MUST BE POWER
+     * CYCLED** to resume sampling
      *
      * @return True if the sensor was successfully rebooted, false if not.
      */
-    bool shutdown(void) __attribute__((error("Command not available!")));
+    bool shutdown(void);
     /**@}*/
 
 

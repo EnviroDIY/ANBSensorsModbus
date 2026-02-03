@@ -252,6 +252,25 @@ bool anbSensor::setIntervalTime(uint8_t newIntervalTime) {
     return success;
 }
 
+
+#if 0
+bool anbSensor::getStartDelay(uint16_t& hours, uint16_t& minutes) {
+    if (!modbus.getRegisters(0x03, 0x0042, 2)) { return false; }
+
+    // Parse the registers into the respective variables
+    // The first 2 bytes are the address and the function code
+    hours   = modbus.float32FromFrame(bigEndian, 3);  // next 4 bytes (3-6)
+    minutes = modbus.float32FromFrame(bigEndian, 7);  // next 4 bytes (7-10)
+    return true;
+}
+#endif
+bool anbSensor::setStartDelay(uint16_t delayHours, uint16_t delayMinutes) {
+    byte delayFrame[4];
+    modbus.uint16ToFrame(delayHours, bigEndian, delayFrame, 0);
+    modbus.uint16ToFrame(delayMinutes, bigEndian, delayFrame, 2);
+    return modbus.setRegisters(0x0042, 0x02, delayFrame, false);
+}
+
 // The immersion sensor status (immersion rule) is in **holding** register
 // 0x003C (decimal 60)
 bool anbSensor::isImmersionSensorEnabled(void) {
@@ -263,6 +282,62 @@ bool anbSensor::enableImmersionSensor(bool enable) {
     modbus.setCommandTimeout(5000L);
     // Write to holding register 0x003C (decimal 60)
     bool success = modbus.setRegisters(0x003C, 1, dataToSend, false);
+    modbus.setCommandTimeout(1000L);
+    return success;
+}
+
+// The profiling mode is in **holding** register 0x0041 (decimal 65) and is
+// write only
+#if 0
+bool anbSensor::isFastProfilingEnabled(void) {
+    int16_t profileMode = modbus.int16FromRegister(0x03, 0x0041, bigEndian);
+    switch (profileMode) {
+        case 1: return true;
+        case 2: return false;
+        default:
+            return false;  // Default to false if unknown
+    }
+}
+#endif
+bool anbSensor::enableFastProfiling(bool enable) {
+    byte profileMode;
+    switch (enable) {
+        case true: profileMode = 1; break;
+        case false: profileMode = 2; break;
+        default: return false;  // Invalid style
+    }
+    byte dataToSend[2] = {0x00, profileMode};
+    modbus.setCommandTimeout(5000L);
+    // Write to holding register 0x0041 (decimal 65)
+    bool success = modbus.setRegisters(0x0041, 1, dataToSend, false);
+    modbus.setCommandTimeout(1000L);
+    return success;
+}
+
+// The SD card status is in **holding** register 0x0040 (decimal 64) and is
+// write only
+#if 0
+bool anbSensor::isSDCardEnabled(void) {
+    int16_t sdCardStatus = modbus.int16FromRegister(0x03, 0x0040, bigEndian);
+    switch (sdCardStatus) {
+        case 1: return true;
+        case 2: return false;
+        default:
+            return false;  // Default to false if unknown
+    }
+}
+#endif
+bool anbSensor::enableSDCard(bool enable) {
+    byte sdCardStatus;
+    switch (enable) {
+        case true: sdCardStatus = 1; break;
+        case false: sdCardStatus = 2; break;
+        default: return false;  // Invalid style
+    }
+    byte dataToSend[2] = {0x00, sdCardStatus};
+    modbus.setCommandTimeout(5000L);
+    // Write to holding register 0x0040 (decimal 64)
+    bool success = modbus.setRegisters(0x0040, 1, dataToSend, false);
     modbus.setCommandTimeout(1000L);
     return success;
 }
@@ -309,6 +384,16 @@ bool anbSensor::writeConfiguration(ANBSensorMode mode, ANBPowerStyle power,
 //----------------------------------------------------------------------------
 //  Command functions
 //----------------------------------------------------------------------------
+
+// For read-only Modbus data loggers, a scan is starting by sending the command
+// {55 03 00 AA 00 0B[CRCL:CRCH]}
+bool anbSensor::startReadOnly(void) {
+    modbus.setCommandTimeout(5000L);
+    bool bytesReturned = modbus.getModbusData(_slaveID, 0x03, 0x00AA, 0x000B,
+                                              4);
+    modbus.setCommandTimeout(1000L);
+    return bytesReturned == 4;
+}
 
 // The start scan command is set with **coil** 0x0100 (decimal 256)
 bool anbSensor::start(void) {
@@ -377,6 +462,15 @@ bool anbSensor::forceReboot(bool alreadyInTerminal) {
     dumpToDebugStream(10000L);
     _stream->setTimeout(1000L);  // restore the default timeout
 
+    return gotModbusResponse();
+}
+
+// The shutdown command is set by writing 0x0000 to **holding** register 0x0200
+// (decimal 512)
+bool anbSensor::shutdown(void) {
+    if (_stream == nullptr) { return false; }
+    byte value[2] = {0x00, 0x00};
+    modbus.setRegisters(0x0200, 1, value, false);
     return gotModbusResponse();
 }
 
