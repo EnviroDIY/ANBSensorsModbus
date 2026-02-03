@@ -571,8 +571,8 @@ class anbSensor {
      * The start delay is in ~~input~~ **holding** registers 0x0042-0x0043
      * (decimal 66-67).
      *
-     * @param hours The hours part of the new start delay (0-24)
-     * @param minutes The minutes part of the new start delay (0-59)
+     * @param delayHours The hours part of the new start delay (0-24)
+     * @param delayMinutes The minutes part of the new start delay (0-59)
      * @return True if the start delay was successfully set, false if not.
      */
     bool setStartDelay(uint16_t delayHours, uint16_t delayMinutes);

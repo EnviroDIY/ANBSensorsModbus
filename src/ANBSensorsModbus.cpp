@@ -300,12 +300,7 @@ bool anbSensor::isFastProfilingEnabled(void) {
 }
 #endif
 bool anbSensor::enableFastProfiling(bool enable) {
-    byte profileMode;
-    switch (enable) {
-        case true: profileMode = 1; break;
-        case false: profileMode = 2; break;
-        default: return false;  // Invalid style
-    }
+    byte profileMode   = enable ? 1 : 2;
     byte dataToSend[2] = {0x00, profileMode};
     modbus.setCommandTimeout(5000L);
     // Write to holding register 0x0041 (decimal 65)
@@ -328,12 +323,7 @@ bool anbSensor::isSDCardEnabled(void) {
 }
 #endif
 bool anbSensor::enableSDCard(bool enable) {
-    byte sdCardStatus;
-    switch (enable) {
-        case true: sdCardStatus = 1; break;
-        case false: sdCardStatus = 2; break;
-        default: return false;  // Invalid style
-    }
+    byte sdCardStatus  = enable ? 1 : 2;
     byte dataToSend[2] = {0x00, sdCardStatus};
     modbus.setCommandTimeout(5000L);
     // Write to holding register 0x0040 (decimal 64)
@@ -389,8 +379,8 @@ bool anbSensor::writeConfiguration(ANBSensorMode mode, ANBPowerStyle power,
 // {55 03 00 AA 00 0B[CRCL:CRCH]}
 bool anbSensor::startReadOnly(void) {
     modbus.setCommandTimeout(5000L);
-    bool bytesReturned = modbus.getModbusData(_slaveID, 0x03, 0x00AA, 0x000B,
-                                              4);
+    int16_t bytesReturned = modbus.getModbusData(_slaveID, 0x03, 0x00AA, 0x000B,
+                                                 4);
     modbus.setCommandTimeout(1000L);
     return bytesReturned == 4;
 }
