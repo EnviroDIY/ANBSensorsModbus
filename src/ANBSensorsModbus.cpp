@@ -167,8 +167,9 @@ bool anbSensor::isMeasurementComplete(void) {
     // modbus.printLastError();
     if (modbus.getLastError() == NO_ERROR) {
         // If we got a good health code, try getting the pH to confirm
+        getpH();
         // debugPrint(F("  Health code OK, trying to get pH to confirm...\n"));
-        float pH = getpH();
+        // float pH = getpH();
         // debugPrint(F("  pH:"), pH, '\n');
         // modbus.printLastError();
     }
