@@ -507,10 +507,6 @@ class anbSensor {
      * The interval time is stored in ~~input~~ **holding** register 0x0036
      * (decimal 54).
      *
-     * @note The interval time only applies if the sensor is in autonomous mode
-     * and always powered.  The sensor will go into a low power state during the
-     * set interval.
-     *
      * @return The current interval time in minutes. 0 indicates continuous
      * operation.
      */
@@ -522,14 +518,24 @@ class anbSensor {
      * - 0 for continuous operation
      * - 10-240 for interval mode (in minutes)
      *
-     * The new interval time **does not take effect** until the next bootup.
-     *
-     * @note The interval time only applies if the sensor is in autonomous mode
-     * and always powered.  The sensor will go into a low power state during the
-     * set interval.
+     * @attention The new interval time **does not take effect** until the next
+     * bootup.
      *
      * The interval time is stored in ~~input~~ **holding** register 0x0036
      * (decimal 54).
+     *
+     * @note The interval time is used in **both** autonomous/always powered
+     * mode and controlled/on measurement mode. In autonomous/always powered
+     * mode, the interval sets how often the sensor wakes up to take a
+     * measurement. In controlled/on measurement mode, the sensor does some
+     * internal adjustments to the power levels on the sensing element based on
+     * the interval and how frequently it expects to be powered.
+     *
+     * @warning In firmwares >= IB 10.11.11/STM 10.11.73D, you **cannot** set
+     * the interval time to 0 (continuous mode) when in controlled/on
+     * measurement mode.  Attempting to do so will result in an illegal data
+     * value error.  In earlier firmwares, setting the interval time to 0 is
+     * possible, but the manufacturer says it should not be done.
      *
      * @param newIntervalTime The new interval time to use
      * @return True if the interval time was successfully set, false if not.
@@ -572,6 +578,8 @@ class anbSensor {
      *
      * The start delay is in ~~input~~ **holding** registers 0x0042-0x0043
      * (decimal 66-67).
+     *
+     * @remark Added in firmware IB 10.11.11/STM 10.11.73D.
      *
      * @param delayHours The hours part of the new start delay (0-24)
      * @param delayMinutes The minutes part of the new start delay (0-59)
@@ -635,6 +643,8 @@ class anbSensor {
         __attribute__((error("Command not available!")));
     /**
      * @brief Enables or disables the fast profiling mode
+     *
+     * @remark Added in firmware IB 10.11.11/STM 10.11.73D.
      *
      * @param enable True to enable fast profiling mode, false to disable
      * @return True if the command was successfully sent, false if not.
@@ -840,6 +850,8 @@ class anbSensor {
      *
      * @warning After sending a shutdown command, the sensor **MUST BE POWER
      * CYCLED** to resume sampling
+     *
+     * @remark Added in firmware IB 10.11.11/STM 10.11.73D.
      *
      * @return True if the sensor was successfully rebooted, false if not.
      */
