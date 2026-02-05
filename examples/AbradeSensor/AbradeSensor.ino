@@ -327,46 +327,63 @@ void setup() {
         Serial.println(F("Power cycling after abrading..."));
         powerCycleSensor();
     }
+
+    // Configure sensor
+    Serial.print(F("\n\nConfiguring sensor to get values after abrasion...\n"));
+
+    // Set Sensor Power Style
+    Serial.print(F("Set sensor power style to always powered... "));
+    bool powerStyleSet = sensor.setPowerStyle(ANBPowerStyle::ALWAYS_POWERED);
+    Serial.print(F(" ..."));
+    Serial.println(powerStyleSet ? F("success") : F("failed"));
+
+    // Set Sensor Control Mode
+    Serial.print(F("Set sensor control mode to controlled... "));
+    bool modeSet = sensor.setControlMode(ANBSensorMode::CONTROLLED);
+    Serial.print(F(" ..."));
+    Serial.println(modeSet ? F("success") : F("failed"));
+
+    // Set Sensor Salinity Mode
+    Serial.print(F("Set sensor salinity mode to low salinity... "));
+    bool salinitySet = sensor.setSalinityMode(ANBSalinityMode::LOW_SALINITY);
+    Serial.print(F(" ..."));
+    Serial.println(salinitySet ? F("success") : F("failed"));
+
+    // Set Immersion Rule
+    Serial.print(F("Set sensor immersion rule to enabled... "));
+    bool immersionSet = sensor.enableImmersionSensor();
+    Serial.print(F(" ..."));
+    Serial.println(immersionSet ? F("success") : F("failed"));
+
+    // Set Sampling Interval Time
+    Serial.print(F("Set sensor sampling interval to 0 (continuous)... "));
+    bool intervalSet = sensor.setIntervalTime(0);
+    Serial.print(F(" ..."));
+    Serial.println(intervalSet ? F("success") : F("failed"));
+
+    Serial.print(F("\n\nPower cycling sensor to apply new settings...\n\n"));
+    powerCycleSensor();
+
+    Serial.println(F("\n\nStarting a scan... "));
+    bool scanStarted = sensor.start();
+    Serial.print(F(" ..."));
+    Serial.println(scanStarted ? F("success") : F("failed"));
+    if (!scanStarted) { while (1); }  // Stay here forevermore
 }
 
 // ==========================================================================
 //  Arduino Loop Function
 // ==========================================================================
 void loop() {
-    bool isReady = sensor.isSensorReady();
-    if (isReady) {
-        Serial.print(F("Sensor ready after "));
-        Serial.print(millis() - startTime);
-        Serial.println(F(" ms"));
-    } else {
-        Serial.print(F("Timed out waiting for ready after "));
-        Serial.print(millis() - startTime);
-        Serial.println(F(" ms"));
-    }
+    startTime = millis();
 
-    Serial.println(F("\n\nStarting a scan... "));
-    bool scanStarted = sensor.start();
-    Serial.print(F(" ..."));
-    Serial.println(scanStarted ? F("success") : F("failed"));
-    if (!scanStarted) {
-        // Wait before the next attempt
-        Serial.println(F("Waiting before the next attempt..."));
-        for (size_t i = 0; i < 20; i++) {
-            delay(1000L);
-            Serial.print('.');
-        }
-        Serial.println('\n');
-        return;
-    } else {
-        startTime = millis();
-        // Wait before the first attempt to read
-        Serial.println(F("Waiting at least 15s for the first measurement..."));
-        for (size_t i = 0; i < 15; i++) {
-            delay(1000L);
-            Serial.print('.');
-        }
-        Serial.println('\n');
+    // Wait before the first attempt to read
+    Serial.println(F("Waiting at least 15s for the first measurement..."));
+    for (size_t i = 0; i < 15; i++) {
+        delay(1000L);
+        Serial.print('.');
     }
+    Serial.println('\n');
 
     if (readingNum == 0) {
         // The first measurement after power up takes a **long** time -
@@ -442,7 +459,7 @@ void loop() {
         delay(1000L);
         Serial.print('.');
     }
-    Serial.println();
+    Serial.println(F("\n\n"));
 }
 
 // cspell: ignore DEREPin SWSERIAL spcond
