@@ -376,9 +376,11 @@ class anbSensor {
      * > able to calculate the value.
      *
      * The error responses documented by ANB Sensors will be returned for
-     * requests for pH values or health codes, but **not** when requesting the
-     * status code.  The request for the status code will return a valid
-     * response even before the sensor is ready to start scanning.
+     * requests for pH values or (in firmware prior to
+     * IB 10.11.11/STM 10.11.73D) health codes, but **not** when requesting the
+     * status code.  The request for the status code (and the health code in
+     * firmware >= IB 10.11.11/STM 10.11.73D) will return a valid response even
+     * before the sensor is ready to start scanning.
      *
      * @return True if the measurement is complete, false if not.
      */

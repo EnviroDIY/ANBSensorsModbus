@@ -104,9 +104,17 @@ bool anbSensor::begin(byte modbusSlaveID, modbusMaster& modbus) {
 // and look for any correctly formed modbus response.
 bool anbSensor::gotModbusResponse(void) {
     modbus.setCommandRetries(1);
+    // debugPrint(F("anbSensor::gotModbusResponse(): Checking sensor readiness
+    // by "
+    //              "getting status code.  Any valid response (even a valid
+    //              error " "code) is considered a success.\n"));
+    // ANBStatusCode status = getStatusCode();
+    // debugPrint(F("  Status Code:"), static_cast<int16_t>(status), '-',
+    //            getStatusString(status), '\n');
     getStatusCode();
     modbus.setCommandRetries(10);
     modbusErrorCode lastCode = modbus.getLastError();
+    // modbus.printLastError();
     return static_cast<int8_t>(lastCode) < 0x0C;
 }
 
@@ -121,7 +129,14 @@ bool anbSensor::gotModbusResponse(void) {
 bool anbSensor::isSensorReady(void) {
     modbus.setCommandRetries(1);
     getStatusCode();
+    // debugPrint(F("anbSensor::isSensorReady(): Checking sensor readiness by "
+    //              "getting status code.  Any non-error is considered
+    //              ready.\n"));
+    // ANBStatusCode status = getStatusCode();
+    // debugPrint(F("  Status Code:"), static_cast<int16_t>(status), '-',
+    //            getStatusString(status), '\n');
     modbus.setCommandRetries(10);
+    // modbus.printLastError();
     return modbus.getLastError() == NO_ERROR;
 }
 
@@ -132,9 +147,31 @@ bool anbSensor::isSensorReady(void) {
 // If the measurement is not ready, the sensor will return `< ADDRESS >< 83 ><
 // 06 >< CRC >` to indicate it's not ready or `< ADDRESS >< 83 >< 05 >< CRC >`
 // to show it's not measuring at all.
+
+// On firmwares < 0.10.10, the request for the health code will return the busy
+// error, which is what we're checking for.
+
+// On versions >= IB 10.11.11/STM 10.11.73D, the will return the last health
+// code measured in any previous reading and you must check the pH to confirm
+// readiness.
 bool anbSensor::isMeasurementComplete(void) {
     modbus.setCommandRetries(1);
     getHealthCode();
+    // debugPrint(F(
+    //     "anbSensor::isMeasurementComplete(): Checking measurement readiness
+    //     by " "getting health code and then pH.  Any non-error is considered "
+    //     "ready.\n"));
+    // ANBHealthCode health = getHealthCode();
+    // debugPrint(F("  Health Code:"), static_cast<int16_t>(health), '-',
+    //            getHealthString(health), '\n');
+    // modbus.printLastError();
+    if (modbus.getLastError() == NO_ERROR) {
+        // If we got a good health code, try getting the pH to confirm
+        // debugPrint(F("  Health code OK, trying to get pH to confirm...\n"));
+        float pH = getpH();
+        // debugPrint(F("  pH:"), pH, '\n');
+        // modbus.printLastError();
+    }
     modbus.setCommandRetries(10);
     return modbus.getLastError() == NO_ERROR;
 }
@@ -632,7 +669,9 @@ bool anbSensor::getValues(float& pH, float& temperature, float& salinity,
                           float& specificConductance, float& rawConductivity,
                           ANBHealthCode&     health,
                           ANBDiagnosticCode& diagnostic) {
-    if (!modbus.getRegisters(0x03, 0, 11)) { return false; }
+    int16_t rxBytes = modbus.getRegisters(0x03, 0, 11);
+    // debugPrint(F("Got "), rxBytes, F(" bytes from bulk read.\n"));
+    if (rxBytes <= 0) { return false; }
 
     // NOTE: There are modbus map inconsistencies!
     // The sensor responds to the programmed modbus commands to give the values
