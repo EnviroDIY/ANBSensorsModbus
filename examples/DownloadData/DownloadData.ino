@@ -3,10 +3,10 @@
  * @author Sara Geleskie Damiano <sdamiano@stroudcenter.org>
  * @license This example is published under the BSD-3 license.
  *
- * @brief This prints basic meta-data about a sensor to the first serial port
- * and then begins taking measurements from the sensor.
+ * @brief This transfers all data from the sensor's internal SD card to an
+ * external SD card on the Arduino board.
  *
- * @m_examplenavigation{example_get_values,}
+ * @m_examplenavigation{example_download_data,}
  * @m_footernavigation
  * ======================================================================= */
 

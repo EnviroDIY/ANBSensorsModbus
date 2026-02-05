@@ -1,12 +1,12 @@
 /** =========================================================================
- * @example{lineno} GetValues.ino
+ * @example{lineno} FindSensorBaud.ino
  * @author Sara Geleskie Damiano <sdamiano@stroudcenter.org>
  * @license This example is published under the BSD-3 license.
  *
- * @brief This prints basic meta-data about a sensor to the first serial port
- * and then begins taking measurements from the sensor.
+ * @brief This attempts to communicate with the sensor at all supported baud
+ * rates.
  *
- * @m_examplenavigation{example_get_values,}
+ * @m_examplenavigation{example_find_baud,}
  * @m_footernavigation
  * ======================================================================= */
 
@@ -24,9 +24,9 @@
 byte modbusAddress = 0x55;  // HEX 0x55 is the ANB default modbus address.
 
 // The Modbus baud rate the sensor uses
-int32_t       modbusBaud = 115200;  // 57600 is ANB default baud rate.
+uint32_t      modbusBaud = 57600;  // 57600 is ANB default baud rate.
 ANBSensorBaud desiredBaud =
-    ANBSensorBaud::BAUD115200;  // 57600 is ANB default baud rate.
+    ANBSensorBaud::BAUD57600;  // 57600 is ANB default baud rate.
 
 // Sensor Timing
 // Edit these to explore
@@ -39,7 +39,7 @@ ANBSensorBaud desiredBaud =
 // ==========================================================================
 //  Data Logger Options
 // ==========================================================================
-const int32_t serialBaud = 115200;  // Baud rate for serial monitor
+const uint32_t serialBaud = 115200;  // Baud rate for serial monitor
 
 // Define pin number variables
 const int sensorPwrPin  = 56;  // The pin sending power to the sensor

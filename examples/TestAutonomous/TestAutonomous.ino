@@ -3,10 +3,9 @@
  * @author Sara Geleskie Damiano <sdamiano@stroudcenter.org>
  * @license This example is published under the BSD-3 license.
  *
- * @brief This prints basic meta-data about a sensor to the first serial port
- * and then begins taking measurements from the sensor.
+ * @brief This puts the sensor into autonomous mode with specified settings.
  *
- * @m_examplenavigation{example_get_values,}
+ * @m_examplenavigation{example_test_autonomous,}
  * @m_footernavigation
  * ======================================================================= */
 
