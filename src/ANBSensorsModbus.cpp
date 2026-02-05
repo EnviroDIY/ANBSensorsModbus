@@ -205,12 +205,8 @@ bool anbSensor::setControlMode(ANBSensorMode newControlMode) {
     }
     byte dataToSend[2] = {0x00, modeCode};
     modbus.setCommandTimeout(5000L);
-    bool success = false;
     // Write to holding register 0x0035 (decimal 53)
-    for (size_t i = 0; i < 5; i++) {
-        success = modbus.setRegisters(0x0035, 1, dataToSend, false);
-        if (success) break;
-    }
+    bool success = modbus.setRegisters(0x0035, 1, dataToSend, false);
     modbus.setCommandTimeout(1000L);
     return success;
 }
@@ -237,12 +233,8 @@ bool anbSensor::setSalinityMode(ANBSalinityMode newSalinityMode) {
     }
     byte dataToSend[2] = {0x00, modeCode};
     modbus.setCommandTimeout(5000L);
-    bool success = false;
     // Write to holding register 0x003E (decimal 62)
-    for (size_t i = 0; i < 5; i++) {
-        success = modbus.setRegisters(0x003E, 1, dataToSend, false);
-        if (success) break;
-    }
+    bool success = modbus.setRegisters(0x003E, 1, dataToSend, false);
     modbus.setCommandTimeout(1000L);
     return success;
 }
@@ -269,12 +261,8 @@ bool anbSensor::setPowerStyle(ANBPowerStyle newPowerStyle) {
     }
     byte dataToSend[2] = {0x00, styleCode};
     modbus.setCommandTimeout(5000L);
-    bool success = false;
     // Write to holding register 0x003F (decimal 63)
-    for (size_t i = 0; i < 5; i++) {
-        success = modbus.setRegisters(0x003F, 1, dataToSend, false);
-        if (success) break;
-    }
+    bool success = modbus.setRegisters(0x003F, 1, dataToSend, false);
     modbus.setCommandTimeout(1000L);
     return success;
 }
@@ -295,12 +283,8 @@ bool anbSensor::setIntervalTime(uint8_t newIntervalTime) {
     }
     byte dataToSend[2] = {0x00, newIntervalTime};
     modbus.setCommandTimeout(5000L);
-    bool success = false;
     // Write to holding register 0x0036 (decimal 54)
-    for (size_t i = 0; i < 5; i++) {
-        success = modbus.setRegisters(0x0036, 1, dataToSend, false);
-        if (success) break;
-    }
+    bool success = modbus.setRegisters(0x0036, 1, dataToSend, false);
     modbus.setCommandTimeout(1000L);
     return success;
 }
@@ -321,12 +305,7 @@ bool anbSensor::setStartDelay(uint16_t delayHours, uint16_t delayMinutes) {
     byte delayFrame[4];
     modbus.uint16ToFrame(delayHours, bigEndian, delayFrame, 0);
     modbus.uint16ToFrame(delayMinutes, bigEndian, delayFrame, 2);
-    bool success = false;
-    for (size_t i = 0; i < 5; i++) {
-        success = modbus.setRegisters(0x0042, 0x02, delayFrame, false);
-        if (success) break;
-    }
-    return success;
+    return modbus.setRegisters(0x0042, 0x02, delayFrame, false);
 }
 
 // The immersion sensor status (immersion rule) is in **holding** register
@@ -338,12 +317,8 @@ bool anbSensor::isImmersionSensorEnabled(void) {
 bool anbSensor::enableImmersionSensor(bool enable) {
     byte dataToSend[2] = {0x00, static_cast<byte>(enable ? 1 : 2)};
     modbus.setCommandTimeout(5000L);
-    bool success = false;
     // Write to holding register 0x003C (decimal 60)
-    for (size_t i = 0; i < 5; i++) {
-        success = modbus.setRegisters(0x003C, 1, dataToSend, false);
-        if (success) break;
-    }
+    bool success = modbus.setRegisters(0x003C, 1, dataToSend, false);
     modbus.setCommandTimeout(1000L);
     return success;
 }
@@ -365,12 +340,8 @@ bool anbSensor::enableFastProfiling(bool enable) {
     byte profileMode   = enable ? 1 : 2;
     byte dataToSend[2] = {0x00, profileMode};
     modbus.setCommandTimeout(5000L);
-    bool success = false;
     // Write to holding register 0x0041 (decimal 65)
-    for (size_t i = 0; i < 5; i++) {
-        success = modbus.setRegisters(0x0041, 1, dataToSend, false);
-        if (success) break;
-    }
+    bool success = modbus.setRegisters(0x0041, 1, dataToSend, false);
     modbus.setCommandTimeout(1000L);
     return success;
 }
@@ -392,12 +363,8 @@ bool anbSensor::enableSDCard(bool enable) {
     byte sdCardStatus  = enable ? 1 : 2;
     byte dataToSend[2] = {0x00, sdCardStatus};
     modbus.setCommandTimeout(5000L);
-    bool success = false;
     // Write to holding register 0x0040 (decimal 64)
-    for (size_t i = 0; i < 5; i++) {
-        success = modbus.setRegisters(0x0040, 1, dataToSend, false);
-        if (success) break;
-    }
+    bool success = modbus.setRegisters(0x0040, 1, dataToSend, false);
     modbus.setCommandTimeout(1000L);
     return success;
 }
@@ -437,12 +404,7 @@ bool anbSensor::writeConfiguration(ANBSensorMode mode, ANBPowerStyle power,
     modbus.uint16ToFrame(intervalMinutes, bigEndian, utilCmdFrame, 12);
     modbus.uint16ToFrame(profilingEnabled ? 1 : 0, bigEndian, utilCmdFrame, 14);
     modbus.uint16ToFrame(modbusEnabled ? 1 : 0, bigEndian, utilCmdFrame, 16);
-    bool success = false;
-    for (size_t i = 0; i < 5; i++) {
-        success = modbus.setRegisters(0x0400, 0x08, utilCmdFrame, false);
-        if (success) break;
-    }
-    return success;
+    return modbus.setRegisters(0x0400, 0x08, utilCmdFrame, false);
 }
 
 
@@ -535,11 +497,7 @@ bool anbSensor::forceReboot(bool alreadyInTerminal) {
 bool anbSensor::shutdown(void) {
     if (_stream == nullptr) { return false; }
     byte value[2] = {0x00, 0x00};
-    bool success  = false;
-    for (size_t i = 0; i < 5; i++) {
-        success = modbus.setRegisters(0x0200, 1, value, false);
-        if (success) break;
-    }
+    modbus.setRegisters(0x0200, 1, value, false);
     return gotModbusResponse();
 }
 
@@ -930,11 +888,7 @@ bool anbSensor::setRTC(int8_t seconds, int8_t minutes, int8_t hours, int8_t day,
     time_bytes[9]  = dec2bcdRTC(month);
     time_bytes[11] = dec2bcd(year - 2000);
     modbus.setCommandTimeout(5000L);
-    bool success = false;
-    for (size_t i = 0; i < 5; i++) {
-        success = modbus.setRegisters(0x003D, 6, time_bytes);
-        if (success) break;
-    }
+    bool success = modbus.setRegisters(0x003D, 6, time_bytes);
     modbus.setCommandTimeout(1000L);
     return success;
 }
