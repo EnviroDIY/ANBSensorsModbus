@@ -52,7 +52,7 @@ const int DEREPin =
 
 // Turn on debugging outputs (i.e. raw Modbus requests & responses)
 // by uncommenting next line (i.e. `#define DEBUG`)
-#define DEBUG
+// #define DEBUG
 
 // ==========================================================================
 // Create and Assign a Serial Port for Modbus

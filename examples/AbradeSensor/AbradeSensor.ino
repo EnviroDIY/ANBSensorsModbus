@@ -388,6 +388,15 @@ void loop() {
         // that a measurement is ready, but a new value will not be
         // available for at least 10.5 (high salinity) or 14 (low
         // salinity) seconds.
+
+        // Wait before the first attempt to read
+        Serial.println(F("Waiting at least 15s for the first measurement..."));
+        for (size_t i = 0; i < 15; i++) {
+            delay(1000L);
+            Serial.print('.');
+        }
+        Serial.println('\n');
+
         while (!sensor.isMeasurementComplete() &&
                millis() - startTime <= MEASUREMENT_TIME) {
             if (millis() - startTime > MEASUREMENT_TIME) {

@@ -29,7 +29,7 @@ RV8803 rtc;
 byte modbusAddress = 0x55;  // HEX 0x55 is the ANB default modbus address.
 
 // The Modbus baud rate the sensor uses
-int32_t modbusBaud = 115200;  // 57600 is ANB default baud rate.
+int32_t modbusBaud = 57600;  // 57600 is ANB default baud rate.
 
 // Sensor Timing
 // Edit these to explore
@@ -64,7 +64,7 @@ bool modbusEnabled    = true;   // true to enable modbus
 
 // Turn on debugging outputs (i.e. raw Modbus requests & responses)
 // by uncommenting next line (i.e. `#define DEBUG`)
-#define DEBUG
+// #define DEBUG
 
 // ==========================================================================
 // Create and Assign a Serial Port for Modbus
