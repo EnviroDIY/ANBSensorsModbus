@@ -377,14 +377,6 @@ void setup() {
 void loop() {
     startTime = millis();
 
-    // Wait before the first attempt to read
-    Serial.println(F("Waiting at least 15s for the first measurement..."));
-    for (size_t i = 0; i < 15; i++) {
-        delay(1000L);
-        Serial.print('.');
-    }
-    Serial.println('\n');
-
     if (readingNum == 0) {
         // The first measurement after power up takes a **long** time -
         // at least 129 seconds in high salinity mode and 184 seconds in
